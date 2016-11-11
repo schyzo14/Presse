@@ -5,7 +5,10 @@
  */
 package Vues;
 
+import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -20,6 +23,15 @@ public class TransmettreArticle extends javax.swing.JFrame {
      */
     public TransmettreArticle() {
         initComponents();
+        
+        //Dimensionnement Fenetre
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Dimension d = tk.getScreenSize();
+        Insets insets = tk.getScreenInsets(getGraphicsConfiguration());
+        int width = (int) (824 - insets.left - insets.right);
+        int height = (int) (568 - insets.top - insets.bottom);
+        setSize(width, height);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -224,7 +236,8 @@ public class TransmettreArticle extends javax.swing.JFrame {
             popUpArticle();
         }else{
             //Affichage message d'erreur
-            
+            JOptionPane erreurMess = new JOptionPane();
+            erreurMess.showMessageDialog(null, "Tout les champs sont obligatoires!", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButton_TransmettreArticleActionPerformed
