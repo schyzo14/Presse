@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.distributeur.Vue.CreerCompte;
+package client.distributeur.Vue.SeConnecter;
+
+import client.distributeur.Vue.CreerCompte.*;
 
 /**
  *
  * @author Aurore
  */
-public class ConfirmationCreationCompte extends javax.swing.JFrame {
+public class ErreurConnexion extends javax.swing.JFrame {
 
     /**
      * Creates new form ErreurMail
      */
-    public ConfirmationCreationCompte() {
+    public ErreurConnexion() {
         initComponents();
     }
 
@@ -27,19 +29,20 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelCompteCree = new javax.swing.JLabel();
+        jLabelConnexionImpossible = new javax.swing.JLabel();
         jButtonOK = new javax.swing.JButton();
-        jLabelMDPest = new javax.swing.JLabel();
-        jLabelMDP = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Compte créé");
+        setTitle("Erreur Connexion");
 
-        jLabelCompteCree.setText("Compte créé !");
+        jLabelConnexionImpossible.setText("Connexion impossible.");
 
         jButtonOK.setText("OK");
-
-        jLabelMDPest.setText("Le mot de passe est : ");
+        jButtonOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,33 +51,29 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jButtonOK))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelCompteCree)
-                            .addComponent(jLabelMDPest))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelConnexionImpossible))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jButtonOK)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelCompteCree)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelMDPest)
-                    .addComponent(jLabelMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jLabelConnexionImpossible)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jButtonOK)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,13 +92,13 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConfirmationCreationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErreurConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConfirmationCreationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErreurConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConfirmationCreationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErreurConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConfirmationCreationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErreurConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -107,15 +106,13 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfirmationCreationCompte().setVisible(true);
+                new ErreurConnexion().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonOK;
-    private javax.swing.JLabel jLabelCompteCree;
-    private javax.swing.JLabel jLabelMDP;
-    private javax.swing.JLabel jLabelMDPest;
+    private javax.swing.JLabel jLabelConnexionImpossible;
     // End of variables declaration//GEN-END:variables
 }

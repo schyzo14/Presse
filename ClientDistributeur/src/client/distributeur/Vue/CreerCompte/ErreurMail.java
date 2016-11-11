@@ -28,14 +28,14 @@ public class ErreurMail extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabelErreurMail = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Créer un compte");
 
         jLabelErreurMail.setText("Cet email est déjà utilisé.");
 
-        jButton1.setText("OK");
+        jButtonOK.setText("OK");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,7 +48,7 @@ public class ErreurMail extends javax.swing.JFrame {
                         .addComponent(jLabelErreurMail))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(75, 75, 75)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonOK)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -57,7 +57,7 @@ public class ErreurMail extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabelErreurMail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jButtonOK)
                 .addContainerGap())
         );
 
@@ -100,7 +100,7 @@ public class ErreurMail extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonOK;
     private javax.swing.JLabel jLabelErreurMail;
     // End of variables declaration//GEN-END:variables
 }
