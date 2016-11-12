@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Accueil</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Rechercher un titre par son nom</h1>
+        <form action='resultatTitreNom.jsp' method='get' target='_blank'>
+            <label>Nom du titre :</label>
+            <input type='text' name='titreNom' />
+            <input type='submit' value='Rechercher' />
+        </form>
+        
+        <h1>Rechercher un titre par mots-clés</h1>
+        <form action='resultatTitreMotsCles.jsp' method='get' target='_blank'>
+            <label>Liste de mots-clés :</label>
+            <input type='text' name='titreMotsCles' />
+            <input type='submit' value='Rechercher' />
+        </form>
+    </body>
+</html>
