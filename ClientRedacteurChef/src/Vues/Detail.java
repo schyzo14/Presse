@@ -9,15 +9,13 @@ package Vues;
  *
  * @author manou
  */
-public class DetailArticle extends javax.swing.JPanel {
+public class Detail extends javax.swing.JFrame {
 
     /**
-     * Creates new form DetailArticle
+     * Creates new form Detail
      */
-    public DetailArticle() {
+    public Detail() {
         initComponents();
-        
-        
     }
 
     /**
@@ -29,37 +27,38 @@ public class DetailArticle extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField_NomDetailArticle = new javax.swing.JTextField();
+        jPanel_DetailArticle = new javax.swing.JPanel();
         jLabel_NomDetailArticle = new javax.swing.JLabel();
-        jLabel_AuteurDetailArticle = new javax.swing.JLabel();
+        jTextField_NomDetailArticle = new javax.swing.JTextField();
         jTextField_AuteurDetailArticle = new javax.swing.JTextField();
+        jLabel_AuteurDetailArticle = new javax.swing.JLabel();
+        jLabel_ContenuDetailArticle = new javax.swing.JLabel();
         jScrollPane_ContenuDetailArticle = new javax.swing.JScrollPane();
         jTextArea_ContenuDetailArticle = new javax.swing.JTextArea();
-        jLabel_ContenuDetailArticle = new javax.swing.JLabel();
-        jLabel_MotsClesDetailArticle = new javax.swing.JLabel();
         jScrollPane_MotsClesDetailArticle = new javax.swing.JScrollPane();
         jList_MotsClesDetailArticle = new javax.swing.JList<>();
+        jLabel_MotsClesDetailArticle = new javax.swing.JLabel();
         jButton_FermerDetailArticle = new javax.swing.JButton();
-
-        jTextField_NomDetailArticle.setEditable(false);
 
         jLabel_NomDetailArticle.setText("Nom : ");
 
-        jLabel_AuteurDetailArticle.setText("Auteur :");
+        jTextField_NomDetailArticle.setEditable(false);
 
         jTextField_AuteurDetailArticle.setEditable(false);
+
+        jLabel_AuteurDetailArticle.setText("Auteur :");
+
+        jLabel_ContenuDetailArticle.setText("Contenu :");
 
         jTextArea_ContenuDetailArticle.setEditable(false);
         jTextArea_ContenuDetailArticle.setColumns(20);
         jTextArea_ContenuDetailArticle.setRows(5);
         jScrollPane_ContenuDetailArticle.setViewportView(jTextArea_ContenuDetailArticle);
 
-        jLabel_ContenuDetailArticle.setText("Contenu :");
-
-        jLabel_MotsClesDetailArticle.setText("Mots-clés :");
-
         jList_MotsClesDetailArticle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane_MotsClesDetailArticle.setViewportView(jList_MotsClesDetailArticle);
+
+        jLabel_MotsClesDetailArticle.setText("Mots-clés :");
 
         jButton_FermerDetailArticle.setText("Fermer");
         jButton_FermerDetailArticle.addActionListener(new java.awt.event.ActionListener() {
@@ -68,54 +67,54 @@ public class DetailArticle extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_DetailArticleLayout = new javax.swing.GroupLayout(jPanel_DetailArticle);
+        jPanel_DetailArticle.setLayout(jPanel_DetailArticleLayout);
+        jPanel_DetailArticleLayout.setHorizontalGroup(
+            jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_DetailArticleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_DetailArticleLayout.createSequentialGroup()
+                        .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel_NomDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_AuteurDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(347, 347, 347))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_DetailArticleLayout.createSequentialGroup()
+                        .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel_ContenuDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_MotsClesDetailArticle))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane_ContenuDetailArticle)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_DetailArticleLayout.createSequentialGroup()
+                                .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane_MotsClesDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField_NomDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField_AuteurDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(jPanel_DetailArticleLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jButton_FermerDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel_DetailArticleLayout.setVerticalGroup(
+            jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_DetailArticleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_NomDetailArticle)
                     .addComponent(jTextField_NomDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_AuteurDetailArticle)
                     .addComponent(jTextField_AuteurDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_ContenuDetailArticle)
                     .addComponent(jScrollPane_ContenuDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_DetailArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_MotsClesDetailArticle)
                     .addComponent(jScrollPane_MotsClesDetailArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -123,7 +122,18 @@ public class DetailArticle extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getAccessibleContext().setAccessibleParent(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel_DetailArticle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel_DetailArticle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_FermerDetailArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FermerDetailArticleActionPerformed
@@ -133,6 +143,40 @@ public class DetailArticle extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_jButton_FermerDetailArticleActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Detail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Detail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Detail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Detail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Detail().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_FermerDetailArticle;
@@ -141,6 +185,7 @@ public class DetailArticle extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel_MotsClesDetailArticle;
     private javax.swing.JLabel jLabel_NomDetailArticle;
     private javax.swing.JList<String> jList_MotsClesDetailArticle;
+    private javax.swing.JPanel jPanel_DetailArticle;
     private javax.swing.JScrollPane jScrollPane_ContenuDetailArticle;
     private javax.swing.JScrollPane jScrollPane_MotsClesDetailArticle;
     private javax.swing.JTextArea jTextArea_ContenuDetailArticle;

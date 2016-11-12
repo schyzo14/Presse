@@ -155,12 +155,11 @@ public class SelectionArticle extends javax.swing.JFrame {
         //Vérification qu'une ligne est bien sélectionné sinon message d'erreur
         if(jTable_SelectionArticle.getSelectedRow()!=-1)
         {
-            System.out.println("Afficher Détail");
             //Récupérer les éléments liés à l'article sélectionné et afficher DetailArticle
-            DetailArticle detail = new DetailArticle();
+            Detail detail = new Detail();
             detail.setVisible(true);
+            
         }else{
-            System.out.println("Erreur");
             //Popup erreur
             JOptionPane erreurMess = new JOptionPane();
             erreurMess.showMessageDialog(null, "Vous devez sélectionner une ligne pour afficher son détail!", "Erreur", JOptionPane.ERROR_MESSAGE);
