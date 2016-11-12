@@ -137,7 +137,7 @@ public class TransmettreArticle extends javax.swing.JFrame {
                                 .addGap(75, 75, 75)
                                 .addGroup(jPanel_TransmettreArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransmettreArticleLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGap(0, 101, Short.MAX_VALUE)
                                         .addComponent(jButton_TransmettreArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel_TransmettreArticleLayout.createSequentialGroup()
                                         .addGroup(jPanel_TransmettreArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -183,8 +183,8 @@ public class TransmettreArticle extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransmettreArticleLayout.createSequentialGroup()
                         .addGroup(jPanel_TransmettreArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel_MotsClesArticle)
-                            .addComponent(jScrollPane_MotsClesArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                            .addComponent(jScrollPane_MotsClesArticle, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+                        .addGap(33, 33, 33)
                         .addGroup(jPanel_TransmettreArticleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_QuitterArticle)
                             .addComponent(jButton_TransmettreArticle))))
@@ -245,7 +245,7 @@ public class TransmettreArticle extends javax.swing.JFrame {
     private void popUpArticle() {
         //Custom button text
         Object[] options = {"Quitter",
-            "Ecrire un article"};
+            "Ecrire un autre article"};
         int reponse = JOptionPane.showOptionDialog(this,
                 "Que voulez-vous faire ?",
                 "Continuer ?",
