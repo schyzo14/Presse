@@ -5,6 +5,8 @@
  */
 package presse;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Schyzo
@@ -12,6 +14,7 @@ package presse;
 public class motsCles {
     private int numMC;
     private String motCle;
+    private HashMap<Integer,article> listeArticles;
     
     public motsCles(int n, String m) {
         this.numMC = n;
@@ -32,5 +35,13 @@ public class motsCles {
 
     public void setMotCle(String motCle) {
         this.motCle = motCle;
+    }
+
+    public HashMap<Integer, article> getListeArticles() {
+        return listeArticles;
+    }
+
+    public void setListeArticles(HashMap<Integer, article> listeArticles) {
+        this.listeArticles = listeArticles;
     }
 }

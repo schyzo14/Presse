@@ -16,6 +16,7 @@ public class article {
     private String nomA;
     private String contenuA;
     private HashMap<Integer,auteur> listeAuteurs;
+    private HashMap<Integer,motsCles> listeMotsCles;
     
     public article(int n, String no, String c) {
         this.numA = n;
@@ -53,5 +54,13 @@ public class article {
 
     public void setListeAuteurs(HashMap<Integer, auteur> listeAuteurs) {
         this.listeAuteurs = listeAuteurs;
+    }
+
+    public HashMap<Integer, motsCles> getListeMotsCles() {
+        return listeMotsCles;
+    }
+
+    public void setListeMotsCles(HashMap<Integer, motsCles> listeMotsCles) {
+        this.listeMotsCles = listeMotsCles;
     }
 }
