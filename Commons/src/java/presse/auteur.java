@@ -5,6 +5,8 @@
  */
 package presse;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Schyzo
@@ -13,6 +15,7 @@ public class auteur {
     private int numA;
     private String nomA;
     private String prenomA;
+    private HashMap<Integer,article> listeArticles;
     
     public auteur(int n, String no, String p) {
         this.numA = n;
@@ -42,5 +45,13 @@ public class auteur {
     
     public void setPrenomA(String p) {
         this.prenomA = p;
+    }
+
+    public HashMap<Integer, article> getListeArticles() {
+        return listeArticles;
+    }
+
+    public void setListeArticles(HashMap<Integer, article> listeArticles) {
+        this.listeArticles = listeArticles;
     }
 }
