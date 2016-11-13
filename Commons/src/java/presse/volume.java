@@ -5,6 +5,8 @@
  */
 package presse;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Schyzo
@@ -12,6 +14,7 @@ package presse;
 public class volume {
     private int numV;
     private String nomV;
+    private HashMap<Integer,article> listeArticles;
 
     public volume(int numV, String nomV) {
         this.numV = numV;
@@ -32,5 +35,13 @@ public class volume {
 
     public void setNomV(String nomV) {
         this.nomV = nomV;
+    }
+
+    public HashMap<Integer, article> getListeArticles() {
+        return listeArticles;
+    }
+
+    public void setListeArticles(HashMap<Integer, article> listeArticles) {
+        this.listeArticles = listeArticles;
     }
 }
