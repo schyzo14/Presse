@@ -5,6 +5,8 @@
  */
 package presse;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Schyzo
@@ -14,6 +16,7 @@ public class publicite {
     private String nomP;
     private String compagnie;
     private String contenuP;
+    private HashMap<Integer,volume> listeVolumes;
 
     public publicite(int numP, String nomP, String compagnie, String contenuP) {
         this.numP = numP;
@@ -52,5 +55,13 @@ public class publicite {
 
     public void setContenuP(String contenuP) {
         this.contenuP = contenuP;
+    }
+
+    public HashMap<Integer, volume> getListeVolumes() {
+        return listeVolumes;
+    }
+
+    public void setListeVolumes(HashMap<Integer, volume> listeVolumes) {
+        this.listeVolumes = listeVolumes;
     }
 }
