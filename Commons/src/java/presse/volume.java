@@ -16,6 +16,7 @@ public class volume {
     private String nomV;
     private HashMap<Integer,article> listeArticles;
     private HashMap<Integer,publicite> listePublicites;
+    private titre t;
 
     public volume(int numV, String nomV) {
         this.numV = numV;
@@ -52,5 +53,13 @@ public class volume {
 
     public void setListePublicites(HashMap<Integer, publicite> listePublicites) {
         this.listePublicites = listePublicites;
+    }
+
+    public titre getT() {
+        return t;
+    }
+
+    public void setT(titre t) {
+        this.t = t;
     }
 }
