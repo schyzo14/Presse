@@ -6,6 +6,7 @@
 package presse;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  *
@@ -18,6 +19,9 @@ public class contrat {
     private float coutC;
     private Date dateValC;
     private Date datePaieC;
+    private HashMap<Integer,distributeur> listeDistributeurs;
+    private HashMap<Integer,editeur> listeEditeurs;
+    private HashMap<Integer,titre> listeTitres;
 
     public contrat(int numC, int nbCopieC, int dureeC, float coutC, Date dateValC, Date datePaieC) {
         this.numC = numC;
@@ -74,5 +78,29 @@ public class contrat {
 
     public void setDatePaieC(Date datePaieC) {
         this.datePaieC = datePaieC;
+    }
+
+    public HashMap<Integer, distributeur> getListeDistributeurs() {
+        return listeDistributeurs;
+    }
+
+    public void setListeDistributeurs(HashMap<Integer, distributeur> listeDistributeurs) {
+        this.listeDistributeurs = listeDistributeurs;
+    }
+
+    public HashMap<Integer, editeur> getListeEditeurs() {
+        return listeEditeurs;
+    }
+
+    public void setListeEditeurs(HashMap<Integer, editeur> listeEditeurs) {
+        this.listeEditeurs = listeEditeurs;
+    }
+
+    public HashMap<Integer, titre> getListeTitres() {
+        return listeTitres;
+    }
+
+    public void setListeTitres(HashMap<Integer, titre> listeTitres) {
+        this.listeTitres = listeTitres;
     }
 }

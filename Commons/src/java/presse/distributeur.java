@@ -5,6 +5,8 @@
  */
 package presse;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Schyzo
@@ -14,6 +16,7 @@ public class distributeur {
     private String nomD;
     private String mailD;
     private String mdpD;
+    private HashMap<Integer,contrat> listeContrats;
 
     public distributeur(int numD, String nomD, String mailD) {
         this.numD = numD;
@@ -52,5 +55,13 @@ public class distributeur {
 
     public void setMdpD(String mdpD) {
         this.mdpD = mdpD;
+    }
+
+    public HashMap<Integer, contrat> getListeContrats() {
+        return listeContrats;
+    }
+
+    public void setListeContrats(HashMap<Integer, contrat> listeContrats) {
+        this.listeContrats = listeContrats;
     }
 }
