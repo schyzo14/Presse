@@ -15,6 +15,7 @@ public class motsCles {
     private int numMC;
     private String motCle;
     private HashMap<Integer,article> listeArticles;
+    private HashMap<Integer,titre> listeTitres;
     
     public motsCles(int n, String m) {
         this.numMC = n;
@@ -43,5 +44,13 @@ public class motsCles {
 
     public void setListeArticles(HashMap<Integer, article> listeArticles) {
         this.listeArticles = listeArticles;
+    }
+
+    public HashMap<Integer, titre> getListeTitres() {
+        return listeTitres;
+    }
+
+    public void setListeTitres(HashMap<Integer, titre> listeTitres) {
+        this.listeTitres = listeTitres;
     }
 }

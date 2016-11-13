@@ -17,6 +17,7 @@ public class article {
     private String contenuA;
     private HashMap<Integer,auteur> listeAuteurs;
     private HashMap<Integer,motsCles> listeMotsCles;
+    private volume v;
     
     public article(int n, String no, String c) {
         this.numA = n;
@@ -62,5 +63,13 @@ public class article {
 
     public void setListeMotsCles(HashMap<Integer, motsCles> listeMotsCles) {
         this.listeMotsCles = listeMotsCles;
+    }
+
+    public volume getV() {
+        return v;
+    }
+
+    public void setV(volume v) {
+        this.v = v;
     }
 }
