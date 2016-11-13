@@ -9,15 +9,15 @@ package presse;
  *
  * @author Schyzo
  */
-public class auteur {
+public class article {
     private int numA;
     private String nomA;
-    private String prenomA;
+    private String contenuA;
     
-    public auteur(int n, String no, String p) {
+    public article(int n, String no, String c) {
         this.numA = n;
         this.nomA = no;
-        this.prenomA = p;
+        this.contenuA = c;
     }
     
     public int getNumA() {
@@ -36,11 +36,11 @@ public class auteur {
         this.nomA = n;
     }
     
-    public String getPrenomA() {
-        return this.prenomA;
+    public String getContenuA() {
+        return this.contenuA;
     }
     
-    public void setPrenomA(String p) {
-        this.prenomA = p;
+    public void setContenuA(String c) {
+        this.contenuA = c;
     }
 }
