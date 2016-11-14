@@ -5,6 +5,7 @@
  */
 package Vues;
 
+import REST.ClientREST;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
@@ -230,8 +231,9 @@ public class TransmettreArticle extends javax.swing.JFrame {
         //On vérifie que tout les champs ont été saisi (sauf les mots-clés)
         if(!jTextField_NomArticle.getText().isEmpty() && !jTextField_AuteurArticle.getText().isEmpty() && !jTextArea_ContenuArticle.getText().isEmpty())
         {
-            //Transmettre à Mise sous presse (RESEAU)
-
+            //Transmettre à TransmissionArticles via REST (RESEAU)
+            ClientREST rest = new ClientREST();
+            rest.postJson();
             //Affichage de la pop up 
             popUpArticle();
         }else{
