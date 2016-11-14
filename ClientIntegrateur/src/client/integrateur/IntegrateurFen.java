@@ -5,6 +5,11 @@
  */
 package client.integrateur;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.HashMap;
+import presse.publicite;
+
 /**
  *
  * @author Schyzo
@@ -16,6 +21,14 @@ public class IntegrateurFen extends javax.swing.JFrame {
      */
     public IntegrateurFen() {
         initComponents();
+        ClientREST c = new ClientREST();
+        String s = c.getListePubs();
+        Gson gson = new Gson();
+        /*HashMap<Integer, publicite> listePub = new HashMap<>();
+        listePub = (HashMap<Integer, publicite>) gson.fromJson(s, listePub.getClass());*/
+        java.lang.reflect.Type type = new TypeToken<HashMap<Integer,publicite>>(){}.getType();
+        HashMap<Integer,publicite> listePub = gson.fromJson(s, type);
+        jTextAreaArticle.setText(listePub.get(1).getNomP());
     }
 
     /**
