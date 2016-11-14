@@ -12,7 +12,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import services.publicitesBeanLocal;
 
@@ -20,6 +23,7 @@ import services.publicitesBeanLocal;
  *
  * @author Schyzo
  */
+//@Path("publicites/{numPub}")
 @Path("publicites")
 public class publicitesRessource {
     //Accès backoffice
@@ -37,9 +41,16 @@ public class publicitesRessource {
         this.publicitesBean = lookupPublicitesBeanLocal();
     }
     
+    /*@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getListePubs(@PathParam("numPub") String numPub) {
+        return this.gson.toJson(this.publicitesBean.getPublicites(Integer.parseInt(numPub)));
+    }*/
+    
     @GET
-    public String getJson() {
-        return this.gson.toJson("Une pub");
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getListePubs() {
+        return this.gson.toJson(this.publicitesBean.getListePubs());
     }
     
     /**
