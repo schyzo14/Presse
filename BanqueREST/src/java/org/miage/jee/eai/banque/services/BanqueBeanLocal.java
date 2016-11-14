@@ -1,7 +1,6 @@
 package org.miage.jee.eai.banque.services;
 
 import javax.ejb.Local;
-import org.miage.jee.eai.banque.entities.Compte;
 import org.miage.jee.eai.banque.entities.Payement;
 
 @Local

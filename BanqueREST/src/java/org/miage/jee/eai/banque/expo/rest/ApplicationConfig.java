@@ -34,9 +34,7 @@ public class ApplicationConfig extends Application {
      * comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(org.miage.jee.eai.banque.expo.rest.BanqueResource.class);
         resources.add(org.miage.jee.eai.banque.expo.rest.CompteResource.class);
-        resources.add(org.miage.jee.eai.banque.expo.rest.PositionResource.class);
-    }
+ }
 
 }

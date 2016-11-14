@@ -5,6 +5,8 @@
  */
 package client.distributeur.Vue.VirementBancaire;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+
 /**
  *
  * @author Aurore
@@ -179,7 +181,9 @@ public class VirementBancaire extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

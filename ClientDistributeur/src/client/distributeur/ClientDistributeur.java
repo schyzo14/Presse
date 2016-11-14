@@ -5,6 +5,8 @@
  */
 package client.distributeur;
 
+import client.distributeur.Vue.Menu.MenuAvantConnexion;
+
 /**
  *
  * @author Aurore
@@ -15,7 +17,9 @@ public class ClientDistributeur {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Afficher la fenetre
+        MenuAvantConnexion menuAvantConnexion = new MenuAvantConnexion();
+        menuAvantConnexion.setVisible(true);
     }
     
 }

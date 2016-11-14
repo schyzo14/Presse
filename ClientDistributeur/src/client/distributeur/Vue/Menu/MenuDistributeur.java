@@ -5,6 +5,11 @@
  */
 package client.distributeur.Vue.Menu;
 
+import client.distributeur.Vue.EnvoyerRecepisse.ListContratAttenteRecepisse;
+import client.distributeur.Vue.PasserContrat.PasserContrat;
+import client.distributeur.Vue.ValiderContrat.ListContratAValider;
+import client.distributeur.Vue.VirementBancaire.VirementBancaire;
+
 /**
  *
  * @author Aurore
@@ -110,23 +115,32 @@ public class MenuDistributeur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonPasserContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPasserContratActionPerformed
-        // TODO add your handling code here:
+        PasserContrat passerContrat = new PasserContrat();
+        passerContrat.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonPasserContratActionPerformed
 
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
-        // TODO add your handling code here:
+        ListContratAValider listContratAValider = new ListContratAValider();
+        listContratAValider.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonValiderContratActionPerformed
 
     private void jButtonRealiserVirementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealiserVirementActionPerformed
-        // TODO add your handling code here:
+        VirementBancaire virementBancaire = new VirementBancaire();
+        virementBancaire.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonRealiserVirementActionPerformed
 
     private void jButtonEnvoyerRecepisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerRecepisseActionPerformed
-        // TODO add your handling code here:
+        ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
+        listContratAttenteRecepisse.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 
     /**

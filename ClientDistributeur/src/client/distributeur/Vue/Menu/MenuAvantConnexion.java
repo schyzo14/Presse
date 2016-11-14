@@ -5,6 +5,9 @@
  */
 package client.distributeur.Vue.Menu;
 
+import client.distributeur.Vue.CreerCompte.CreerCompte;
+import client.distributeur.Vue.SeConnecter.SeConnecter;
+
 /**
  *
  * @author Aurore
@@ -86,15 +89,20 @@ public class MenuAvantConnexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreerCompteActionPerformed
-        // TODO add your handling code here:
+        CreerCompte creerCompte = new CreerCompte();
+        creerCompte.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonCreerCompteActionPerformed
 
     private void jButtonSeConnecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeConnecterActionPerformed
-        // TODO add your handling code here:
+        SeConnecter seConnecter = new SeConnecter();
+        seConnecter.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonSeConnecterActionPerformed
 
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 
     /**

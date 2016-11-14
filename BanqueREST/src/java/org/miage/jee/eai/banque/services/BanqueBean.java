@@ -50,17 +50,18 @@ public class BanqueBean implements BanqueBeanLocal {
                         
                         return payement;
                     } else {
-                        throw new Error("Le payeur n'a pas assez d'argent !");
+                        new Throwable("Le payeur n'a pas assez d'argent !");
                     }
                 } else {
-                    throw new Error("Le compte de réception est introuvable !");
+                    new Throwable("Le compte de réception est introuvable !");
                 }
             } else {
-                throw new Error("Le nom du compte du payeur est introuvable !");
+                new Throwable("Le nom du compte du payeur est introuvable !");
             }
         } else {
-            throw new Error("Le compte du payeur est introuvable !");
+            new Throwable("Le compte du payeur est introuvable !");
         }
+        return null;
     }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.miage.jee.eai.banque.expo.rest;
 
 import com.google.gson.Gson;
@@ -10,21 +5,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.miage.jee.eai.banque.entities.Payement;
 import org.miage.jee.eai.banque.services.BanqueBeanLocal;
 
-/**
- * REST Web Service pour un Compte
- *
- * @author Cédric Teyssié
- */
-@Path("comptes/{idCompte}")
+@Path("comptes/{numCompte}")
 public class CompteResource {
 
     BanqueBeanLocal banqueBean;
@@ -38,19 +31,36 @@ public class CompteResource {
         this.banqueBean = lookupBanqueBeanLocal();
         this.gson = new Gson();
     }
-
+    
     /**
-     * Renvoie la représentation JSON d'un compte Pour l'appeler on doit utiliser l'URL :
-     * http://localhost:8080/BanqueREST/webresources/comptes/0
+     * http://localhost:8080/BanqueREST/webresources/comptes/10001111/compte?numPayement=1&nomPayeur=Hachette Diffusion&numCompteReception=11110000&montant=1000
      *
-     * @param idCompte id du compte
-     *
-     * @return le compte en notation JSON de la forme {"idCompte":0,"pos":{"date":1475757207292,"somme":1000.0}}
+     * @param numCompte
+     * @param numPayement
+     * @param nomPayeur
+     * @param numCompteReception
+     * @param montant
+     * @return 
      */
-    @GET
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson(@PathParam("idCompte") String idCompte) {
-        return this.gson.toJson(this.banqueBean.getCompte(Integer.parseInt(idCompte)));
+    public Response putJson(
+            @PathParam("numCompte") String numCompte, 
+            @QueryParam("numPayement") String numPayement, @QueryParam("nomPayeur") String nomPayeur, @QueryParam("numCompteReception") String numCompteReception, @QueryParam("montant") String montant) {
+        
+        int numComptePayeur = Integer.parseInt(numCompte);
+        int numPayementInt = Integer.parseInt(numPayement);
+        int numCompteReceptionInt = Integer.parseInt(numCompteReception);
+        double montantD = Double.parseDouble(montant);
+        Payement payement;
+        
+        try {
+            payement = this.banqueBean.payer(numPayementInt, nomPayeur, numComptePayeur, numCompteReceptionInt, montantD);
+        } catch (Throwable e) {
+            return Response.ok(this.gson.toJson(e)).build();
+        }
+
+        return Response.ok(this.gson.toJson(payement)).build();
     }
 
     private BanqueBeanLocal lookupBanqueBeanLocal() {

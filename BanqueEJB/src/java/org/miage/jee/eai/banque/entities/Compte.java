@@ -1,52 +1,55 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.miage.jee.eai.banque.entities;
 
-/**
- *
- * Compte
- *
- * @author Cédric Teyssié  <cedric.teyssie@irit.fr>, IRIT-SIERA, Université Paul Sabatier
- * @version 0.1, 5 oct. 2016
- * @since 0.1, 5 oct. 2016
- */
-// BanqueEJB
-// org.miage.jee.eai.banque.entities
-// Compte.java
+import java.util.ArrayList;
+import java.util.List;
+
 public class Compte {
 
-    private int idCompte;
-    private Position pos;
+    private int numCompte;
+    private String nomCompte;   
+    private double somme;
+    private ArrayList<Payement> listPayements = new ArrayList<Payement> ();
 
-    public Compte(int idCompte, double somme_init) {
-        this.idCompte = idCompte;
-        this.pos = new Position(somme_init);
+    public Compte(int numCompte, String nomCompte, double somme) {
+        this.setNumCompte(numCompte);
+        this.setNomCompte(nomCompte);
+        this.setSomme(somme);
     }
 
-    public int getIdCompte() {
-        return idCompte;
+    public int getNumCompte() {
+        return numCompte;
     }
 
-    public void setIdCompte(int idCompte) {
-        this.idCompte = idCompte;
+    public void setNumCompte(int numCompte) {
+        this.numCompte = numCompte;
     }
 
-    public Position getPos() {
-        return pos;
+    public String getNomCompte() {
+        return nomCompte;
     }
 
-    public void setPos(Position pos) {
-        this.pos = pos;
+    public void setNomCompte(String nomCompte) {
+        this.nomCompte = nomCompte;
     }
 
-    public void crediter(double somme) {
-        this.pos.setSomme(somme + this.pos.getSomme());
+    public double getSomme() {
+        return somme;
     }
 
-    public void debiter(double somme) {
-        this.pos.setSomme(this.pos.getSomme() - somme);
+    public void setSomme(double somme) {
+        this.somme = somme;
+    }
+
+    public ArrayList<Payement> getListPayements() {
+        return listPayements;
+    }
+
+    public void setListPayements(ArrayList<Payement> listPayements) {
+        this.listPayements = listPayements;
+    }
+                
+    public void addPayements(Payement payement) {
+        this.listPayements.add(payement);
+        this.setSomme(this.getSomme() - payement.getMontant());
     }
 }

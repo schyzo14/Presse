@@ -5,6 +5,9 @@
  */
 package client.distributeur.Vue.CreerCompte;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+import client.distributeur.Vue.SeConnecter.SeConnecter;
+
 /**
  *
  * @author Aurore
@@ -98,7 +101,9 @@ public class CreerCompte extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        // TODO add your handling code here:
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**

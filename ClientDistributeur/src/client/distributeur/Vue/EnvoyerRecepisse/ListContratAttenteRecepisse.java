@@ -11,12 +11,12 @@ import client.distributeur.Vue.ValiderContrat.*;
  *
  * @author Aurore
  */
-public class ListContratAttenteRecepissé extends javax.swing.JFrame {
+public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
     /**
      * Creates new form ListContratAValider
      */
-    public ListContratAttenteRecepissé() {
+    public ListContratAttenteRecepisse() {
         initComponents();
     }
 
@@ -123,21 +123,23 @@ public class ListContratAttenteRecepissé extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListContratAttenteRecepissé.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListContratAttenteRecepisse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListContratAttenteRecepissé.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListContratAttenteRecepisse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListContratAttenteRecepissé.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListContratAttenteRecepisse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListContratAttenteRecepissé.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListContratAttenteRecepisse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListContratAttenteRecepissé().setVisible(true);
+                new ListContratAttenteRecepisse().setVisible(true);
             }
         });
     }
