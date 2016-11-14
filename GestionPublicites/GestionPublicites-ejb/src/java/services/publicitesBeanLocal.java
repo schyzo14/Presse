@@ -15,5 +15,6 @@ import presse.publicite;
  */
 @Local
 public interface publicitesBeanLocal {
-    public HashMap<Integer, publicite> getPublicites();
+    public publicite getPublicites(int num);
+    public HashMap<Integer, publicite> getListePubs();
 }
