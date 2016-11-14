@@ -8,6 +8,7 @@ package REST;
 import java.util.HashMap;
 import javax.ejb.Local;
 import presse.article;
+import presse.auteur;
 
 /**
  *
@@ -17,4 +18,9 @@ import presse.article;
 public interface ArticlesBeanLocal {
     public article getArticles(int numA);
     public HashMap<Integer, article> getListeArticles();
+    
+    public auteur getAuteurs(int numA);
+    public HashMap<Integer, auteur> getListeAuteurs();
+
+    public article addArticles(String nomA, String nomAut, String contenu, String motcles);
 }
