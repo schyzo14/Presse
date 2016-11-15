@@ -1,43 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://www.netbeans.org/ns/project/1">
-    <type>org.netbeans.modules.web.project</type>
+    <type>org.netbeans.modules.j2ee.earproject</type>
     <configuration>
-        <buildExtensions xmlns="http://www.netbeans.org/ns/ant-build-extender/1">
-            <extension file="rest-build.xml" id="rest.5"/>
-        </buildExtensions>
-        <data xmlns="http://www.netbeans.org/ns/web-project/3">
-            <name>Banque-war</name>
+        <data xmlns="http://www.netbeans.org/ns/j2ee-earproject/2">
+            <name>Banque</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <web-module-libraries>
-                <library dirs="200">
-                    <file>${file.reference.gson-2.7.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${libs.javaee-api-7.0.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="100">
-                    <file>${reference.Banque-ejb.dist}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-            </web-module-libraries>
+            <web-module-libraries/>
             <web-module-additional-libraries>
-                <library dirs="100">
+                <library>
                     <file>${reference.Banque-ejb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
-                <library dirs="100">
+                <library>
                     <file>${reference.Banque-ejb.dist}</file>
                     <path-in-war>/</path-in-war>
                 </library>
+                <library>
+                    <file>${reference.Banque-war.dist-ear}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
             </web-module-additional-libraries>
-            <source-roots>
-                <root id="src.dir" name="Source Packages"/>
-            </source-roots>
-            <test-roots>
-                <root id="test.src.dir" name="Test Packages"/>
-            </test-roots>
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
@@ -50,6 +32,14 @@
             </reference>
             <reference>
                 <foreign-project>Banque-ejb</foreign-project>
+                <artifact-type>j2ee_ear_archive</artifact-type>
+                <script>build.xml</script>
+                <target>dist-ear</target>
+                <clean-target>clean-ear</clean-target>
+                <id>dist-ear</id>
+            </reference>
+            <reference>
+                <foreign-project>Banque-war</foreign-project>
                 <artifact-type>j2ee_ear_archive</artifact-type>
                 <script>build.xml</script>
                 <target>dist-ear</target>
