@@ -45,24 +45,22 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                                       <Component id="jLabelPubZone2" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jButtonAnnuler" min="-2" pref="115" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jButtonValider" min="-2" pref="115" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jButtonAnnuler" min="-2" pref="115" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jButtonValider" min="-2" pref="115" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
+                      <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabelNumVolume" min="-2" max="-2" attributes="0"/>
@@ -133,14 +131,9 @@
       <SubComponents>
         <Component class="javax.swing.JList" name="jListPubZone1">
           <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Playstation : La PS4Pro est dans la place !"/>
-                <StringItem index="1" value="Air France : Vive les avions !"/>
-                <StringItem index="2" value="Eurosport : BeinSport + Eurosport, profitez du combo !"/>
-                <StringItem index="3" value="Doliprane : Mal de t&#xea;te au soleil ? Prenez du doliprane !"/>
-                <StringItem index="4" value="MIAGE : La formation du futur !"/>
-              </StringArray>
+            <Property name="selectionMode" type="int" value="0"/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[258, 0]"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -163,14 +156,9 @@
       <SubComponents>
         <Component class="javax.swing.JList" name="jListPubZone2">
           <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Playstation : La PS4Pro est dans la place !"/>
-                <StringItem index="1" value="Air France : Vive les avions !"/>
-                <StringItem index="2" value="Eurosport : BeinSport + Eurosport, profitez du combo !"/>
-                <StringItem index="3" value="Doliprane : Mal de t&#xea;te au soleil ? Prenez du doliprane !"/>
-                <StringItem index="4" value="MIAGE : La formation du futur !"/>
-              </StringArray>
+            <Property name="selectionMode" type="int" value="0"/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[258, 0]"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -201,11 +189,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Annuler"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnnulerActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonValider">
       <Properties>
         <Property name="text" type="java.lang.String" value="Valider"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonValiderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelArticle">
       <Properties>

@@ -14,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
  * [publicites]<br>
  * USAGE:
  * <pre>
-        ClientREST client = new ClientREST();
+        ClientRESTPublicites client = new ClientRESTPublicites();
         Object response = client.XXX(...);
         // do whatever with response
         client.close();
@@ -22,13 +22,13 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author Khadija
  */
-public class ClientREST {
+public class ClientRESTPublicites {
 
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/GestionPublicites-war/webresources";
 
-    public ClientREST() {
+    public ClientRESTPublicites() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("publicites");
     }

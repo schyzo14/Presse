@@ -8,6 +8,8 @@ package client.integrateur;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import presse.publicite;
 
 /**
@@ -21,14 +23,22 @@ public class IntegrateurFen extends javax.swing.JFrame {
      */
     public IntegrateurFen() {
         initComponents();
-        ClientREST c = new ClientREST();
-        String s = c.getListePubs();
         Gson gson = new Gson();
-        /*HashMap<Integer, publicite> listePub = new HashMap<>();
-        listePub = (HashMap<Integer, publicite>) gson.fromJson(s, listePub.getClass());*/
+        
+        //Init client REST
+        ClientRESTPublicites c = new ClientRESTPublicites();
+        //Récupération de toutes les publicités au format json
+        String s = c.getListePubs();
+        //Transformation du json à HashMap
         java.lang.reflect.Type type = new TypeToken<HashMap<Integer,publicite>>(){}.getType();
         HashMap<Integer,publicite> listePub = gson.fromJson(s, type);
-        jTextAreaArticle.setText(listePub.get(1).getNomP());
+        //Récupération sous forme de liste
+        DefaultListModel<String> lesPubs = new DefaultListModel<>();
+        for(publicite p : listePub.values()) {
+            lesPubs.addElement(p.getCompagnie() + " - " + p.getContenuP());
+        }
+        jListPubZone1.setModel(lesPubs);
+        jListPubZone2.setModel(lesPubs);
     }
 
     /**
@@ -63,20 +73,14 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
         jLabelPubZone1.setText("Publicité de la zone 1 :");
 
-        jListPubZone1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Playstation : La PS4Pro est dans la place !", "Air France : Vive les avions !", "Eurosport : BeinSport + Eurosport, profitez du combo !", "Doliprane : Mal de tête au soleil ? Prenez du doliprane !", "MIAGE : La formation du futur !" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jListPubZone1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListPubZone1.setMinimumSize(new java.awt.Dimension(258, 0));
         jScrollPane1.setViewportView(jListPubZone1);
 
         jLabelPubZone2.setText("Publicité de la zone 2 :");
 
-        jListPubZone2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Playstation : La PS4Pro est dans la place !", "Air France : Vive les avions !", "Eurosport : BeinSport + Eurosport, profitez du combo !", "Doliprane : Mal de tête au soleil ? Prenez du doliprane !", "MIAGE : La formation du futur !" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jListPubZone2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListPubZone2.setMinimumSize(new java.awt.Dimension(258, 0));
         jScrollPane2.setViewportView(jListPubZone2);
 
         jTextAreaArticle.setEditable(false);
@@ -87,8 +91,18 @@ public class IntegrateurFen extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTextAreaArticle);
 
         jButtonAnnuler.setText("Annuler");
+        jButtonAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnnulerActionPerformed(evt);
+            }
+        });
 
         jButtonValider.setText("Valider");
+        jButtonValider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonValiderActionPerformed(evt);
+            }
+        });
 
         jLabelArticle.setText("Article 1/15 : Foot");
 
@@ -118,18 +132,17 @@ public class IntegrateurFen extends javax.swing.JFrame {
                                 .addComponent(jLabelPubZone1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(79, 79, 79)
                                         .addComponent(jLabelPubZone2))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(24, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2)
+                                    .addComponent(jScrollPane1))))
+                        .addContainerGap(34, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelNumVolume)
                         .addGap(18, 18, 18)
@@ -168,6 +181,35 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonAnnulerActionPerformed
+
+    private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
+        //Custom button text
+        Object[] options = {"Créer un nouveau volume",
+            "Quitter"};
+        int reponse = JOptionPane.showOptionDialog(this,
+                "Que voulez-vous faire ?",
+                "Continuer ?",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[1]);
+        
+        if(options[reponse].equals("Quitter")){
+            this.dispose();
+        } else if(options[reponse].equals("Créer un nouveau volume")) {
+            //Remettre tous les champs à vide
+            jListPubZone1.removeAll();
+            jListPubZone2.removeAll();
+            jTextAreaArticle.setText("");
+            jTextFieldNumVolume.setText("");
+            //JOptionPane.getRootFrame().dispose(); 
+        }
+    }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**
      * @param args the command line arguments
