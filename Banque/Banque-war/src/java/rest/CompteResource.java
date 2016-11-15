@@ -34,7 +34,7 @@ public class CompteResource {
     }
     
     /**
-     * http://localhost:8080/BanqueREST/webresources/comptes/10001111/compte?numPayement=1&nomPayeur=Hachette Diffusion&numCompteReception=11110000&montant=1000
+     * http://localhost:8080/Banque-war/webresources/comptes/10001111/?nomPayeur=Hachette Diffusion&numCompteReception=11110000&montant=1000
      *
      * @param numCompte
      * @param numPayement
