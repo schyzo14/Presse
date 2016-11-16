@@ -1,5 +1,5 @@
 
-package entities;
+package client.distributeur;
 
 import java.util.Calendar;
 import java.util.Date;
