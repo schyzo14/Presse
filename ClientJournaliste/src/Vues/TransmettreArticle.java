@@ -5,11 +5,13 @@
  */
 package Vues;
 
+import com.google.gson.Gson;
 import REST.ClientREST;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.HashMap;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -236,6 +238,15 @@ public class TransmettreArticle extends javax.swing.JFrame {
             String contenu = jTextArea_ContenuArticle.getText();
             DefaultListModel modele = (DefaultListModel) jList_MotsClesArticle.getModel();
             String motscles = modele.toString();
+            
+            HashMap<String, String> valeurs = new HashMap<String,String>();
+            valeurs.put("nomArticle", nomArticle);
+            valeurs.put("nomAuteur",nomAuteur);
+            valeurs.put("contenu",contenu);
+            valeurs.put("motscles", motscles);
+            Gson gson = new Gson();
+            String json = gson.toJson(valeurs);
+            System.out.println(json);
             
             //Transmettre à TransmissionArticles via REST (RESEAU)
             ClientREST rest = new ClientREST();
