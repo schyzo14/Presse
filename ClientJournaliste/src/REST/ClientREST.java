@@ -37,9 +37,9 @@ public class ClientREST {
         return webTarget.request().post(null, String.class);
     }
 
-    public <T> T getJson(Class<T> responseType) throws ClientErrorException {
+    public String getJson() throws ClientErrorException {
         WebTarget resource = webTarget;
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
 
     public void close() {

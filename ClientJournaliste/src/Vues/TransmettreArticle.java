@@ -231,6 +231,12 @@ public class TransmettreArticle extends javax.swing.JFrame {
         //On vérifie que tout les champs ont été saisi (sauf les mots-clés)
         if(!jTextField_NomArticle.getText().isEmpty() && !jTextField_AuteurArticle.getText().isEmpty() && !jTextArea_ContenuArticle.getText().isEmpty())
         {
+            String nomArticle = jTextField_NomArticle.getText();
+            String nomAuteur = jTextField_AuteurArticle.getText();
+            String contenu = jTextArea_ContenuArticle.getText();
+            DefaultListModel modele = (DefaultListModel) jList_MotsClesArticle.getModel();
+            String motscles = modele.toString();
+            
             //Transmettre à TransmissionArticles via REST (RESEAU)
             ClientREST rest = new ClientREST();
             rest.postJson();
