@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.ejb.Singleton;
 import presse.article;
 import presse.auteur;
-import presse.publicite;
 
 /**
  *
@@ -36,6 +35,7 @@ public class ArticlesBean implements ArticlesBeanLocal{
         return this.listeArticles.get(numA);
     }
 
+    @Override
     public HashMap<Integer, article> getListeArticles() {
         return listeArticles;
     }
@@ -50,6 +50,7 @@ public class ArticlesBean implements ArticlesBeanLocal{
         return this.listeAuteurs.get(numA);
     }
 
+    @Override
     public HashMap<Integer, auteur> getListeAuteurs() {
         return listeAuteurs;
     }
@@ -58,6 +59,7 @@ public class ArticlesBean implements ArticlesBeanLocal{
         this.listeAuteurs = listeAuteurs;
     }
     
+    @Override
     public article addArticles(String nomA, String nomAut, String contenu, String motcles){
         System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         article a = new article(1, nomA, contenu);

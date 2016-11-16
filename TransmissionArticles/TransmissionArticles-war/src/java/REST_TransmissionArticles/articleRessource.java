@@ -72,7 +72,7 @@ public class articleRessource {
     private ArticlesBeanLocal lookupArticlesBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();
-            return (ArticlesBeanLocal) c.lookup("java:global/TransmissionArticles/TransmissionArticles-ejb/articlesBean!services.articlesBeanLocal");
+            return (ArticlesBeanLocal) c.lookup("java:global/TransmissionArticles/TransmissionArticles-ejb/ArticlesBean!REST.ArticlesBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
