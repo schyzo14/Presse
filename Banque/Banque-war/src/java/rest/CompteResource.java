@@ -45,9 +45,11 @@ public class CompteResource {
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response putJson(
+    public Response postJson(
             @PathParam("numCompte") String numCompte, 
             @QueryParam("nomPayeur") String nomPayeur, @QueryParam("numCompteReception") String numCompteReception, @QueryParam("montant") String montant) {
+        
+        System.out.println("POST - numCompte : "+numCompte+" - nomPayeur : "+nomPayeur+" - numCompteReception : "+numCompteReception+" - montant : "+montant);
         
         int numComptePayeur = Integer.parseInt(numCompte);
         int numCompteReceptionInt = Integer.parseInt(numCompteReception);
