@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.ejb.Singleton;
 import presse.article;
 import presse.auteur;
+import presse.motsCles;
 
 /**
  *
@@ -18,15 +19,14 @@ import presse.auteur;
 public class ArticlesBean implements ArticlesBeanLocal{
     private HashMap<Integer, article> listeArticles;
     private HashMap<Integer, auteur> listeAuteurs;
+    private HashMap<Integer, motsCles> listeMotsCles;
+    private int lastid;
     
     public ArticlesBean() {
         this.listeArticles = new HashMap<>();
-        //article a = new article(1, "Nom article", "Contenu Article");
-        //this.listeArticles.put(a.getNumA(), a);
-        
         this.listeAuteurs = new HashMap<>();
-        //auteur aut = new auteur(1, "Nom Auteur", "Prénom Auteurs");
-        //this.listeAuteurs.put(aut.getNumA(), aut);*/
+        this.listeMotsCles = new HashMap<>();
+        this.lastid = 0;
     }
     
     //Récupérer les articles
@@ -59,15 +59,34 @@ public class ArticlesBean implements ArticlesBeanLocal{
         this.listeAuteurs = listeAuteurs;
     }
     
+    //Récupérer les mots cles
+    @Override
+    public motsCles getMotsCles(int numMC) {
+        return this.listeMotsCles.get(numMC);
+    }
+
+    @Override
+    public HashMap<Integer, motsCles> getListeMotsCles() {
+        return listeMotsCles;
+    }
+
+    public void setListeMotsCles(HashMap<Integer, motsCles> listeMC) {
+        this.listeMotsCles = listeMC;
+    }
+    
     @Override
     public article addArticles(String nomA, String nomAut, String contenu, String motcles){
         System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);
-        article a = new article(1, nomA, contenu);
+        article a = new article(lastid, nomA, contenu);
         this.listeArticles.put(a.getNumA(), a);
         
-        auteur aut = new auteur(1, nomAut, "Prénom Auteurs");
+        auteur aut = new auteur(lastid, nomAut, "Prénom Auteurs");
         this.listeAuteurs.put(aut.getNumA(), aut);
         
+        motsCles mc = new motsCles(lastid, motcles);
+        this.listeMotsCles.put(mc.getNumMC(),mc);
+        
+        lastid++;
         return a;
     }
 }

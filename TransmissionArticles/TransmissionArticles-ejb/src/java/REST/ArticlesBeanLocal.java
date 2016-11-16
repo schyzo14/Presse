@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.ejb.Local;
 import presse.article;
 import presse.auteur;
+import presse.motsCles;
 
 /**
  *
@@ -21,6 +22,9 @@ public interface ArticlesBeanLocal {
     
     public auteur getAuteurs(int numA);
     public HashMap<Integer, auteur> getListeAuteurs();
+    
+    public motsCles getMotsCles(int numMC);
+    public HashMap<Integer, motsCles> getListeMotsCles();
 
     public article addArticles(String nomA, String nomAut, String contenu, String motcles);
 }

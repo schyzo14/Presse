@@ -61,6 +61,7 @@ public class articleRessource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String postJson(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
+        System.out.println("POST : nomA : "+nomA +" nomAut :"+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         return this.gson.toJson(this.articlesBean.addArticles(nomA, nomAut, contenu, motcles));
     }
     

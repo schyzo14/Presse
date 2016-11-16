@@ -73,7 +73,7 @@ public class Sender {
             //On envoie un Objet contenant les champs récupérer via REST (A FAIRE)
             for (int i = 0; i < count; ++i) {
                 ObjectMessage message = session.createObjectMessage();
-                message.setObject(text + (i + 1));
+                message.setObject("Les elements saisis par l'utilisateur");
                 sender.send(message);
                 System.out.println("Sent: ");
             }
