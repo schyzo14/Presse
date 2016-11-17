@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.json.*;
 
 /**
  *
@@ -184,24 +185,68 @@ public class VirementBancaire extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        String numCompte = jTextFieldNumCompteDebiteur.getText();
-        String nomPayeur = jTextFieldNomCompteDebiteur.getText();
-        int numCompteReception = Integer.parseInt(jTextFieldNumCompteCrediteur.getText());
-        double montant = Double.parseDouble(jTextFieldMontant.getText());
-                
-        ClientRESTDistributeur c = new ClientRESTDistributeur(numCompte);
-        Gson gson = new Gson();
-        String s = c.virement(numCompte, nomPayeur, numCompteReception, montant);
-        
-        java.lang.reflect.Type type = new TypeToken<Payement>(){}.getType();
-        Payement payement = gson.fromJson(s, type);
-        
-        if (payement.getNumComptePayeur() == 0) {
-            JOptionPane erreurMess3 = new JOptionPane();
-            erreurMess3.showMessageDialog(null, "Erreur : ", "Réponse", JOptionPane.OK_CANCEL_OPTION);
-        } else {
-            JOptionPane erreurMess = new JOptionPane();
-            erreurMess.showMessageDialog(null, payement.getNumPayement()+" - "+payement.getNumComptePayeur()+" - "+payement.getNumCompteReception()+" - "+payement.getMontant()+" - "+payement.getDate(), "Réponse", JOptionPane.OK_CANCEL_OPTION);
+        // test si des champs vide
+        if (jTextFieldNumCompteDebiteur.getText().equals("") || 
+                jTextFieldNomCompteDebiteur.getText().equals("") || 
+                jTextFieldNumCompteCrediteur.getText().equals("") || 
+                jTextFieldMontant.getText().equals("")) {
+            
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Attention", JOptionPane.WARNING_MESSAGE);
+                        
+        } else { // champ ok
+            try {           
+                int numCompte = Integer.parseInt(jTextFieldNumCompteDebiteur.getText());
+                String nomPayeur = jTextFieldNomCompteDebiteur.getText();
+                int numCompteReception = Integer.parseInt(jTextFieldNumCompteCrediteur.getText());
+                double montant = Double.parseDouble(jTextFieldMontant.getText());
+
+                ClientRESTDistributeur c = new ClientRESTDistributeur(Integer.toString(numCompte));
+                Gson gson = new Gson();
+                String s = c.virement(Integer.toString(numCompte), nomPayeur, numCompteReception, montant);
+
+                java.lang.reflect.Type type = new TypeToken<Payement>(){}.getType();
+                Payement payement = gson.fromJson(s, type);
+
+                if (payement.getNumComptePayeur() == 0) {
+                    String detailMessage = "Erreur";
+                    try {
+                        JSONObject obj;
+                        obj = new JSONObject(s);
+                        detailMessage = obj.getJSONObject("cause").getString("detailMessage");
+                    } catch (JSONException ex) {
+                        Logger.getLogger(VirementBancaire.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    String messageErreur = "<html><b>Erreur lors du virement !</b><br><br>"
+                            + "Raison : " + detailMessage + "</html>";
+
+                    JOptionPane d = new JOptionPane();
+                    String lesTextes[]={ "Abandonner", "Reéssayer"}; 
+                    int retour = d.showOptionDialog(this, messageErreur, "Erreur de Virement", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, null, lesTextes, lesTextes[0]);
+
+
+                        if (lesTextes[retour].equals("Reéssayer")) {
+                            jTextFieldNumCompteDebiteur.setText("");
+                            jTextFieldNomCompteDebiteur.setText("");
+                            jTextFieldNumCompteCrediteur.setText("");
+                            jTextFieldMontant.setText("");
+                        } else {
+                            MenuDistributeur menuDistributeur = new MenuDistributeur();
+                            menuDistributeur.setVisible(true);
+                            this.setVisible(false);
+                        }
+
+                } else {
+                    PaiementValide paiementValide = new PaiementValide(payement);
+                    paiementValide.setVisible(true);
+                    this.setVisible(false);
+                }
+            
+            } catch (NumberFormatException  e) {
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "<html>Les numéros de compte sont des entiers !<br>Le montant est un nombre du type 123.12 !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
+            }
         }
         
     }//GEN-LAST:event_jButtonValiderActionPerformed

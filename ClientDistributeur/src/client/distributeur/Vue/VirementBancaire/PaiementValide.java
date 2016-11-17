@@ -5,17 +5,30 @@
  */
 package client.distributeur.Vue.VirementBancaire;
 
+import client.distributeur.Payement;
+import client.distributeur.Vue.Menu.MenuDistributeur;
+
 /**
  *
  * @author Aurore
  */
 public class PaiementValide extends javax.swing.JFrame {
 
+    static private Payement payement;
+    
     /**
      * Creates new form PaiementValide
      */
-    public PaiementValide() {
+    public PaiementValide(Payement payement) {
         initComponents();
+        this.payement = payement;
+        
+        String recepisse = "<html><i>Numéro du virement : " + payement.getNumPayement() + "<br>" +
+                            "Numéro du compte débité : " + payement.getNumComptePayeur() + "<br>" +
+                            "Numéro du compte crédité : " + payement.getNumCompteReception() + "<br>" +
+                            "Montant du virement : " + payement.getMontant() + "<br>" +
+                            "Date du virement : " + payement.getDate() + "</i></html>";
+        jLabelChampRecepisse.setText(recepisse);
     }
 
     /**
@@ -93,7 +106,9 @@ public class PaiementValide extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
-        // TODO add your handling code here:
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**
@@ -126,7 +141,7 @@ public class PaiementValide extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PaiementValide().setVisible(true);
+                new PaiementValide(payement).setVisible(true);
             }
         });
     }
