@@ -185,32 +185,40 @@ public class VirementBancaire extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        // test si des champs vide
+        // On vérifie si les champs sont vides
         if (jTextFieldNumCompteDebiteur.getText().equals("") || 
                 jTextFieldNomCompteDebiteur.getText().equals("") || 
                 jTextFieldNumCompteCrediteur.getText().equals("") || 
                 jTextFieldMontant.getText().equals("")) {
             
             JOptionPane jop = new JOptionPane();
-            jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Attention", JOptionPane.WARNING_MESSAGE);
+            jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
                         
-        } else { // champ ok
-            try {           
+        } else { // Les champs ne sont pas vide
+            try {
+                // On récupère le contenu des champs
+                // Si le format est incorrect, on lève une exception qui ouvrira une pop-up pour prévenir l'utilisateur
                 int numCompte = Integer.parseInt(jTextFieldNumCompteDebiteur.getText());
                 String nomPayeur = jTextFieldNomCompteDebiteur.getText();
                 int numCompteReception = Integer.parseInt(jTextFieldNumCompteCrediteur.getText());
                 double montant = Double.parseDouble(jTextFieldMontant.getText());
 
+                // On fait l'appel REST avers la banque
                 ClientRESTDistributeur c = new ClientRESTDistributeur(Integer.toString(numCompte));
-                Gson gson = new Gson();
+                
+                // On récupère le résultat
                 String s = c.virement(Integer.toString(numCompte), nomPayeur, numCompteReception, montant);
 
+                // On récupère l'objet Payement qui nous est renvoyé par la Banque
                 java.lang.reflect.Type type = new TypeToken<Payement>(){}.getType();
+                Gson gson = new Gson();
                 Payement payement = gson.fromJson(s, type);
 
-                if (payement.getNumComptePayeur() == 0) {
-                    String detailMessage = "Erreur";
+                // Si il n'y a pas de numéro de payement, c'est qu'il y a eu un problème sur le serveur REST Banque
+                if (payement.getNumPayement()== 0) {
+                    String detailMessage = "Oups... Une erreur est survenue...";
                     try {
+                        // On récupère la cause de l'erreur
                         JSONObject obj;
                         obj = new JSONObject(s);
                         detailMessage = obj.getJSONObject("cause").getString("detailMessage");
@@ -218,32 +226,36 @@ public class VirementBancaire extends javax.swing.JFrame {
                         Logger.getLogger(VirementBancaire.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
+                    // On formate l'erreur pour l'afficher
                     String messageErreur = "<html><b>Erreur lors du virement !</b><br><br>"
                             + "Raison : " + detailMessage + "</html>";
 
+                    // Pop-up qui affiche l'erreur
                     JOptionPane d = new JOptionPane();
                     String lesTextes[]={ "Abandonner", "Reéssayer"}; 
                     int retour = d.showOptionDialog(this, messageErreur, "Erreur de Virement", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, null, lesTextes, lesTextes[0]);
 
-
-                        if (lesTextes[retour].equals("Reéssayer")) {
-                            jTextFieldNumCompteDebiteur.setText("");
-                            jTextFieldNomCompteDebiteur.setText("");
-                            jTextFieldNumCompteCrediteur.setText("");
-                            jTextFieldMontant.setText("");
-                        } else {
-                            MenuDistributeur menuDistributeur = new MenuDistributeur();
-                            menuDistributeur.setVisible(true);
-                            this.setVisible(false);
-                        }
+                    // Si l'utilisateur clique sur Reéssayer, on réinitialise le formulaire pour qu'il recommence
+                    if (lesTextes[retour].equals("Reéssayer")) {
+                        jTextFieldNumCompteDebiteur.setText("");
+                        jTextFieldNomCompteDebiteur.setText("");
+                        jTextFieldNumCompteCrediteur.setText("");
+                        jTextFieldMontant.setText("");
+                    } else { // Sinon on le renvoie sur le menu
+                        MenuDistributeur menuDistributeur = new MenuDistributeur();
+                        menuDistributeur.setVisible(true);
+                        this.setVisible(false);
+                    }
 
                 } else {
+                    // Le payement a réussi, on affiche la pop-up de confirmation avec le récépissé
                     PaiementValide paiementValide = new PaiementValide(payement);
                     paiementValide.setVisible(true);
                     this.setVisible(false);
                 }
             
-            } catch (NumberFormatException  e) {
+            } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
+                // On affiche une pop-up pour le signaler
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, "<html>Les numéros de compte sont des entiers !<br>Le montant est un nombre du type 123.12 !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
             }

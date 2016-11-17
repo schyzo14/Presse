@@ -13,7 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import services.BanqueBeanLocal;
 //import entities.Payement;
@@ -37,7 +36,6 @@ public class CompteResource {
      * http://localhost:8080/Banque-war/webresources/comptes/10001111/?nomPayeur=Hachette Diffusion&numCompteReception=11110000&montant=1000
      *
      * @param numCompte
-     * @param numPayement
      * @param nomPayeur
      * @param numCompteReception
      * @param montant

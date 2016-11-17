@@ -43,22 +43,19 @@ public class ClientRESTDistributeur {
         String resourcePath = java.text.MessageFormat.format("comptes/{0}", new Object[]{numCompte});
         webTarget = client.target(BASE_URI).path(resourcePath);
     }
-
- /*   public Response virement(String numCompte, String nomPayeur, int numCompteReception, double montant) throws ClientErrorException {
     
-        webTarget = webTarget.queryParam("nomPayeur", nomPayeur);
-        webTarget = webTarget.queryParam("numCompteReception", numCompteReception);
-        webTarget = webTarget.queryParam("montant", montant);
-
-        Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE)
-            .post(Entity.json(MediaType.APPLICATION_JSON));
-    
-        return response;
-    
-    }*/
-    
+    /**
+     * Faire un virement avec REST vers la banque
+     * @param numCompte
+     * @param nomPayeur
+     * @param numCompteReception
+     * @param montant
+     * @return
+     * @throws ClientErrorException 
+     */
     public String virement(String numCompte, String nomPayeur, int numCompteReception, double montant) throws ClientErrorException {
     
+        // Ajout des paramètres
         webTarget = webTarget.queryParam("nomPayeur", nomPayeur);
         webTarget = webTarget.queryParam("numCompteReception", numCompteReception);
         webTarget = webTarget.queryParam("montant", montant);

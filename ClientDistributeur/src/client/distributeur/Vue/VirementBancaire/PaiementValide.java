@@ -7,6 +7,7 @@ package client.distributeur.Vue.VirementBancaire;
 
 import client.distributeur.Payement;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import java.text.DateFormat;
 
 /**
  *
@@ -23,12 +24,15 @@ public class PaiementValide extends javax.swing.JFrame {
         initComponents();
         this.payement = payement;
         
-        String recepisse = "<html><i>Numéro du virement : " + payement.getNumPayement() + "<br>" +
-                            "Numéro du compte débité : " + payement.getNumComptePayeur() + "<br>" +
-                            "Numéro du compte crédité : " + payement.getNumCompteReception() + "<br>" +
-                            "Montant du virement : " + payement.getMontant() + "<br>" +
-                            "Date du virement : " + payement.getDate() + "</i></html>";
-        jLabelChampRecepisse.setText(recepisse);
+        DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+        
+        String recepisse = "Numéro du virement : " + payement.getNumPayement() + "\n" +
+                            "Numéro du compte débité : " + payement.getNumComptePayeur() + "\n" +
+                            "Numéro du compte crédité : " + payement.getNumCompteReception() + "\n" +
+                            "Montant du virement : " + payement.getMontant() + " €\n" +
+                            "Date du virement : " + shortDateFormat.format(payement.getDate());
+        jTextAreaRecepisse.setText(recepisse);
+        jTextAreaRecepisse.setEditable(false);
     }
 
     /**
@@ -42,9 +46,10 @@ public class PaiementValide extends javax.swing.JFrame {
 
         jLabelRecepisse = new javax.swing.JLabel();
         jLabelPaiementValide = new javax.swing.JLabel();
-        jLabelChampRecepisse = new javax.swing.JLabel();
         jLabelPensezCopier = new javax.swing.JLabel();
         jButtonOK = new javax.swing.JButton();
+        jScrollPaneRecepisse = new javax.swing.JScrollPane();
+        jTextAreaRecepisse = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Paiement validé");
@@ -64,6 +69,10 @@ public class PaiementValide extends javax.swing.JFrame {
             }
         });
 
+        jTextAreaRecepisse.setColumns(20);
+        jTextAreaRecepisse.setRows(5);
+        jScrollPaneRecepisse.setViewportView(jTextAreaRecepisse);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,20 +80,21 @@ public class PaiementValide extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabelChampRecepisse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelPaiementValide)
-                            .addComponent(jLabelRecepisse)
-                            .addComponent(jLabelPensezCopier))
-                        .addGap(0, 6, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(167, 167, 167)
+                                .addComponent(jButtonOK))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelPaiementValide)
+                                    .addComponent(jLabelRecepisse)
+                                    .addComponent(jLabelPensezCopier))))
+                        .addGap(0, 80, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jScrollPaneRecepisse)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(167, 167, 167)
-                .addComponent(jButtonOK)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,9 +103,9 @@ public class PaiementValide extends javax.swing.JFrame {
                 .addComponent(jLabelPaiementValide)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelRecepisse)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelChampRecepisse, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPaneRecepisse, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelPensezCopier)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jButtonOK)
@@ -148,9 +158,10 @@ public class PaiementValide extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonOK;
-    private javax.swing.JLabel jLabelChampRecepisse;
     private javax.swing.JLabel jLabelPaiementValide;
     private javax.swing.JLabel jLabelPensezCopier;
     private javax.swing.JLabel jLabelRecepisse;
+    private javax.swing.JScrollPane jScrollPaneRecepisse;
+    private javax.swing.JTextArea jTextAreaRecepisse;
     // End of variables declaration//GEN-END:variables
 }
