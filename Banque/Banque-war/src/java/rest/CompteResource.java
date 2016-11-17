@@ -42,14 +42,12 @@ public class CompteResource {
      * @param numCompteReception
      * @param montant
      * @return 
-     */
+     */    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postJson(
+    public String postJson(
             @PathParam("numCompte") String numCompte, 
             @QueryParam("nomPayeur") String nomPayeur, @QueryParam("numCompteReception") String numCompteReception, @QueryParam("montant") String montant) {
-        
-        System.out.println("POST - numCompte : "+numCompte+" - nomPayeur : "+nomPayeur+" - numCompteReception : "+numCompteReception+" - montant : "+montant);
         
         int numComptePayeur = Integer.parseInt(numCompte);
         int numCompteReceptionInt = Integer.parseInt(numCompteReception);
@@ -59,10 +57,10 @@ public class CompteResource {
         try {
             payement = this.banqueBean.payer(nomPayeur, numComptePayeur, numCompteReceptionInt, montantD);
         } catch (Throwable e) {
-            return Response.ok(this.gson.toJson(e)).build();
+            return this.gson.toJson(e);
         }
 
-        return Response.ok(this.gson.toJson(payement)).build();
+        return this.gson.toJson(payement);
     }
 
     private BanqueBeanLocal lookupBanqueBeanLocal() {

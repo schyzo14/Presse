@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package client.distributeur.Vue.SeConnecter;
-
-import client.distributeur.Vue.CreerCompte.*;
 import client.distributeur.Vue.Menu.MenuDistributeur;
 
 /**

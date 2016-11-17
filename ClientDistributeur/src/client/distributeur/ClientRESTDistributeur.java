@@ -44,40 +44,28 @@ public class ClientRESTDistributeur {
         webTarget = client.target(BASE_URI).path(resourcePath);
     }
 
-    public Response virement(String numCompte, String nomPayeur, int numCompteReception, double montant) throws ClientErrorException {
-        //return webTarget.request().put(null, Response.class);
-       // WebTarget resource = webTarget;
-      /*  String resourcePath = java.text.MessageFormat.format("comptes/{0}", new Object[]{numCompte});
-        WebTarget service = client.target(BASE_URI).path(resourcePath);
-        Form form =new Form();
-        form.param("nomPayeur", nomPayeur);
-        form.param("numCompteReception", Integer.toString(numCompteReception));
-        form.param("montant", Double.toString(montant));
-        Response response = service.request().put(Entity.entity(form,MediaType.APPLICATION_JSON),Response.class);
-        return response;*/
-        
-        //return webTarget.queryParam("nomPayeur", nomPayeur).queryParam("numCompteReception", numCompteReception).queryParam("montant", montant).request().put();
-       // return webTarget.request().put();
-      
-      //  webTarget.request().post(entity, type);
-      
-    /*    Form form =new Form();
-        form.param("nomPayeur", nomPayeur);
-        form.param("numCompteReception", Integer.toString(numCompteReception));
-        form.param("montant", Double.toString(montant));
-        Invocation.Builder builder = webTarget.request();
-        Response response = builder.accept(MediaType.APPLICATION_JSON)
-            .post(Entity.entity(form, MediaType.APPLICATION_JSON));
-    */
+ /*   public Response virement(String numCompte, String nomPayeur, int numCompteReception, double montant) throws ClientErrorException {
     
-            webTarget = webTarget.queryParam("nomPayeur", nomPayeur);
-            webTarget = webTarget.queryParam("numCompteReception", numCompteReception);
-            webTarget = webTarget.queryParam("montant", montant);
-            
-            Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(MediaType.APPLICATION_JSON));
+        webTarget = webTarget.queryParam("nomPayeur", nomPayeur);
+        webTarget = webTarget.queryParam("numCompteReception", numCompteReception);
+        webTarget = webTarget.queryParam("montant", montant);
+
+        Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE)
+            .post(Entity.json(MediaType.APPLICATION_JSON));
     
         return response;
+    
+    }*/
+    
+    public String virement(String numCompte, String nomPayeur, int numCompteReception, double montant) throws ClientErrorException {
+    
+        webTarget = webTarget.queryParam("nomPayeur", nomPayeur);
+        webTarget = webTarget.queryParam("numCompteReception", numCompteReception);
+        webTarget = webTarget.queryParam("montant", montant);
+        
+        return webTarget.request(MediaType.APPLICATION_JSON_TYPE)
+            .post(Entity.json(MediaType.APPLICATION_JSON), String.class);
+    
     }
 
     public void close() {

@@ -9,8 +9,10 @@ import client.distributeur.ClientRESTDistributeur;
 import client.distributeur.Payement;
 import client.distributeur.Vue.Menu.MenuDistributeur;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -186,26 +188,22 @@ public class VirementBancaire extends javax.swing.JFrame {
         String nomPayeur = jTextFieldNomCompteDebiteur.getText();
         int numCompteReception = Integer.parseInt(jTextFieldNumCompteCrediteur.getText());
         double montant = Double.parseDouble(jTextFieldMontant.getText());
-        
-        JOptionPane erreurMess = new JOptionPane();
-        erreurMess.showMessageDialog(null, "num : "+numCompte+" - nom : "+nomPayeur+" - numR : "+numCompteReception+" - montant : "+montant, "Réponse", JOptionPane.OK_CANCEL_OPTION);
-        
+                
         ClientRESTDistributeur c = new ClientRESTDistributeur(numCompte);
-        
-        Response response = c.virement(numCompte, nomPayeur, numCompteReception, montant);
-        
         Gson gson = new Gson();
+        String s = c.virement(numCompte, nomPayeur, numCompteReception, montant);
         
-        java.lang.reflect.Type type = Payement.class;
-    /*    Payement payement = gson.fromJson(response.toString(), type);
+        java.lang.reflect.Type type = new TypeToken<Payement>(){}.getType();
+        Payement payement = gson.fromJson(s, type);
         
-        JOptionPane erreurMess3 = new JOptionPane();
-        erreurMess3.showMessageDialog(null, payement.getNumComptePayeur()+ " - "+payement.getNumPayement()+" - ...", "Réponse", JOptionPane.OK_CANCEL_OPTION);
-*/
-        JOptionPane erreurMess2 = new JOptionPane();
-        erreurMess2.showMessageDialog(null, response.toString(), "Réponse", JOptionPane.OK_CANCEL_OPTION);
-        System.out.println(response.toString());
-        System.out.println(response.getStringHeaders().toString());
+        if (payement.getNumComptePayeur() == 0) {
+            JOptionPane erreurMess3 = new JOptionPane();
+            erreurMess3.showMessageDialog(null, "Erreur : ", "Réponse", JOptionPane.OK_CANCEL_OPTION);
+        } else {
+            JOptionPane erreurMess = new JOptionPane();
+            erreurMess.showMessageDialog(null, payement.getNumPayement()+" - "+payement.getNumComptePayeur()+" - "+payement.getNumCompteReception()+" - "+payement.getMontant()+" - "+payement.getDate(), "Réponse", JOptionPane.OK_CANCEL_OPTION);
+        }
+        
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
