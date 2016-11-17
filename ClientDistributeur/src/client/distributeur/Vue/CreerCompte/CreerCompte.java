@@ -7,6 +7,7 @@ package client.distributeur.Vue.CreerCompte;
 
 import client.distributeur.Vue.Menu.MenuDistributeur;
 import client.distributeur.Vue.SeConnecter.SeConnecter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -101,9 +102,26 @@ public class CreerCompte extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        MenuDistributeur menuDistributeur = new MenuDistributeur();
-        menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        // On récupère le contenu des champs
+        String mail = jTextFieldMail.getText();
+        String nom = jTextFieldNom.getText();
+        
+        // On vérifie que les champs sont complétés
+        if (mail.equals("") || nom.equals("")) {
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
+        } else {
+            //
+            // TO DO : Créer un compte auprès du serveur web --> récupérer mdp
+            //
+            String mdp = "XXX";
+            
+            // Compte créé --> fenêtre de confirmation
+            ConfirmationCreationCompte confirmationCreationCompte = new ConfirmationCreationCompte(mdp);
+            confirmationCreationCompte.setVisible(true);
+            this.setVisible(false);
+        }
+        
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**
