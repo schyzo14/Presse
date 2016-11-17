@@ -99,7 +99,4 @@ public class PresseBean implements PresseBeanLocal{
     public HashMap<Integer, publicite> getListePublicite() {
         return this.listePublicite;
     }
-    
-    
-    
 }
