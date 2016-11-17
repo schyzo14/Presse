@@ -5,17 +5,25 @@
  */
 package client.distributeur.Vue.CreerCompte;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+
 /**
  *
  * @author Aurore
  */
 public class ConfirmationCreationCompte extends javax.swing.JFrame {
 
+    private static String mdp;
+    
     /**
      * Creates new form ErreurMail
      */
-    public ConfirmationCreationCompte() {
+    public ConfirmationCreationCompte(String mdp) {
         initComponents();
+        
+        // Champ MDP
+        this.mdp = mdp;
+        jLabelMDP.setText("<html><b>"+mdp+"</b></html>");
     }
 
     /**
@@ -38,6 +46,11 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
         jLabelCompteCree.setText("Compte créé !");
 
         jButtonOK.setText("OK");
+        jButtonOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOKActionPerformed(evt);
+            }
+        });
 
         jLabelMDPest.setText("Le mot de passe est : ");
 
@@ -48,15 +61,15 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jButtonOK))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelCompteCree)
                             .addComponent(jLabelMDPest))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jButtonOK)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,6 +88,13 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
+        // on arrive au menu
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -107,7 +127,7 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfirmationCreationCompte().setVisible(true);
+                new ConfirmationCreationCompte(mdp).setVisible(true);
             }
         });
     }
