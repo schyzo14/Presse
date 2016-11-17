@@ -27,7 +27,15 @@ public class PresseBean implements PresseBeanLocal{
     private int lastid;
     
     public PresseBean() {
+        //Initialisation de la table Articles
         this.listeArticles = new HashMap<>();
+        article a1 = new article(1, "Final Fantasy XV", "Final Fantasy XV, annoncé originellement sous le titre Final Fantasy Versus XIII, est un jeu vidéo développé et édité par Square-Enix, prévu pour le 29 novembre 2016 sur PlayStation 4 et Xbox One.");
+        this.listeArticles.put(a1.getNumA(), a1);
+        article a2 = new article(2, "Naruto - The Last", "Naruto the Last, le film est le dixième film japonais basé sur le manga Naruto et le septième film tiré de l'anime Naruto Shippûden, sorti le 6 décembre 2014 au Japon");
+        this.listeArticles.put(a2.getNumA(), a2);
+        article a3 = new article(3, "Coupe du Monde", "La Coupe du monde de football ou Coupe du monde de la FIFA est une compétition internationale de football qui se déroule ordinairement tous les quatre ans.");
+        this.listeArticles.put(a3.getNumA(), a3);
+        
         this.listeAuteurs = new HashMap<>();
         this.listeMotsCles = new HashMap<>();
         this.listePublicite = new HashMap<>();
