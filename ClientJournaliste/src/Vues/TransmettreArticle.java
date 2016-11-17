@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
  * @author manou
  */
 public class TransmettreArticle extends javax.swing.JFrame {
+    ClientREST rest = new ClientREST();
 
     /**
      * Creates new form TransmettreArticle
@@ -224,6 +225,8 @@ public class TransmettreArticle extends javax.swing.JFrame {
     private void jButton_QuitterArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_QuitterArticleActionPerformed
         // TODO add your handling code here:
         //Fermer toutes les connexion je suppose
+        rest.close();
+        
         //Fermeture de la fenêtre
         this.dispose();
     }//GEN-LAST:event_jButton_QuitterArticleActionPerformed
@@ -239,18 +242,9 @@ public class TransmettreArticle extends javax.swing.JFrame {
             DefaultListModel modele = (DefaultListModel) jList_MotsClesArticle.getModel();
             String motscles = modele.toString();
             
-            HashMap<String, String> valeurs = new HashMap<String,String>();
-            valeurs.put("nomArticle", nomArticle);
-            valeurs.put("nomAuteur",nomAuteur);
-            valeurs.put("contenu",contenu);
-            valeurs.put("motscles", motscles);
-            Gson gson = new Gson();
-            String json = gson.toJson(valeurs);
-            System.out.println(json);
-            
             //Transmettre à TransmissionArticles via REST (RESEAU)
-            ClientREST rest = new ClientREST();
-            rest.postJson();
+            rest.postJsonJournaliste(nomArticle, nomAuteur, contenu, motscles);
+            
             //Affichage de la pop up 
             popUpArticle();
         }else{
@@ -276,6 +270,7 @@ public class TransmettreArticle extends javax.swing.JFrame {
         
         if(options[reponse].equals("Quitter")){
             //Fermer toutes les connexion réseaux
+            rest.close();
             
             //Quitter
             System.exit(0);

@@ -7,7 +7,9 @@ package REST;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Jersey REST client generated for REST resource:articleRessource
@@ -33,8 +35,13 @@ public class ClientREST {
         webTarget = client.target(BASE_URI).path("articles");
     }
 
-    public String postJson() throws ClientErrorException {
-        return webTarget.request().post(null, String.class);
+    public String postJsonJournaliste(String nomArticle, String nomAuteur, String contenu, String motscles) throws ClientErrorException {
+        webTarget = webTarget.queryParam("nomArticle", nomArticle);
+        webTarget = webTarget.queryParam("nomAuteur", nomAuteur);
+        webTarget = webTarget.queryParam("contenu", contenu);
+        webTarget = webTarget.queryParam("motscles", motscles);
+        
+        return webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(MediaType.APPLICATION_JSON), String.class);
     }
 
     public String getJson() throws ClientErrorException {
