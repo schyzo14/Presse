@@ -23,7 +23,6 @@ import services.publicitesBeanLocal;
  *
  * @author Schyzo
  */
-//@Path("publicites/{numPub}")
 @Path("publicites")
 public class publicitesRessource {
     //Accès backoffice
@@ -40,12 +39,6 @@ public class publicitesRessource {
         this.gson = new Gson();
         this.publicitesBean = lookupPublicitesBeanLocal();
     }
-    
-    /*@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getListePubs(@PathParam("numPub") String numPub) {
-        return this.gson.toJson(this.publicitesBean.getPublicites(Integer.parseInt(numPub)));
-    }*/
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
