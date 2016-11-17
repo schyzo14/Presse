@@ -53,14 +53,20 @@ public class articleRessource {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-        return this.gson.toJson(this.articlesBean.getListeArticles());
+    public Response getJson() {
+        return Response.status(Response.Status.FORBIDDEN).build();
     }
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postJson(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
+    public String postJsonJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
+        System.out.println("POST : nomA : "+nomA +" nomAut :"+nomAut+" contenu : "+contenu+" motscles : "+motcles);
+        return this.gson.toJson(this.articlesBean.addArticles(nomA, nomAut, contenu, motcles));
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postJsonRedacteur(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
         System.out.println("POST : nomA : "+nomA +" nomAut :"+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         return this.gson.toJson(this.articlesBean.addArticles(nomA, nomAut, contenu, motcles));
     }

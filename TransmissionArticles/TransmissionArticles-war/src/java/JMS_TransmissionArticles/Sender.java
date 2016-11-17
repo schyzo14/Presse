@@ -35,6 +35,7 @@ public class Sender {
         Session session = null;
         MessageProducer sender = null;
         String text = "Message ";
+        
 
         if (args.length < 1 || args.length > 2) {
             System.out.println("usage: Sender <destination> [count]");
@@ -71,12 +72,14 @@ public class Sender {
             
             //Construction du message puis envoie
             //On envoie un Objet contenant les champs récupérer via REST (A FAIRE)
-            for (int i = 0; i < count; ++i) {
                 ObjectMessage message = session.createObjectMessage();
+                //article a = new article();
+                //auteur a = new auteur();
+                //motscles mc = new motscles();
                 message.setObject("Les elements saisis par l'utilisateur");
                 sender.send(message);
+                //A refaire 2 deux 
                 System.out.println("Sent: ");
-            }
         } catch (JMSException exception) {
             exception.printStackTrace();
         } catch (NamingException exception) {
