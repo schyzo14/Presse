@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -43,6 +44,13 @@ public class articlesRessource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getListeArticles() {
         return this.gson.toJson(this.presseBean.getListeArticles());
+    }
+    
+    @GET
+    @Path("articles/{idArticle}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDetailArticle(@PathParam("idArticle") int idArticle) {
+        return this.gson.toJson(this.presseBean.getArticles(idArticle));
     }
     
     /**
