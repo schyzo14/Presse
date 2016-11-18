@@ -5,7 +5,6 @@
  */
 package WS;
 
-import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -51,7 +50,11 @@ public class DistributeurWS {
      */
     @WebMethod(operationName="inscription")
     public String inscription(@WebParam(name="mail") String mail, @WebParam(name="nom") String nom) {
-        return this.gson.toJson(this.distributeurBean.inscrire(mail, nom));
+        try {
+            return this.gson.toJson(this.distributeurBean.inscrire(mail, nom));
+        } catch (Throwable e) {
+            return this.gson.toJson(e);
+        }
     }
     
     /**
@@ -64,7 +67,11 @@ public class DistributeurWS {
      */
     @WebMethod(operationName="connection")
     public String connection(@WebParam(name="mail") String mail, @WebParam(name="mdp") String mdp) {
-        return this.gson.toJson(this.distributeurBean.connecter(mail, mdp));
+        try {
+            return this.gson.toJson(this.distributeurBean.connecter(mail, mdp));
+        } catch (Throwable e) {
+            return this.gson.toJson(e);
+        }
     }
     
     
@@ -137,7 +144,7 @@ public class DistributeurWS {
      */
     @WebMethod(operationName="listeContratRecepisse")
     public String listeContratRecepisse(@WebParam(name="distributeurId") Integer distributeurId) {
-        return this.gson.toJson(this.contratBean.validerContrat(distributeurId));
+        return this.gson.toJson(this.contratBean.listeContratRecepisse(distributeurId));
     }
     
 	
@@ -149,8 +156,8 @@ public class DistributeurWS {
      * @return true si succès false sinon
      */
     @WebMethod(operationName="envoiRecepisse")
-    public String envoiRecepisse(@WebParam(name="recepisse") String recepisse) {
-        return this.gson.toJson(this.contratBean.setRecepisse(recepisse));
+    public String envoiRecepisse(@WebParam(name="contratId") Integer contratId, @WebParam(name="recepisse") String recepisse) {
+        return this.gson.toJson(this.contratBean.setRecepisse(contratId, recepisse));
     }
 
 }

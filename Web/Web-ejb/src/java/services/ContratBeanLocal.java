@@ -7,10 +7,7 @@ package services;
 
 import java.util.HashMap;
 import javax.ejb.Local;
-import javax.jws.WebParam;
 import presse.contrat;
-import presse.distributeur;
-import presse.editeur;
 
 /**
  *
@@ -27,5 +24,5 @@ public interface ContratBeanLocal {
     
     public HashMap<Integer, contrat> listeContratRecepisse(int distributeurId);
     
-    public contrat setRecepisse(String recepisse);
+    public contrat setRecepisse(int contratId, String recepisse);
 }

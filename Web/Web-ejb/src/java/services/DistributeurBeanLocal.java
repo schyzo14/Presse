@@ -5,13 +5,8 @@
  */
 package services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.ejb.Local;
 import presse.distributeur;
-import presse.editeur;
-import presse.publicite;
-import presse.titre;
 
 /**
  *

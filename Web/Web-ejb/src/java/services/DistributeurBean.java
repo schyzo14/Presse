@@ -8,8 +8,6 @@ package services;
 import java.util.HashMap;
 import java.util.Iterator;
 import presse.distributeur;
-import presse.editeur;
-import presse.titre;
 
 /**
  *
@@ -17,16 +15,18 @@ import presse.titre;
  */
 public class DistributeurBean implements DistributeurBeanLocal {
     
-    private static HashMap<String, distributeur> lesdistributeurs;
+    public static HashMap<String, distributeur> lesdistributeurs;
 
     public DistributeurBean() {
         lesdistributeurs = new HashMap<>();
         
         // Compte distributeur déjà existant
+        // TODO : récupérer les distributeurs de GestionDistributeurs
         lesdistributeurs.put("contact@hachetteDiff.fr", new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"));
         lesdistributeurs.put("union@union.com", new distributeur(2, "Union", "union@union.com"));
         lesdistributeurs.put("sodis@sodis.com", new distributeur(3, "Sodis", "sodis@sodis.com"));
     }
+    
     
     @Override
     public distributeur inscrire(String mail, String nom) {
@@ -52,13 +52,25 @@ public class DistributeurBean implements DistributeurBeanLocal {
         return null;
     }
 
+    
     @Override
     public distributeur connecter(String mail, String mdp) {
         // On vérifie si le mail est déjà utilisé
-        if (! lesdistributeurs.containsKey(mail)) {
+        if (lesdistributeurs.containsKey(mail)) {
+            distributeur distrib = lesdistributeurs.get(mail);
             
+            // On vérifie le mdp
+            if (distrib.getMdpD().equals(mdp)) {
+                return distrib;
+            } else {
+                new Throwable("Le mot de passe est incorrect !");
+            }
+            
+        } else {
+            new Throwable("Le mail est inconnu !");
         }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
+        
     }
 
      
