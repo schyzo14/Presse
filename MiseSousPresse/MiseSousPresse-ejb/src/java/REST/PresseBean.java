@@ -34,23 +34,32 @@ public class PresseBean implements PresseBeanLocal{
         this.listeMotsCles = new HashMap<>();
         this.listePublicite = new HashMap<>();
         this.listeVolume = new HashMap<>();
-        this.lastid = 0;
+        this.lastid = 3;
         
         //Alimentation des articles
         article a1 = new article(1, "Final Fantasy XV", "Final Fantasy XV, annoncé originellement sous le titre Final Fantasy Versus XIII, est un jeu vidéo développé et édité par Square-Enix, prévu pour le 29 novembre 2016 sur PlayStation 4 et Xbox One.");
         this.listeArticles.put(a1.getNumA(), a1);
-        auteur aut1 = new auteur(99, "Nom Test", "Prenom Test");
-        a1.getListeAuteurs().put(99, aut1);
+        auteur aut1 = new auteur(1, "Nom Test", "Prenom Test");
+        a1.getListeAuteurs().put(1, aut1);
+        motsCles mc1 = new motsCles(1, "mc1");
+        a1.getListeMotsCles().put(1, mc1);
         
         article a2 = new article(2, "Naruto - The Last", "Naruto the Last, le film est le dixième film japonais basé sur le manga Naruto et le septième film tiré de l'anime Naruto Shippûden, sorti le 6 décembre 2014 au Japon");
         this.listeArticles.put(a2.getNumA(), a2);
-        auteur aut2 = new auteur(98, "Nom Test", "Prenom Test");
-        a2.getListeAuteurs().put(98, aut2);
+        auteur aut2 = new auteur(2, "Nom Test", "Prenom Test");
+        a2.getListeAuteurs().put(2, aut2);
+        motsCles mc2 = new motsCles(2, "mc2");
+        a2.getListeMotsCles().put(1, mc1);
+        a2.getListeMotsCles().put(2, mc2);
         
         article a3 = new article(3, "Coupe du Monde", "La Coupe du monde de football ou Coupe du monde de la FIFA est une compétition internationale de football qui se déroule ordinairement tous les quatre ans.");
         this.listeArticles.put(a3.getNumA(), a3);
-        auteur aut3 = new auteur(97, "Nom Test", "Prenom Test");
-        a3.getListeAuteurs().put(97, aut3);
+        auteur aut3 = new auteur(3, "Nom Test", "Prenom Test");
+        a3.getListeAuteurs().put(3, aut3);
+        motsCles mc3 = new motsCles(3, "mc3");
+        a2.getListeMotsCles().put(1, mc1);
+        a2.getListeMotsCles().put(2, mc2);
+        a3.getListeMotsCles().put(3, mc3);
         
 
     }

@@ -46,13 +46,6 @@ public class articlesRessource {
         return this.gson.toJson(this.presseBean.getListeArticles());
     }
     
-    @GET
-    @Path("articles/{idArticle}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getDetailArticle(@PathParam("idArticle") int idArticle) {
-        return this.gson.toJson(this.presseBean.getArticles(idArticle));
-    }
-    
     /**
      * Recherche JNDI BackOffice
      *
