@@ -5,21 +5,46 @@
  */
 package Vues;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import REST.ClientREST_MiseSousPresse;
+import com.google.gson.reflect.TypeToken;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
+import presse.article;
 
 /**
  *
  * @author manou
  */
 public class SelectionArticle extends javax.swing.JFrame {
-
+    ClientREST_MiseSousPresse restMiseSousPresse = new ClientREST_MiseSousPresse();
+    private HashMap<Integer,article> listeArticles;
+    private HashMap<Integer,article> detailArticles;
     /**
      * Creates new form SelectionArticle
      */
     public SelectionArticle() {
+        Gson gson = new Gson();
+        
         initComponents();
         
         //Récupérer la notification et afficher s'il y a
+        
+        //Afficher la liste des articles
+        String articles = restMiseSousPresse.getListeArticles();
+
+        //Transformation du json à HashMap Articles
+        java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer,article>>(){}.getType();
+        listeArticles = gson.fromJson(articles, typeArticles);
+
+        //Ajout des articles dans la jTable
+        for(int i=1; i<=listeArticles.size();i++)
+        {
+            jTable_SelectionArticle.setValueAt(listeArticles.get(i).getNumA(), i-1, 0);
+            jTable_SelectionArticle.setValueAt(listeArticles.get(i).getContenuA(), i-1, 1);
+            jTable_SelectionArticle.setValueAt(listeArticles.get(i).getNomA(), i-1, 2);
+        }
     }
 
     /**
@@ -152,9 +177,20 @@ public class SelectionArticle extends javax.swing.JFrame {
 
     private void jButton_DetailSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DetailSelectionActionPerformed
         // TODO add your handling code here:
+        Gson gson = new Gson();
         //Vérification qu'une ligne est bien sélectionné sinon message d'erreur
         if(jTable_SelectionArticle.getSelectedRow()!=-1)
         {
+            int idArticle = (int) jTable_SelectionArticle.getValueAt(jTable_SelectionArticle.getSelectedRow(), 0);
+            String detailArt = restMiseSousPresse.getDetailArticle(idArticle);
+            
+            //Transformation du json à HashMap Articles
+            java.lang.reflect.Type detailArtic = new TypeToken<article>(){}.getType();
+            article art = gson.fromJson(detailArt, detailArtic);
+            
+            String nomArt = art.getNomA();
+            String contenu = art.getContenuA();
+            
             //Récupérer les éléments liés à l'article sélectionné et afficher DetailArticle
             Detail detail = new Detail();
             detail.setVisible(true);
