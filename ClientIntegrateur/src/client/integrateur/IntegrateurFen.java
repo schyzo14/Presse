@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import presse.article;
 import presse.publicite;
+import presse.volume;
 
 /**
  *
@@ -23,12 +24,13 @@ import presse.publicite;
 public class IntegrateurFen extends javax.swing.JFrame {
     private HashMap<Integer,publicite> listePub;
     private HashMap<Integer,article> listeArticles;
+    Gson gson;
     
     /**
      * Creates new form IntegrateurFen
      */
     public IntegrateurFen() {
-        Gson gson = new Gson();
+        gson = new Gson();
         
         //Init clients REST
         ClientRESTPublicites clientPublicites = new ClientRESTPublicites();
@@ -239,7 +241,6 @@ public class IntegrateurFen extends javax.swing.JFrame {
         
         //Vérification que tous les articles ont été traités
         for(article a : this.listeArticles.values()) {
-            System.out.println(a.getListePublicites().size());
             if(a.getListePublicites().size() != 2) {
                 JOptionPane.showMessageDialog(this,
                 "Vous n'avez pas traité tous les articles",
@@ -250,7 +251,11 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
 
         //Envoyer le volume sur le serveur 
-        
+        volume v = new volume(Integer.parseInt(this.jTextFieldNumVolume.getText()));
+        v.setListeArticles(this.listeArticles);
+        ClientRESTVolume clientVolume = new ClientRESTVolume();
+        String rep = clientVolume.addVolume(this.gson.toJson(v));
+        System.out.println("Reponse : \n"+rep);
         
         //Dialog Box Quitter
         Object[] options = {"Créer un nouveau volume",
