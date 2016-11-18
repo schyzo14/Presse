@@ -5,6 +5,12 @@
  */
 package Vues;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+import javax.swing.DefaultListModel;
+import presse.motsCles;
+
 /**
  *
  * @author manou
@@ -19,8 +25,20 @@ public class Detail extends javax.swing.JFrame {
         
     }
     
-    public void setChamp(String nomArt, String contenu){
+    public void setChamp(String nomArt, String contenu, String nomAut, HashMap<Integer,motsCles> listeMC){
         jTextField_NomDetailArticle.setText(nomArt);
+        jTextField_AuteurDetailArticle.setText(nomAut);
+        
+        DefaultListModel modele = (DefaultListModel) jList_MotsClesDetailArticle.getModel();
+        Set clesMC = listeMC.keySet();
+            Iterator itMC = clesMC.iterator();
+            while (itMC.hasNext()){
+                Object cle = itMC.next();
+                String motscles = listeMC.get(cle).getMotCle();
+                System.out.println("modele : "+motscles);
+                modele.addElement(motscles);
+            }
+        
         jTextArea_ContenuDetailArticle.setText(contenu);
     }
 
@@ -61,6 +79,7 @@ public class Detail extends javax.swing.JFrame {
         jTextArea_ContenuDetailArticle.setRows(5);
         jScrollPane_ContenuDetailArticle.setViewportView(jTextArea_ContenuDetailArticle);
 
+        jList_MotsClesDetailArticle.setModel(new DefaultListModel());
         jList_MotsClesDetailArticle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane_MotsClesDetailArticle.setViewportView(jList_MotsClesDetailArticle);
 

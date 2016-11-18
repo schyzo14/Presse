@@ -7,44 +7,54 @@ package Vues;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import REST.ClientREST_MiseSousPresse;
+import REST.ClientREST_TransmissionArticles;
 import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import presse.article;
+import presse.motsCles;
 
 /**
  *
  * @author manou
  */
 public class SelectionArticle extends javax.swing.JFrame {
-    ClientREST_MiseSousPresse restMiseSousPresse = new ClientREST_MiseSousPresse();
-    private HashMap<Integer,article> listeArticles;
-    private HashMap<Integer,article> detailArticles;
+
+    ClientREST_TransmissionArticles restTransmissionArticles = new ClientREST_TransmissionArticles();
+    private HashMap<Integer, article> listeArticles;
+    private HashMap<Integer, article> detailArticles;
+
     /**
      * Creates new form SelectionArticle
      */
     public SelectionArticle() {
         Gson gson = new Gson();
-        
+
         initComponents();
-        
+
         //Récupérer la notification et afficher s'il y a
-        
         //Afficher la liste des articles
-        String articles = restMiseSousPresse.getListeArticles();
+        String articles = restTransmissionArticles.getListeArticles();
 
         //Transformation du json à HashMap Articles
-        java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer,article>>(){}.getType();
+        java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer, article>>() {
+        }.getType();
         listeArticles = gson.fromJson(articles, typeArticles);
 
-        //Ajout des articles dans la jTable
-        for(int i=1; i<=listeArticles.size();i++)
-        {
-            jTable_SelectionArticle.setValueAt(listeArticles.get(i).getNumA(), i-1, 0);
-            jTable_SelectionArticle.setValueAt(listeArticles.get(i).getContenuA(), i-1, 1);
-            jTable_SelectionArticle.setValueAt(listeArticles.get(i).getNomA(), i-1, 2);
+        Set clesArt = listeArticles.keySet();
+        Iterator itArt = clesArt.iterator();
+        int i=0;
+        while (itArt.hasNext()) {
+            Object cle = itArt.next();
+            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getNumA(), i, 0);
+            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getContenuA(), i, 1);
+            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getNomA(), i, 2);
+            
+            i++;
         }
+        
     }
 
     /**
@@ -67,6 +77,32 @@ public class SelectionArticle extends javax.swing.JFrame {
 
         jTable_SelectionArticle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -170,7 +206,7 @@ public class SelectionArticle extends javax.swing.JFrame {
     private void jButton_QuitterSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_QuitterSelectionActionPerformed
         // TODO add your handling code here:
         //Fermeture des connexion réseau
-        
+
         //Fermeture fenêtre
         System.exit(0);
     }//GEN-LAST:event_jButton_QuitterSelectionActionPerformed
@@ -179,30 +215,35 @@ public class SelectionArticle extends javax.swing.JFrame {
         // TODO add your handling code here:
         Gson gson = new Gson();
         //Vérification qu'une ligne est bien sélectionné sinon message d'erreur
-        if(jTable_SelectionArticle.getSelectedRow()!=-1)
-        {
+        if (jTable_SelectionArticle.getSelectedRow() != -1) {
             int idArticle = (int) jTable_SelectionArticle.getValueAt(jTable_SelectionArticle.getSelectedRow(), 0);
-            String detailArt = restMiseSousPresse.getDetailArticle(idArticle);
-            
+            String detailArt = restTransmissionArticles.getDetailArticle(idArticle);
+
             //Transformation du json à HashMap Articles
-            java.lang.reflect.Type detailArtic = new TypeToken<article>(){}.getType();
+            java.lang.reflect.Type detailArtic = new TypeToken<article>() {
+            }.getType();
             article art = gson.fromJson(detailArt, detailArtic);
-            
+
             String nomArt = art.getNomA();
             String contenu = art.getContenuA();
-            System.out.println(art.getListeAuteurs());
-            
-            for(int j=1; j<=art.getListeAuteurs().size(); j++)
-            {
-                System.out.println((art.getListeAuteurs()).get(j));
+            String nomAut = null;
+
+            Set cles = art.getListeAuteurs().keySet();
+            Iterator it = cles.iterator();
+            while (it.hasNext()) {
+                Object cle = it.next();
+                nomAut = art.getListeAuteurs().get(cle).getNomA();
             }
-            
+
+            HashMap<Integer, motsCles> listemotscles = new HashMap<Integer, motsCles>();
+            listemotscles = art.getListeMotsCles();
+
             //Récupérer les éléments liés à l'article sélectionné et afficher DetailArticle
             Detail detail = new Detail();
-            detail.setChamp(nomArt, contenu);
+            detail.setChamp(nomArt, contenu, nomAut, listemotscles);
             detail.setVisible(true);
-            
-        }else{
+
+        } else {
             //Popup erreur
             JOptionPane erreurMess = new JOptionPane();
             erreurMess.showMessageDialog(null, "Vous devez sélectionner une ligne pour afficher son détail!", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -212,7 +253,7 @@ public class SelectionArticle extends javax.swing.JFrame {
     private void jButton_MettrePresseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_MettrePresseActionPerformed
         // TODO add your handling code here:
         //Partie Réseau
-        
+
     }//GEN-LAST:event_jButton_MettrePresseActionPerformed
 
     /**

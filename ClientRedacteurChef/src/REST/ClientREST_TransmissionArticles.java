@@ -10,11 +10,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * Jersey REST client generated for REST resource:articlesRessource
+ * Jersey REST client generated for REST resource:articleRessource
  * [articles]<br>
  * USAGE:
  * <pre>
- *        ClientREST_MiseSousPresse client = new ClientREST_MiseSousPresse();
+ *        ClientREST_TransmissionArticles client = new ClientREST_TransmissionArticles();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -22,13 +22,13 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author manou
  */
-public class ClientREST_MiseSousPresse {
+public class ClientREST_TransmissionArticles {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/MiseSousPresse-war/webresources";
+    private static final String BASE_URI = "http://localhost:8080/TransmissionArticles-war/webresources";
 
-    public ClientREST_MiseSousPresse() {
+    public ClientREST_TransmissionArticles() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("articles");
     }
@@ -37,6 +37,10 @@ public class ClientREST_MiseSousPresse {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("articles/{0}", new Object[]{idArticle}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+    }
+
+    public String postJsonArticleJournaliste() throws ClientErrorException {
+        return webTarget.request().post(null, String.class);
     }
 
     public String getListeArticles() throws ClientErrorException {
