@@ -13,13 +13,11 @@ import java.util.HashMap;
  */
 public class volume {
     private int numV;
-    private String nomV;
     private HashMap<Integer,article> listeArticles;
     private titre t;
 
-    public volume(int numV, String nomV) {
+    public volume(int numV) {
         this.numV = numV;
-        this.nomV = nomV;
     }
 
     public int getNumV() {
@@ -28,14 +26,6 @@ public class volume {
 
     public void setNumV(int numV) {
         this.numV = numV;
-    }
-
-    public String getNomV() {
-        return nomV;
-    }
-
-    public void setNomV(String nomV) {
-        this.nomV = nomV;
     }
 
     public HashMap<Integer, article> getListeArticles() {
