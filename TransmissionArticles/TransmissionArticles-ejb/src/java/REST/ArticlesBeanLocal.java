@@ -27,4 +27,6 @@ public interface ArticlesBeanLocal {
     public HashMap<Integer, motsCles> getListeMotsCles();
 
     public article addArticles(String nomA, String nomAut, String contenu, String motcles);
+    public auteur addAuteurs(String nomA, String nomAut, String contenu, String motcles);
+    public motsCles addMotsCles(String nomA, String nomAut, String contenu, String motcles);
 }
