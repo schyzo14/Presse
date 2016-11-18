@@ -216,7 +216,40 @@ public class IntegrateurFen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
+        //Enregistrement du dernier article et de ses pubs
+        int numA = getNumArticleCourant();
+        if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Il faut choisir deux pubs par article",
+                    "Mauvaise sélection",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            enregistrerArticlePubs(numA);
+        }
+        
+        //Vérification du numéro de volume
+        try {
+            Integer.parseInt(this.jTextFieldNumVolume.getText());    
+        } catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erreur sur le numéro de volume",
+                    "Erreur",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        //Vérification que tous les articles ont été traités
+        if(this.listeArticles.keySet().size() != this.articlePubs.keySet().size()) {
+            JOptionPane.showMessageDialog(this,
+                "Vous n'avez pas traité tous les articles",
+                "Erreur",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         //Envoyer le volume sur le serveur 
+        
         
         //Dialog Box Quitter
         Object[] options = {"Créer un nouveau volume",
@@ -229,40 +262,48 @@ public class IntegrateurFen extends javax.swing.JFrame {
                 null,
                 options,
                 options[1]);
-        
+
         if(options[reponse].equals("Quitter")){
             this.dispose();
         } else if(options[reponse].equals("Créer un nouveau volume")) {
             //Remettre tous les champs à vide
-            jListPubZone1.removeAll();
-            jListPubZone2.removeAll();
-            jTextAreaArticle.setText("");
-            jTextFieldNumVolume.setText("");
-            //JOptionPane.getRootFrame().dispose(); 
+            this.jTextFieldNumVolume.setText("");
+            this.articlePubs.clear();
+            this.jListPubZone1.clearSelection();
+            this.jListPubZone2.clearSelection();
+            jLabelArticle.setText("#1/" + listeArticles.size() + " : " + listeArticles.get(1).getNomA());
+            jTextAreaArticle.setText(listeArticles.get(1).getContenuA());
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonSuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuivantActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant();
-        enregistrerArticlePubs(numA);
-        
-        //Affichage de l'article suivant
-        if(numA < this.listeArticles.size()) {
-            //Déselection des JList
-            this.jListPubZone1.clearSelection();
-            this.jListPubZone2.clearSelection();
-            
-            numA++;
-            //Actualisation jLabel
-            this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
-            //Actualisation jText
-            this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
-            
-            //Sélection des pubs liées
-            if(this.articlePubs.get(numA) != null) {
-                this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
-                this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+        if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Il faut choisir deux pubs par article",
+                    "Mauvaise sélection",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            enregistrerArticlePubs(numA);
+
+            //Affichage de l'article suivant
+            if(numA < this.listeArticles.size()) {
+                //Déselection des JList
+                this.jListPubZone1.clearSelection();
+                this.jListPubZone2.clearSelection();
+
+                numA++;
+                //Actualisation jLabel
+                this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
+                //Actualisation jText
+                this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+
+                //Sélection des pubs liées
+                if(this.articlePubs.get(numA) != null) {
+                    this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
+                    this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+                }
             }
         }
     }//GEN-LAST:event_jButtonSuivantActionPerformed
@@ -270,24 +311,31 @@ public class IntegrateurFen extends javax.swing.JFrame {
     private void jButtonPrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrecedentActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant();
-        enregistrerArticlePubs(numA);
-        
-        //Affichage de l'article suivant
-        if(numA > 1) {
-            //Déselection des JList
-            this.jListPubZone1.clearSelection();
-            this.jListPubZone2.clearSelection();
+        if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Il faut choisir deux pubs par article",
+                    "Mauvaise sélection",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            enregistrerArticlePubs(numA);
             
-            numA--;
-            //Actualisation jLabel
-            this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
-            //Actualisation jText
-            this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
-            
-            //Sélection des pubs liées
-            if(this.articlePubs.get(numA) != null) {
-                this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
-                this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+            //Affichage de l'article suivant
+            if(numA > 1) {
+                //Déselection des JList
+                this.jListPubZone1.clearSelection();
+                this.jListPubZone2.clearSelection();
+
+                numA--;
+                //Actualisation jLabel
+                this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
+                //Actualisation jText
+                this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+
+                //Sélection des pubs liées
+                if(this.articlePubs.get(numA) != null) {
+                    this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
+                    this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+                }
             }
         }
     }//GEN-LAST:event_jButtonPrecedentActionPerformed
