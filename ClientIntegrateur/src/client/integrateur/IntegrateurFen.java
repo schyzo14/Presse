@@ -7,6 +7,7 @@ package client.integrateur;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,12 +23,14 @@ import presse.publicite;
 public class IntegrateurFen extends javax.swing.JFrame {
     private HashMap<Integer,publicite> listePub;
     private HashMap<Integer,article> listeArticles;
+    private HashMap<Integer,ArrayList<publicite>> articlePubs;
     
     /**
      * Creates new form IntegrateurFen
      */
     public IntegrateurFen() {
         Gson gson = new Gson();
+        articlePubs = new HashMap<>();
         
         //Init clients REST
         ClientRESTPublicites clientPublicites = new ClientRESTPublicites();
@@ -48,7 +51,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
         //Récupération sous forme de liste
         DefaultListModel<String> lesPubs = new DefaultListModel<>();
         for(publicite p : listePub.values()) {
-            lesPubs.addElement(p.getCompagnie() + " - " + p.getContenuP());
+            lesPubs.addElement("#" + p.getNumP() + " : " + p.getCompagnie() + " - " + p.getContenuP());
         }
         
         //Affichage
@@ -213,7 +216,9 @@ public class IntegrateurFen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        //Custom button text
+        //Envoyer le volume sur le serveur 
+        
+        //Dialog Box Quitter
         Object[] options = {"Créer un nouveau volume",
             "Quitter"};
         int reponse = JOptionPane.showOptionDialog(this,
@@ -240,28 +245,50 @@ public class IntegrateurFen extends javax.swing.JFrame {
     private void jButtonSuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuivantActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant();
+        enregistrerArticlePubs(numA);
         
         //Affichage de l'article suivant
         if(numA < this.listeArticles.size()) {
+            //Déselection des JList
+            this.jListPubZone1.clearSelection();
+            this.jListPubZone2.clearSelection();
+            
             numA++;
             //Actualisation jLabel
             this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
             //Actualisation jText
             this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+            
+            //Sélection des pubs liées
+            if(this.articlePubs.get(numA) != null) {
+                this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
+                this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+            }
         }
     }//GEN-LAST:event_jButtonSuivantActionPerformed
 
     private void jButtonPrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrecedentActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant();
+        enregistrerArticlePubs(numA);
         
         //Affichage de l'article suivant
         if(numA > 1) {
+            //Déselection des JList
+            this.jListPubZone1.clearSelection();
+            this.jListPubZone2.clearSelection();
+            
             numA--;
             //Actualisation jLabel
             this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
             //Actualisation jText
             this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+            
+            //Sélection des pubs liées
+            if(this.articlePubs.get(numA) != null) {
+                this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
+                this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+            }
         }
     }//GEN-LAST:event_jButtonPrecedentActionPerformed
 
@@ -274,6 +301,38 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
         
         return numA;
+    }
+    
+    public int getNumPub1Courante() {
+        int numPub1 = 0;
+        Pattern pattern = Pattern.compile("#(.*) :");
+        Matcher matcher = pattern.matcher(this.jListPubZone1.getSelectedValue());
+        if(matcher.find()) {
+            numPub1 = Integer.parseInt(matcher.group(1));
+        }
+        
+        return numPub1;
+    }
+    
+    public int getNumPub2Courante() {
+        int numPub2 = 0;
+        Pattern pattern = Pattern.compile("#(.*) :");
+        Matcher matcher = pattern.matcher(this.jListPubZone2.getSelectedValue());
+        if(matcher.find()) {
+            numPub2 = Integer.parseInt(matcher.group(1));
+        }
+        
+        return numPub2;
+    }
+    
+    public void enregistrerArticlePubs(int numA) {
+        int numPub1 = getNumPub1Courante();
+        int numPub2 = getNumPub2Courante();
+        ArrayList<publicite> pubsArticle = new ArrayList<>();
+        
+        pubsArticle.add(this.listePub.get(numPub1));
+        pubsArticle.add(this.listePub.get(numPub2));
+        articlePubs.put(numA, pubsArticle);
     }
     
     /**
