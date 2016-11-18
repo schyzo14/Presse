@@ -16,15 +16,18 @@ public class article {
     private int numA;
     private String nomA;
     private String contenuA;
+    private volume v;
     private HashMap<Integer,auteur> listeAuteurs;
     private HashMap<Integer,motsCles> listeMotsCles;
     private ArrayList<publicite> listePublicites;
-    private volume v;
     
     public article(int n, String no, String c) {
         this.numA = n;
         this.nomA = no;
         this.contenuA = c;
+        listeAuteurs = new HashMap<>();
+        listeMotsCles = new HashMap<>();
+        listePublicites = new ArrayList<>();
     }
     
     public int getNumA() {
