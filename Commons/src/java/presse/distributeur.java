@@ -22,7 +22,7 @@ public class distributeur {
         this.numD = numD;
         this.nomD = nomD;
         this.mailD = mailD;
-        //this.mdpD = /*généré*/
+        this.mdpD = Integer.toString(1 + (int)(Math.random() * ((1000 - 1) + 1)));
     }
 
     public int getNumD() {
