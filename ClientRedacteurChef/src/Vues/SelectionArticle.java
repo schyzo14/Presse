@@ -190,9 +190,16 @@ public class SelectionArticle extends javax.swing.JFrame {
             
             String nomArt = art.getNomA();
             String contenu = art.getContenuA();
+            System.out.println(art.getListeAuteurs());
+            
+            for(int j=1; j<=art.getListeAuteurs().size(); j++)
+            {
+                System.out.println((art.getListeAuteurs()).get(j));
+            }
             
             //Récupérer les éléments liés à l'article sélectionné et afficher DetailArticle
             Detail detail = new Detail();
+            detail.setChamp(nomArt, contenu);
             detail.setVisible(true);
             
         }else{

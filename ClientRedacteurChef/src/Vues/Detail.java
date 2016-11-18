@@ -16,6 +16,12 @@ public class Detail extends javax.swing.JFrame {
      */
     public Detail() {
         initComponents();
+        
+    }
+    
+    public void setChamp(String nomArt, String contenu){
+        jTextField_NomDetailArticle.setText(nomArt);
+        jTextArea_ContenuDetailArticle.setText(contenu);
     }
 
     /**
