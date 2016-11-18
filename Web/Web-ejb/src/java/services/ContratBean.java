@@ -5,7 +5,6 @@
  */
 package services;
 
-import com.sun.faces.util.CollectionsUtils;
 import java.util.Date;
 import java.util.HashMap;
 import presse.contrat;
@@ -24,7 +23,7 @@ public class ContratBean implements ContratBeanLocal {
     public HashMap<Integer, String> lesEtats;
 
     public ContratBean() {
-        lesContrats = new CollectionsUtils.ConstMap<>();
+        lesContrats = new HashMap<Integer, contrat>();
         dernierId = 1;
         
         lesEtats.put(1, "ATTENTECOUT");
