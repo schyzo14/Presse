@@ -6,7 +6,6 @@
 package presse;
 
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  *
@@ -15,13 +14,13 @@ import java.util.HashMap;
 public class contrat {
     private int numC;
     private int nbCopieC;
-    private int dureeC;
+    private int dureeC; // en mois
     private float coutC;
     private Date dateValC;
     private Date datePaieC;
-    private HashMap<Integer,distributeur> listeDistributeurs;
-    private HashMap<Integer,editeur> listeEditeurs;
-    private HashMap<Integer,titre> listeTitres;
+    private distributeur distributeurC;
+    private editeur editeurC;
+    private titre titreC;
 
     public contrat(int numC, int nbCopieC, int dureeC, float coutC, Date dateValC, Date datePaieC) {
         this.numC = numC;
@@ -80,27 +79,29 @@ public class contrat {
         this.datePaieC = datePaieC;
     }
 
-    public HashMap<Integer, distributeur> getListeDistributeurs() {
-        return listeDistributeurs;
+    public distributeur getDistributeurC() {
+        return distributeurC;
     }
 
-    public void setListeDistributeurs(HashMap<Integer, distributeur> listeDistributeurs) {
-        this.listeDistributeurs = listeDistributeurs;
+    public void setDistributeurC(distributeur distributeurC) {
+        this.distributeurC = distributeurC;
     }
 
-    public HashMap<Integer, editeur> getListeEditeurs() {
-        return listeEditeurs;
+    public editeur getEditeurC() {
+        return editeurC;
     }
 
-    public void setListeEditeurs(HashMap<Integer, editeur> listeEditeurs) {
-        this.listeEditeurs = listeEditeurs;
+    public void setEditeurC(editeur editeurC) {
+        this.editeurC = editeurC;
     }
 
-    public HashMap<Integer, titre> getListeTitres() {
-        return listeTitres;
+    public titre getTitreC() {
+        return titreC;
     }
 
-    public void setListeTitres(HashMap<Integer, titre> listeTitres) {
-        this.listeTitres = listeTitres;
+    public void setTitreC(titre titreC) {
+        this.titreC = titreC;
     }
+
+    
 }
