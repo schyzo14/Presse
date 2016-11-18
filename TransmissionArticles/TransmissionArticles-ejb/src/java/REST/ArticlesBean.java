@@ -80,13 +80,29 @@ public class ArticlesBean implements ArticlesBeanLocal{
         article a = new article(lastid, nomA, contenu);
         this.listeArticles.put(a.getNumA(), a);
         
+        lastid++;
+        return a;
+    }
+    
+    @Override
+    public auteur addAuteurs(String nomA, String nomAut, String contenu, String motcles){
+        System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);
+       
         auteur aut = new auteur(lastid, nomAut, "Prénom Auteurs");
         this.listeAuteurs.put(aut.getNumA(), aut);
+        
+        lastid++;
+        return aut;
+    }
+    
+    @Override
+    public motsCles addMotsCles(String nomA, String nomAut, String contenu, String motcles){
+        System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         
         motsCles mc = new motsCles(lastid, motcles);
         this.listeMotsCles.put(mc.getNumMC(),mc);
         
         lastid++;
-        return a;
+        return mc;
     }
 }

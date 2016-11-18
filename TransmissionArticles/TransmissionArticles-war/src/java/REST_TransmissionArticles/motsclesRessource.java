@@ -11,26 +11,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
- * REST
  *
  * @author manou
  */
-@Path("articles")
-public class articleRessource {
+@Path("motscles")
+public class motsclesRessource {
     //Accès backoffice
     ArticlesBeanLocal articlesBean;
 
@@ -39,15 +35,15 @@ public class articleRessource {
     
     //Convertisseur json
     private Gson gson;
-
+    
     /**
      * Creates a new instance of articleRessource
      */
-    public articleRessource() {
+    public motsclesRessource() {
         this.gson = new Gson();
         this.articlesBean = lookupArticlesBeanLocal();
     }
-
+    
     /**
      * Retrieves representation of an instance of REST_TransmissionArticles.articleRessource
      * @return an instance of java.lang.String
@@ -59,7 +55,7 @@ public class articleRessource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postJsonArticleJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
+    public String postJsonMotsClesJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
         System.out.println("POST : nomA : "+nomA +" nomAut :"+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         return this.gson.toJson(this.articlesBean.addArticles(nomA, nomAut, contenu, motcles));
     }
@@ -78,4 +74,5 @@ public class articleRessource {
             throw new RuntimeException(ne);
         }
     }
+    
 }

@@ -6,7 +6,9 @@
 package Vues;
 
 import com.google.gson.Gson;
-import REST.ClientREST;
+import REST.ClientREST_ArticleJournaliste;
+import REST.ClientREST_AuteurJournaliste;
+import REST.ClientREST_MotsClesJournaliste;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
@@ -20,7 +22,9 @@ import javax.swing.JOptionPane;
  * @author manou
  */
 public class TransmettreArticle extends javax.swing.JFrame {
-    ClientREST rest = new ClientREST();
+    ClientREST_ArticleJournaliste restArticle = new ClientREST_ArticleJournaliste();
+    ClientREST_AuteurJournaliste restAuteur = new ClientREST_AuteurJournaliste();
+    ClientREST_MotsClesJournaliste restMotsCles = new ClientREST_MotsClesJournaliste();
 
     /**
      * Creates new form TransmettreArticle
@@ -225,7 +229,9 @@ public class TransmettreArticle extends javax.swing.JFrame {
     private void jButton_QuitterArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_QuitterArticleActionPerformed
         // TODO add your handling code here:
         //Fermer toutes les connexion je suppose
-        rest.close();
+        restArticle.close();
+        restAuteur.close();
+        restMotsCles.close();
         
         //Fermeture de la fenêtre
         this.dispose();
@@ -243,7 +249,9 @@ public class TransmettreArticle extends javax.swing.JFrame {
             String motscles = modele.toString();
             
             //Transmettre à TransmissionArticles via REST (RESEAU)
-            rest.postJsonJournaliste(nomArticle, nomAuteur, contenu, motscles);
+            restArticle.postJsonArticleJournaliste(nomArticle, nomAuteur, contenu, motscles);
+            restAuteur.postJsonAuteurJournaliste(nomArticle, nomAuteur, contenu, motscles);
+            restMotsCles.postJsonMotsClesJournaliste(nomArticle, nomAuteur, contenu, motscles);
             
             //Affichage de la pop up 
             popUpArticle();
@@ -270,11 +278,13 @@ public class TransmettreArticle extends javax.swing.JFrame {
         
         if(options[reponse].equals("Quitter")){
             //Fermer toutes les connexion réseaux
-            rest.close();
+            restArticle.close();
+            restAuteur.close();
+            restMotsCles.close();
             
             //Quitter
             System.exit(0);
-        }else if(options[reponse].equals("Ecrire un article"))
+        }else if(options[reponse].equals("Ecrire un autre article"))
         {
             //Remettre tous les champs à vide
             jTextField_NomArticle.setText("");

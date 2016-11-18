@@ -27,5 +27,7 @@ public class applicationConfig extends Application{
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(REST_TransmissionArticles.articleRessource.class);
+        resources.add(REST_TransmissionArticles.auteurRessource.class);
+        resources.add(REST_TransmissionArticles.motsclesRessource.class);
     }
 }
