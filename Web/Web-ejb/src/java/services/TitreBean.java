@@ -13,10 +13,20 @@ import presse.titre;
  * @author Aurore
  */
 public class TitreBean implements TitreBeanLocal{
+    
+    public static HashMap<Integer, titre> lesTitres = new HashMap<Integer, titre>();
+
+    public TitreBean() {
+        // TODO : récupérer les titres de quelques part
+        lesTitres.put(1, new titre(1, "Titre 1"));
+        lesTitres.put(2, new titre(1, "Titre 2"));
+        lesTitres.put(3, new titre(1, "Titre 3"));
+    }
+    
 
     @Override
     public HashMap<Integer, titre> getListeTitre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return lesTitres;
     }
     
 }

@@ -102,8 +102,8 @@ public class GestionDistributeurs {
                 Message messageReceive = receiver.receive();
                 if(messageReceive instanceof ObjectMessage){
                     ObjectMessage objectMessage = (ObjectMessage) messageReceive;
-                    TitreBoursier titre = (TitreBoursier) objectMessage.getObject();
-                    System.out.println("Reçu : "+titre.getNomComplet());
+                 //   TitreBoursier titre = (TitreBoursier) objectMessage.getObject();
+                 //   System.out.println("Reçu : "+titre.getNomComplet());
                 }
                 
                 
