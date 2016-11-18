@@ -23,14 +23,12 @@ import presse.publicite;
 public class IntegrateurFen extends javax.swing.JFrame {
     private HashMap<Integer,publicite> listePub;
     private HashMap<Integer,article> listeArticles;
-    private HashMap<Integer,ArrayList<publicite>> articlePubs;
     
     /**
      * Creates new form IntegrateurFen
      */
     public IntegrateurFen() {
         Gson gson = new Gson();
-        articlePubs = new HashMap<>();
         
         //Init clients REST
         ClientRESTPublicites clientPublicites = new ClientRESTPublicites();
@@ -240,12 +238,15 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
         
         //Vérification que tous les articles ont été traités
-        if(this.listeArticles.keySet().size() != this.articlePubs.keySet().size()) {
-            JOptionPane.showMessageDialog(this,
+        for(article a : this.listeArticles.values()) {
+            System.out.println(a.getListePublicites().size());
+            if(a.getListePublicites().size() != 2) {
+                JOptionPane.showMessageDialog(this,
                 "Vous n'avez pas traité tous les articles",
                 "Erreur",
                 JOptionPane.WARNING_MESSAGE);
-            return;
+                return;
+            }
         }
 
         //Envoyer le volume sur le serveur 
@@ -268,7 +269,9 @@ public class IntegrateurFen extends javax.swing.JFrame {
         } else if(options[reponse].equals("Créer un nouveau volume")) {
             //Remettre tous les champs à vide
             this.jTextFieldNumVolume.setText("");
-            this.articlePubs.clear();
+            for(article a : this.listeArticles.values()) {
+                a.getListePublicites().clear();
+            }
             this.jListPubZone1.clearSelection();
             this.jListPubZone2.clearSelection();
             jLabelArticle.setText("#1/" + listeArticles.size() + " : " + listeArticles.get(1).getNomA());
@@ -300,9 +303,10 @@ public class IntegrateurFen extends javax.swing.JFrame {
                 this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
 
                 //Sélection des pubs liées
-                if(this.articlePubs.get(numA) != null) {
-                    this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
-                    this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+                ArrayList<publicite> pubs = this.listeArticles.get(numA).getListePublicites();
+                if(!pubs.isEmpty()) {
+                    this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
+                    this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
                 }
             }
         }
@@ -332,9 +336,10 @@ public class IntegrateurFen extends javax.swing.JFrame {
                 this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
 
                 //Sélection des pubs liées
-                if(this.articlePubs.get(numA) != null) {
-                    this.jListPubZone1.setSelectedIndex(this.articlePubs.get(numA).get(0).getNumP()-1);
-                    this.jListPubZone2.setSelectedIndex(this.articlePubs.get(numA).get(1).getNumP()-1);
+                ArrayList<publicite> pubs = this.listeArticles.get(numA).getListePublicites();
+                if(!pubs.isEmpty()) {
+                    this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
+                    this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
                 }
             }
         }
@@ -376,11 +381,12 @@ public class IntegrateurFen extends javax.swing.JFrame {
     public void enregistrerArticlePubs(int numA) {
         int numPub1 = getNumPub1Courante();
         int numPub2 = getNumPub2Courante();
-        ArrayList<publicite> pubsArticle = new ArrayList<>();
+        ArrayList<publicite> pubs = new ArrayList<>();
         
-        pubsArticle.add(this.listePub.get(numPub1));
-        pubsArticle.add(this.listePub.get(numPub2));
-        articlePubs.put(numA, pubsArticle);
+        pubs.add(this.listePub.get(numPub1));
+        pubs.add(this.listePub.get(numPub2));
+        
+        this.listeArticles.get(numA).setListePublicites(pubs);
     }
     
     /**
