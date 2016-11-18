@@ -20,6 +20,8 @@ import services.BanqueBeanLocal;
 @Path("comptes/{numCompte}")
 public class CompteResource {
 
+    BanqueBeanLocal banqueBean1 = lookupBanqueBeanLocal();
+
     BanqueBeanLocal banqueBean;
 
     @Context
@@ -70,4 +72,6 @@ public class CompteResource {
             throw new RuntimeException(ne);
         }
     }
+
+
 }

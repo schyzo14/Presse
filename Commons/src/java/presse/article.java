@@ -5,6 +5,7 @@
  */
 package presse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,14 +16,18 @@ public class article {
     private int numA;
     private String nomA;
     private String contenuA;
+    private volume v;
     private HashMap<Integer,auteur> listeAuteurs;
     private HashMap<Integer,motsCles> listeMotsCles;
-    private volume v;
+    private ArrayList<publicite> listePublicites;
     
     public article(int n, String no, String c) {
         this.numA = n;
         this.nomA = no;
         this.contenuA = c;
+        listeAuteurs = new HashMap<>();
+        listeMotsCles = new HashMap<>();
+        listePublicites = new ArrayList<>();
     }
     
     public int getNumA() {
@@ -63,6 +68,14 @@ public class article {
 
     public void setListeMotsCles(HashMap<Integer, motsCles> listeMotsCles) {
         this.listeMotsCles = listeMotsCles;
+    }
+
+    public ArrayList<publicite> getListePublicites() {
+        return listePublicites;
+    }
+
+    public void setListePublicites(ArrayList<publicite> listePublicites) {
+        this.listePublicites = listePublicites;
     }
 
     public volume getV() {

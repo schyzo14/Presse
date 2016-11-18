@@ -1,7 +1,7 @@
 package services;
 
-import javax.ejb.Local;
 import entities.Payement;
+import javax.ejb.Local;
 
 @Local
 public interface BanqueBeanLocal {

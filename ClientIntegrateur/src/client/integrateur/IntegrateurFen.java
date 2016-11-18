@@ -7,6 +7,7 @@ package client.integrateur;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,7 +49,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
         //Récupération sous forme de liste
         DefaultListModel<String> lesPubs = new DefaultListModel<>();
         for(publicite p : listePub.values()) {
-            lesPubs.addElement(p.getCompagnie() + " - " + p.getContenuP());
+            lesPubs.addElement("#" + p.getNumP() + " : " + p.getCompagnie() + " - " + p.getContenuP());
         }
         
         //Affichage
@@ -213,7 +214,45 @@ public class IntegrateurFen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        //Custom button text
+        //Enregistrement du dernier article et de ses pubs
+        int numA = getNumArticleCourant();
+        if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Il faut choisir deux pubs par article",
+                    "Mauvaise sélection",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            enregistrerArticlePubs(numA);
+        }
+        
+        //Vérification du numéro de volume
+        try {
+            Integer.parseInt(this.jTextFieldNumVolume.getText());    
+        } catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erreur sur le numéro de volume",
+                    "Erreur",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        //Vérification que tous les articles ont été traités
+        for(article a : this.listeArticles.values()) {
+            System.out.println(a.getListePublicites().size());
+            if(a.getListePublicites().size() != 2) {
+                JOptionPane.showMessageDialog(this,
+                "Vous n'avez pas traité tous les articles",
+                "Erreur",
+                JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        //Envoyer le volume sur le serveur 
+        
+        
+        //Dialog Box Quitter
         Object[] options = {"Créer un nouveau volume",
             "Quitter"};
         int reponse = JOptionPane.showOptionDialog(this,
@@ -224,44 +263,85 @@ public class IntegrateurFen extends javax.swing.JFrame {
                 null,
                 options,
                 options[1]);
-        
+
         if(options[reponse].equals("Quitter")){
             this.dispose();
         } else if(options[reponse].equals("Créer un nouveau volume")) {
             //Remettre tous les champs à vide
-            jListPubZone1.removeAll();
-            jListPubZone2.removeAll();
-            jTextAreaArticle.setText("");
-            jTextFieldNumVolume.setText("");
-            //JOptionPane.getRootFrame().dispose(); 
+            this.jTextFieldNumVolume.setText("");
+            for(article a : this.listeArticles.values()) {
+                a.getListePublicites().clear();
+            }
+            this.jListPubZone1.clearSelection();
+            this.jListPubZone2.clearSelection();
+            jLabelArticle.setText("#1/" + listeArticles.size() + " : " + listeArticles.get(1).getNomA());
+            jTextAreaArticle.setText(listeArticles.get(1).getContenuA());
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonSuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuivantActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant();
-        
-        //Affichage de l'article suivant
-        if(numA < this.listeArticles.size()) {
-            numA++;
-            //Actualisation jLabel
-            this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
-            //Actualisation jText
-            this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+        if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Il faut choisir deux pubs par article",
+                    "Mauvaise sélection",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            enregistrerArticlePubs(numA);
+
+            //Affichage de l'article suivant
+            if(numA < this.listeArticles.size()) {
+                //Déselection des JList
+                this.jListPubZone1.clearSelection();
+                this.jListPubZone2.clearSelection();
+
+                numA++;
+                //Actualisation jLabel
+                this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
+                //Actualisation jText
+                this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+
+                //Sélection des pubs liées
+                ArrayList<publicite> pubs = this.listeArticles.get(numA).getListePublicites();
+                if(!pubs.isEmpty()) {
+                    this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
+                    this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
+                }
+            }
         }
     }//GEN-LAST:event_jButtonSuivantActionPerformed
 
     private void jButtonPrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrecedentActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant();
-        
-        //Affichage de l'article suivant
-        if(numA > 1) {
-            numA--;
-            //Actualisation jLabel
-            this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
-            //Actualisation jText
-            this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+        if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Il faut choisir deux pubs par article",
+                    "Mauvaise sélection",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            enregistrerArticlePubs(numA);
+            
+            //Affichage de l'article suivant
+            if(numA > 1) {
+                //Déselection des JList
+                this.jListPubZone1.clearSelection();
+                this.jListPubZone2.clearSelection();
+
+                numA--;
+                //Actualisation jLabel
+                this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
+                //Actualisation jText
+                this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+
+                //Sélection des pubs liées
+                ArrayList<publicite> pubs = this.listeArticles.get(numA).getListePublicites();
+                if(!pubs.isEmpty()) {
+                    this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
+                    this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
+                }
+            }
         }
     }//GEN-LAST:event_jButtonPrecedentActionPerformed
 
@@ -274,6 +354,39 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
         
         return numA;
+    }
+    
+    public int getNumPub1Courante() {
+        int numPub1 = 0;
+        Pattern pattern = Pattern.compile("#(.*) :");
+        Matcher matcher = pattern.matcher(this.jListPubZone1.getSelectedValue());
+        if(matcher.find()) {
+            numPub1 = Integer.parseInt(matcher.group(1));
+        }
+        
+        return numPub1;
+    }
+    
+    public int getNumPub2Courante() {
+        int numPub2 = 0;
+        Pattern pattern = Pattern.compile("#(.*) :");
+        Matcher matcher = pattern.matcher(this.jListPubZone2.getSelectedValue());
+        if(matcher.find()) {
+            numPub2 = Integer.parseInt(matcher.group(1));
+        }
+        
+        return numPub2;
+    }
+    
+    public void enregistrerArticlePubs(int numA) {
+        int numPub1 = getNumPub1Courante();
+        int numPub2 = getNumPub2Courante();
+        ArrayList<publicite> pubs = new ArrayList<>();
+        
+        pubs.add(this.listePub.get(numPub1));
+        pubs.add(this.listePub.get(numPub2));
+        
+        this.listeArticles.get(numA).setListePublicites(pubs);
     }
     
     /**
