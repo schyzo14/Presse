@@ -20,6 +20,7 @@ import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -55,6 +56,13 @@ public class articleRessource {
     @GET
     public String getJson() {
         return this.gson.toJson(this.articlesBean.getListeArticles());
+    }
+    
+    @GET
+    @Path("articles/{idArticle}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDetailArticle(@PathParam("idArticle") int idArticle) {
+        return this.gson.toJson(this.articlesBean.getArticles(idArticle));
     }
     
     @POST

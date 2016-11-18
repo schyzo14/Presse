@@ -26,7 +26,32 @@ public class ArticlesBean implements ArticlesBeanLocal{
         this.listeArticles = new HashMap<>();
         this.listeAuteurs = new HashMap<>();
         this.listeMotsCles = new HashMap<>();
-        this.lastid = 0;
+        this.lastid = 4;
+        
+        //Alimentation des articles
+        article a1 = new article(1, "Final Fantasy XV", "Final Fantasy XV, annoncé originellement sous le titre Final Fantasy Versus XIII, est un jeu vidéo développé et édité par Square-Enix, prévu pour le 29 novembre 2016 sur PlayStation 4 et Xbox One.");
+        this.listeArticles.put(a1.getNumA(), a1);
+        auteur aut1 = new auteur(1, "Nom Test", "Prenom Test");
+        a1.getListeAuteurs().put(1, aut1);
+        motsCles mc1 = new motsCles(1, "mc1");
+        a1.getListeMotsCles().put(1, mc1);
+        
+        article a2 = new article(2, "Naruto - The Last", "Naruto the Last, le film est le dixième film japonais basé sur le manga Naruto et le septième film tiré de l'anime Naruto Shippûden, sorti le 6 décembre 2014 au Japon");
+        this.listeArticles.put(a2.getNumA(), a2);
+        auteur aut2 = new auteur(2, "Nom Test", "Prenom Test");
+        a2.getListeAuteurs().put(2, aut2);
+        motsCles mc2 = new motsCles(2, "mc2");
+        a2.getListeMotsCles().put(1, mc1);
+        a2.getListeMotsCles().put(2, mc2);
+        
+        article a3 = new article(3, "Coupe du Monde", "La Coupe du monde de football ou Coupe du monde de la FIFA est une compétition internationale de football qui se déroule ordinairement tous les quatre ans.");
+        this.listeArticles.put(a3.getNumA(), a3);
+        auteur aut3 = new auteur(3, "Nom Test", "Prenom Test");
+        a3.getListeAuteurs().put(3, aut3);
+        motsCles mc3 = new motsCles(3, "mc3");
+        a3.getListeMotsCles().put(1, mc1);
+        a3.getListeMotsCles().put(2, mc2);
+        a3.getListeMotsCles().put(3, mc3);
     }
     
     //Récupérer les articles
@@ -79,6 +104,26 @@ public class ArticlesBean implements ArticlesBeanLocal{
         System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         article a = new article(lastid, nomA, contenu);
         this.listeArticles.put(a.getNumA(), a);
+        
+        String[] auteurCast = nomAut.split(" ");
+        if(auteurCast.length==1){
+            auteur aut = new auteur(lastid, auteurCast[0], auteurCast[0]);
+            a.getListeAuteurs().put(lastid, aut);
+        }
+        else if(auteurCast.length==2){
+            auteur aut = new auteur(lastid, auteurCast[1], auteurCast[0]);
+            a.getListeAuteurs().put(lastid, aut);
+        }else{
+            auteur aut = new auteur(lastid, auteurCast[2], auteurCast[0]+" "+auteurCast[1]);
+            a.getListeAuteurs().put(lastid, aut);
+        }
+
+        String[] motsClesCast = motcles.split(",");
+        for(int i=0; i<motsClesCast.length; i++)
+        {
+            motsCles mc = new motsCles(lastid, motsClesCast[i]);
+            a.getListeMotsCles().put(i, mc);
+        }
         
         lastid++;
         return a;
