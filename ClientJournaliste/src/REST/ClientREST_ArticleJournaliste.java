@@ -34,8 +34,15 @@ public class ClientREST_ArticleJournaliste {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("articles");
     }
+    
+    public String getDetailArticle(String idArticle) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("articles/{0}", new Object[]{idArticle}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+    }
 
     public String postJsonArticleJournaliste(String nomArticle, String nomAuteur, String contenu, String motscles) throws ClientErrorException {
+        System.out.println("postJsonArticle : "+contenu);
         webTarget = webTarget.queryParam("nomArticle", nomArticle);
         webTarget = webTarget.queryParam("nomAuteur", nomAuteur);
         webTarget = webTarget.queryParam("contenu", contenu);
@@ -48,10 +55,6 @@ public class ClientREST_ArticleJournaliste {
     public String getJson() throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-    }
-
-    public String postJsonRedacteur() throws ClientErrorException {
-        return webTarget.request().post(null, String.class);
     }
 
     public void close() {

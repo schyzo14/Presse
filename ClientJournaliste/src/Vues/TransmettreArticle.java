@@ -248,10 +248,12 @@ public class TransmettreArticle extends javax.swing.JFrame {
             DefaultListModel modele = (DefaultListModel) jList_MotsClesArticle.getModel();
             String motscles = modele.toString();
             
+            System.out.println("AVANT post : "+contenu);
+            
             //Transmettre à TransmissionArticles via REST (RESEAU)
             restArticle.postJsonArticleJournaliste(nomArticle, nomAuteur, contenu, motscles);
-            restAuteur.postJsonAuteurJournaliste(nomArticle, nomAuteur, contenu, motscles);
-            restMotsCles.postJsonMotsClesJournaliste(nomArticle, nomAuteur, contenu, motscles);
+            //restAuteur.postJsonAuteurJournaliste(nomArticle, nomAuteur, contenu, motscles);
+            //restMotsCles.postJsonMotsClesJournaliste(nomArticle, nomAuteur, contenu, motscles);
             
             //Affichage de la pop up 
             popUpArticle();
