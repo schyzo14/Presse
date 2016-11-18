@@ -58,7 +58,7 @@ public class DistributeurBean implements DistributeurBeanLocal {
         if (! lesdistributeurs.containsKey(mail)) {
             
         }
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
      

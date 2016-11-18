@@ -21,14 +21,17 @@ public class contrat {
     private distributeur distributeurC;
     private editeur editeurC;
     private titre titreC;
+    private String etatC;
+    private String recepisseC;
 
-    public contrat(int numC, int nbCopieC, int dureeC, float coutC, Date dateValC, Date datePaieC) {
+    public contrat(int numC, int nbCopieC, int dureeC, float coutC, Date dateValC, Date datePaieC, String etat) {
         this.numC = numC;
         this.nbCopieC = nbCopieC;
         this.dureeC = dureeC;
         this.coutC = coutC;
         this.dateValC = dateValC;
         this.datePaieC = datePaieC;
+        this.etatC = etat;
     }
 
     public int getNumC() {
@@ -103,5 +106,22 @@ public class contrat {
         this.titreC = titreC;
     }
 
+    public String getEtatC() {
+        return etatC;
+    }
+
+    public void setEtatC(String etatC) {
+        this.etatC = etatC;
+    }
+
+    public String getRecepisseC() {
+        return recepisseC;
+    }
+
+    public void setRecepisseC(String recepisseC) {
+        this.recepisseC = recepisseC;
+    }
+
+    
     
 }

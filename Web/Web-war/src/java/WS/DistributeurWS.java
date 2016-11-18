@@ -12,6 +12,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import services.DistributeurBean;
 import com.google.gson.Gson;
+import services.ContratBean;
 import services.EditeurBean;
 import services.TitreBean;
 
@@ -30,6 +31,9 @@ public class DistributeurWS {
     
     @EJB
     private TitreBean titreBean;
+    
+    @EJB
+    private ContratBean contratBean;
 
     private Gson gson;
 
@@ -43,7 +47,7 @@ public class DistributeurWS {
      * @param mail	mail du distributeur
      * @param nom	nom du distributeur
      *
-     * @return true si succès false sinon
+     * @return le distributeur
      */
     @WebMethod(operationName="inscription")
     public String inscription(@WebParam(name="mail") String mail, @WebParam(name="nom") String nom) {
@@ -56,7 +60,7 @@ public class DistributeurWS {
      * @param mail
      * @param mdp
      * 
-     * @return 
+     * @return le distributeur
      */
     @WebMethod(operationName="connection")
     public String connection(@WebParam(name="mail") String mail, @WebParam(name="mdp") String mdp) {
@@ -67,7 +71,7 @@ public class DistributeurWS {
     /**
      * recupère la liste des éditeurs
      * 
-     * @return 
+     * @return la liste des editeurs
      */
     @WebMethod(operationName="getListeEditeur")
     public String getListeEditeur() {
@@ -78,7 +82,7 @@ public class DistributeurWS {
     /**
      * récupère la liste des titres
      * 
-     * @return 
+     * @return la liste des titres
      */
     @WebMethod(operationName="getListTitre")
     public String getListeTitre() {
@@ -93,38 +97,60 @@ public class DistributeurWS {
      * @param nbCopies	nombre de copies du titre
      * @param duree	duree du contrat
      *
-     * @return true si succès false sinon
+     * @return le contrat
      */
-	@WebMethod(operationName="demandeContrat")
-	public boolean demandeContrat(@WebParam(name="editeurId") Integer editeurId, @WebParam(name="titreId") Integer titreId, 
-                @WebParam(name="nbCopies") Integer nbCopies, @WebParam(name="duree") Integer duree) {
-            return false;
-        }
+    @WebMethod(operationName="demandeContrat")
+    public String demandeContrat(@WebParam(name="distributeurId") Integer distributeurId, @WebParam(name="editeurId") Integer editeurId, @WebParam(name="titreId") Integer titreId, 
+            @WebParam(name="nbCopies") Integer nbCopies, @WebParam(name="duree") Integer duree) {
+        return this.gson.toJson(this.contratBean.créerContrat(distributeurId, editeurId, titreId, nbCopies, duree));
+    }
 	
-	/**
-     * validation du cout par le distributeur
+    
+    /**
+     * Liste des contrats à valider
+     * 
+     * @return les contrats a valider
+     */
+    @WebMethod(operationName="listContratAValider")
+    public String listContratAValider(@WebParam(name="distributeurId") Integer distributeurId) {
+        return this.gson.toJson(this.contratBean.listContratAValider(distributeurId));
+    }
+        
+        
+    /**
+     * validation du contrat
      *
-     * @return true si succès false sinon
+     * @return le contrat
      */
-	@WebMethod(operationName="validerContrat")
-	public boolean validerContrat() {
-            return false;
-        }
+    @WebMethod(operationName="validerContrat")
+    public String validerContrat(@WebParam(name="contratId") Integer contratId) {
+        return this.gson.toJson(this.contratBean.validerContrat(contratId));
+    }
 	
+    
+    /**
+     * Liste des contrats en attente d'un recepissé
+     * 
+     * @param distributeurId
+     * 
+     * @return liste des contrats
+     */
+    @WebMethod(operationName="listeContratRecepisse")
+    public String listeContratRecepisse(@WebParam(name="distributeurId") Integer distributeurId) {
+        return this.gson.toJson(this.contratBean.validerContrat(distributeurId));
+    }
+    
 	
-	/**
+    /**
      * envoi d'un récépissé
      * 
      * @param infos	liste des informations du paiement
      *
      * @return true si succès false sinon
      */
-	@WebMethod(operationName="envoiRecepisse")
-	public boolean envoiRecepisse(@WebParam(name="infos") List<String> infos) {
-            return false;
-        }
-	
-	
-
+    @WebMethod(operationName="envoiRecepisse")
+    public String envoiRecepisse(@WebParam(name="recepisse") String recepisse) {
+        return this.gson.toJson(this.contratBean.setRecepisse(recepisse));
+    }
 
 }
