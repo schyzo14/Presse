@@ -5,9 +5,7 @@
  */
 package client.distributeur.Vue.CreerCompte;
 
-import client.distributeur.ClientDistributeur;
 import javax.swing.JOptionPane;
-import presse.distributeur;
 
 /**
  *

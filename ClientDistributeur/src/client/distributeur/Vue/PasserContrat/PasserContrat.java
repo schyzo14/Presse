@@ -5,10 +5,13 @@
  */
 package client.distributeur.Vue.PasserContrat;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 import presse.distributeur;
 import presse.editeur;
+import presse.titre;
 
 /**
  *
@@ -16,6 +19,8 @@ import presse.editeur;
  */
 public class PasserContrat extends javax.swing.JFrame {
 
+    public HashMap<Integer, editeur> listeEditeur = new HashMap<Integer, editeur>();
+    public HashMap<Integer, titre> listeTitre = new HashMap<Integer, titre>();
     /**
      * Creates new form PasserContrat
      */
@@ -24,16 +29,33 @@ public class PasserContrat extends javax.swing.JFrame {
         
         // Liste des éditeur
         // TODO : a remplir avec WS
-        HashMap<Integer, editeur> listeEditeur = new HashMap<Integer, editeur>();
         listeEditeur.put(1, new editeur(1, "test1", "t1"));
         listeEditeur.put(2, new editeur(2, "test2", "t1"));
-        Iterator i = listeEditeur.keySet().iterator();
-        while (i.hasNext()) {
-            editeur edit = (editeur) i.next();
+        Iterator ie = listeEditeur.keySet().iterator();
+        while (ie.hasNext()) {
+            editeur edit = (editeur) ie.next();
             jComboBoxEditeur.addItem(edit.getNomE());
         }
         
-        // Liste des ...
+        // Liste des titres
+        // TODO : à remplir avec WS
+        listeTitre.put(100, new titre(100, "blam1"));
+        listeTitre.put(200, new titre(200, "blam2"));
+        Iterator it = listeTitre.keySet().iterator();
+        while (it.hasNext()) {
+            editeur edit = (editeur) it.next();
+            jComboBoxTitre.addItem(edit.getNomE());
+        }
+        
+        // Nombre de copie
+        jLabelNombreCopie.setText("0");
+        
+        // Durée en mois
+        jComboBoxDuree.addItem("3");
+        jComboBoxDuree.addItem("6");
+        jComboBoxDuree.addItem("12");
+        jComboBoxDuree.addItem("18");
+        jComboBoxDuree.addItem("24");
         
     }
 
@@ -143,7 +165,50 @@ public class PasserContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        try {
+            // On récupère les champs
+            // editeur
+            String edChoix = (String) jComboBoxEditeur.getSelectedItem();
+            Iterator ie = listeEditeur.keySet().iterator();
+            editeur edit;
+            while (ie.hasNext()) {
+                editeur editL = (editeur) ie.next();
+                if (editL.getNomE().equals(edChoix)) {
+                    edit = editL;
+                }
+            }
+            // titre
+            String titreChoix = (String) jComboBoxTitre.getSelectedItem();
+            Iterator it = listeTitre.keySet().iterator();
+            titre titr;
+            while (ie.hasNext()) {
+                titre titrL = (titre) ie.next();
+                if (titrL.getNomT().equals(titreChoix)) {
+                    titr = titrL;
+                }
+            }
+            // nbCopie
+            int nbCopie = Integer.parseInt(jLabelNombreCopie.getText());
+            // mois
+            int mois = (int) jComboBoxDuree.getSelectedItem();
+            
+            //
+            // TODO : créer le contrat avec le WS
+            // on récupère le contrat
+            JOptionPane d = new JOptionPane();
+            String lesTextes[]={"OK"}; 
+            int retour = d.showOptionDialog(this, "Votre contrat a été envoyé avec succés !", "Contrat demandé", JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, lesTextes, lesTextes[0]);
+            if (lesTextes[retour].equals("OK")) {
+                MenuDistributeur menuDistributeur = new MenuDistributeur();
+                menuDistributeur.setVisible(true);
+                this.setVisible(false);
+            }
+            
+        } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
+            // On affiche une pop-up pour le signaler
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "<html>Le nombre de copie est un nombre entier !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

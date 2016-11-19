@@ -16,6 +16,8 @@ public class ListContratAValider extends javax.swing.JFrame {
      */
     public ListContratAValider() {
         initComponents();
+        
+        
     }
 
     /**
