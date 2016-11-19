@@ -5,17 +5,37 @@
  */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+import javax.swing.JOptionPane;
+import presse.contrat;
+
 /**
  *
  * @author Aurore
  */
 public class EnvoyerRecepisse extends javax.swing.JFrame {
 
+    private static contrat con;    
+    
     /**
      * Creates new form ValiderContrat
      */
-    public EnvoyerRecepisse() {
+    public EnvoyerRecepisse(contrat con) {
         initComponents();
+        this.con = con;
+        
+        // éditeut
+        jLabelChampEditeur.setText(con.getEditeurC().getNomE());
+        // titre
+        jLabelChampTitre.setText(con.getTitreC().getNomT());
+        // nb copie
+        jLabelChampNombreCopies.setText(con.getNbCopieC() + " copies");
+        // durée
+        jLabelChampDuree.setText(con.getDureeC() + " mois");
+        // cout
+        jLabelChampCout.setText(con.getCoutC() + " €");
+        // récépissé
+        jTextAreaRecepisse.setText("");
     }
 
     /**
@@ -187,11 +207,28 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEnvoyerRecepisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerRecepisseActionPerformed
-        // TODO add your handling code here:
+        // test champ vide
+        if (jTextAreaRecepisse.getText().equals("")) {
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "Veillez saisir le récépissé !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String recepisse = jTextAreaRecepisse.getText();
+            // TODO : envoyer récépissé WS
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "Le récépissé a été envoyé !", "Récépissé envoyé", JOptionPane.WARNING_MESSAGE);
+            // retour au menu
+            MenuDistributeur menuDistributeur = new MenuDistributeur();
+            menuDistributeur.setVisible(true);
+            this.setVisible(false);
+        }
+
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        // Menu
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -225,7 +262,7 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EnvoyerRecepisse().setVisible(true);
+                new EnvoyerRecepisse(con).setVisible(true);
             }
         });
     }
