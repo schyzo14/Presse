@@ -9,7 +9,6 @@ import client.distributeur.Vue.Menu.MenuDistributeur;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
-import presse.distributeur;
 import presse.editeur;
 import presse.titre;
 
@@ -33,8 +32,8 @@ public class PasserContrat extends javax.swing.JFrame {
         listeEditeur.put(2, new editeur(2, "test2", "t1"));
         Iterator ie = listeEditeur.keySet().iterator();
         while (ie.hasNext()) {
-            editeur edit = (editeur) ie.next();
-            jComboBoxEditeur.addItem(edit.getNomE());
+            int editL = (int) ie.next();
+            jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
         }
         
         // Liste des titres
@@ -43,12 +42,12 @@ public class PasserContrat extends javax.swing.JFrame {
         listeTitre.put(200, new titre(200, "blam2"));
         Iterator it = listeTitre.keySet().iterator();
         while (it.hasNext()) {
-            editeur edit = (editeur) it.next();
-            jComboBoxTitre.addItem(edit.getNomE());
+            int titr = (int) it.next();
+            jComboBoxTitre.addItem(listeTitre.get(titr).getNomT());
         }
         
         // Nombre de copie
-        jLabelNombreCopie.setText("0");
+        jTextFieldNombreCopies.setText("0");
         
         // Durée en mois
         jComboBoxDuree.addItem("3");
@@ -84,19 +83,18 @@ public class PasserContrat extends javax.swing.JFrame {
 
         jLabelEditeur.setText("Editeur");
 
-        jComboBoxEditeur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabelTitre.setText("Titre");
-
-        jComboBoxTitre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabelNombreCopie.setText("Nombre de copies");
 
         jLabelTitreDuree.setText("Durée (en mois)");
 
-        jComboBoxDuree.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jButtonEnvoyer.setText("Envoyer");
+        jButtonEnvoyer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEnvoyerActionPerformed(evt);
+            }
+        });
 
         jButtonAnnuler.setText("Annuler");
         jButtonAnnuler.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +131,7 @@ public class PasserContrat extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addComponent(jComboBoxTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,43 +163,62 @@ public class PasserContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonAnnulerActionPerformed
+
+    private void jButtonEnvoyerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerActionPerformed
         try {
-            // On récupère les champs
-            // editeur
-            String edChoix = (String) jComboBoxEditeur.getSelectedItem();
-            Iterator ie = listeEditeur.keySet().iterator();
-            editeur edit;
-            while (ie.hasNext()) {
-                editeur editL = (editeur) ie.next();
-                if (editL.getNomE().equals(edChoix)) {
-                    edit = editL;
-                }
-            }
-            // titre
-            String titreChoix = (String) jComboBoxTitre.getSelectedItem();
-            Iterator it = listeTitre.keySet().iterator();
-            titre titr;
-            while (ie.hasNext()) {
-                titre titrL = (titre) ie.next();
-                if (titrL.getNomT().equals(titreChoix)) {
-                    titr = titrL;
-                }
-            }
             // nbCopie
-            int nbCopie = Integer.parseInt(jLabelNombreCopie.getText());
-            // mois
-            int mois = (int) jComboBoxDuree.getSelectedItem();
-            
-            //
-            // TODO : créer le contrat avec le WS
-            // on récupère le contrat
-            JOptionPane d = new JOptionPane();
-            String lesTextes[]={"OK"}; 
-            int retour = d.showOptionDialog(this, "Votre contrat a été envoyé avec succés !", "Contrat demandé", JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, lesTextes, lesTextes[0]);
-            if (lesTextes[retour].equals("OK")) {
-                MenuDistributeur menuDistributeur = new MenuDistributeur();
-                menuDistributeur.setVisible(true);
-                this.setVisible(false);
+            int nbCopie = Integer.parseInt(jTextFieldNombreCopies.getText());
+            // nbCopie positif
+            if (nbCopie > 0) {
+                // On récupère les champs
+                // editeur
+                String edChoix = (String) jComboBoxEditeur.getSelectedItem();
+                Iterator ie = listeEditeur.keySet().iterator();
+                editeur edit;
+                while (ie.hasNext()) {
+                    int editL =  (int) ie.next();
+                    editeur editLL = listeEditeur.get(editL);
+                    if (editLL.getNomE().equals(edChoix)) {
+                        edit = editLL;
+                    }
+                }
+                // titre
+                String titreChoix = (String) jComboBoxTitre.getSelectedItem();
+                Iterator it = listeTitre.keySet().iterator();
+                titre titr;
+                while (ie.hasNext()) {
+                    int titrL = (int) ie.next();
+                    titre titrLL = listeTitre.get(titrL);
+                    if (titrLL.getNomT().equals(titreChoix)) {
+                        titr = titrLL;
+                    }
+                }
+
+                // mois
+                int mois = Integer.parseInt(jComboBoxDuree.getSelectedItem().toString());
+
+                //
+                // TODO : créer le contrat avec le WS
+                // on récupère le contrat
+                
+                // validation contrat envoyé
+                JOptionPane d = new JOptionPane();
+                String lesTextes[]={"OK"}; 
+                int retour = d.showOptionDialog(this, "Votre contrat a été envoyé avec succés !", "Contrat demandé", JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, lesTextes, lesTextes[0]);
+                if (lesTextes[retour].equals("OK")) {
+                    MenuDistributeur menuDistributeur = new MenuDistributeur();
+                    menuDistributeur.setVisible(true);
+                    this.setVisible(false);
+                }
+                
+            } else {
+                // nb de copie <= 0    
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "<html>Le nombre de copie doit être positif !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
             }
             
         } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
@@ -209,7 +226,7 @@ public class PasserContrat extends javax.swing.JFrame {
             JOptionPane jop = new JOptionPane();
             jop.showMessageDialog(null, "<html>Le nombre de copie est un nombre entier !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jButtonAnnulerActionPerformed
+    }//GEN-LAST:event_jButtonEnvoyerActionPerformed
 
     /**
      * @param args the command line arguments

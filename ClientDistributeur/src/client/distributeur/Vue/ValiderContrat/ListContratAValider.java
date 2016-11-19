@@ -5,6 +5,9 @@
  */
 package client.distributeur.Vue.ValiderContrat;
 
+import java.util.HashMap;
+import presse.contrat;
+
 /**
  *
  * @author Aurore
@@ -17,6 +20,9 @@ public class ListContratAValider extends javax.swing.JFrame {
     public ListContratAValider() {
         initComponents();
         
+        // Liste des contrats
+        // TODO : récupérer la liste des contrats à valider par le distributeur
+        HashMap<Integer, contrat> lesContratsAValiderDistrib = new HashMap<>();
         
     }
 
