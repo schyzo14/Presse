@@ -30,6 +30,8 @@ public class ContratBean implements ContratBeanLocal {
         lesEtats.put(2, "ATTENTEVALDISTRIB");
         lesEtats.put(3, "ATTENTERECEPISSE");
         lesEtats.put(4, "ATTENTEVALEDITEUR");
+        lesEtats.put(5, "VALIDATIONEDITEUR");
+        lesEtats.put(6, "REFUSDISTRIBUTEUR");
     }
 
     
@@ -84,7 +86,16 @@ public class ContratBean implements ContratBeanLocal {
         
         return lesContrats.get(contratId);
     }
-
+    
+    
+    @Override
+    public contrat refuserContrat(int contratId) {
+        // Passer le contrat à refuser par distributeur
+        lesContrats.get(contratId).setEtatC(lesEtats.get(6));
+        
+        return lesContrats.get(contratId);
+    }
+    
     
     @Override
     public HashMap<Integer, contrat> listeContratRecepisse(int distributeurId) {
@@ -120,5 +131,76 @@ public class ContratBean implements ContratBeanLocal {
         
         return lesContrats.get(contratId);
     }
+
+    
+    @Override
+    public HashMap<Integer, contrat> listeContratAttenteCout(int editeurId) {
+        // Initialisation : Liste des contrats en attente de cout
+        HashMap<Integer, contrat> listeContratAttenteCout = new HashMap<Integer, contrat>();
+        
+        // parcours des contrats
+        for (int key : lesContrats.keySet()) {
+            contrat con = lesContrats.get(key);
+            
+            // Si l'état est en attente du cout
+            if (con.getEtatC().equals(lesEtats.get(1))) {
+                
+                // Si le contrat est à l'éditeur
+                if (con.getEditeurC().getNumE()== editeurId) {
+                    
+                    // on ajoute le contrat à la liste qui sera renvoyée
+                    listeContratAttenteCout.put(key, con);
+                }
+            }
+        }
+        
+        return listeContratAttenteCout;
+    }
+
+    
+    @Override
+    public contrat setCout(int contratId, float cout) {
+        // Mettre le cout dans le contrat 
+        lesContrats.get(contratId).setCoutC(cout);
+        // Passer le contrat à attente de validation du distributeur
+        lesContrats.get(contratId).setEtatC(lesEtats.get(2));
+        
+        return lesContrats.get(contratId);
+    }
+
+    
+    @Override
+    public HashMap<Integer, contrat> listeContratAValiderEditeur(int editeurId) {
+                // Initialisation : Liste des contrats en attente de cout
+        HashMap<Integer, contrat> listeContratAValiderEditeur = new HashMap<Integer, contrat>();
+        
+        // parcours des contrats
+        for (int key : lesContrats.keySet()) {
+            contrat con = lesContrats.get(key);
+            
+            // Si l'état est en attente du cout
+            if (con.getEtatC().equals(lesEtats.get(4))) {
+                
+                // Si le contrat est à l'éditeur
+                if (con.getEditeurC().getNumE()== editeurId) {
+                    
+                    // on ajoute le contrat à la liste qui sera renvoyée
+                    listeContratAValiderEditeur.put(key, con);
+                }
+            }
+        }
+        
+        return listeContratAValiderEditeur;
+    }
+
+    
+    @Override
+    public contrat validerContratEditeur(int contratId) {
+        // Passer le contrat à valider
+        lesContrats.get(contratId).setEtatC(lesEtats.get(5));
+        
+        return lesContrats.get(contratId);
+    }
+    
     
 }

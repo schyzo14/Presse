@@ -136,6 +136,19 @@ public class DistributeurWS {
 	
     
     /**
+     * le distributeur refuse le contrat
+     * 
+     * @param contratId
+     * 
+     * @return le contrat
+     */
+    @WebMethod(operationName="refusContrat")
+    public String refusContrat(@WebParam(name="contratId") Integer contratId) {
+        return this.gson.toJson(this.contratBean.refuserContrat(contratId));
+    }
+    
+    
+    /**
      * Liste des contrats en attente d'un recepissé
      * 
      * @param distributeurId
