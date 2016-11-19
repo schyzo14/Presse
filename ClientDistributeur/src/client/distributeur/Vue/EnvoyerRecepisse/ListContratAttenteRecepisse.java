@@ -5,17 +5,67 @@
  */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.HashMap;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import presse.contrat;
+import presse.distributeur;
+import presse.editeur;
+import presse.titre;
+
 /**
  *
  * @author Aurore
  */
 public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
+    HashMap<Integer, contrat> lesContratsAttenteRecepisse = new HashMap<Integer, contrat>();
+    
     /**
      * Creates new form ListContratAValider
      */
     public ListContratAttenteRecepisse() {
         initComponents();
+        
+        // Liste des contrats
+        // TODO : récupérer la liste des contrats en attente d'un récépissé
+        lesContratsAttenteRecepisse.put(1, new contrat(1, 2, 12, (float) 900.0, new Date(), new Date(), "ATTENTEVALDISTRIB", new editeur(1, "Flammarion", "contact@flam.fr"), new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"), new titre(1, "Titre 1")));
+        lesContratsAttenteRecepisse.put(2, new contrat(2, 3, 24, (float) 800.0, new Date(), new Date(), "ATTENTEVALDISTRIB", new editeur(2, "Chucou", "contact@flam.fr"), new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"), new titre(2, "Titre 2")));
+        lesContratsAttenteRecepisse.put(3, new contrat(3, 4, 6, (float) 700.0, new Date(), new Date(), "ATTENTEVALDISTRIB", new editeur(1, "Flammarion", "contact@flam.fr"), new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"), new titre(3, "Titre 3")));
+
+                // Remplir le tableau
+        String[] columnNames = {"Titre", "Editeur", "Nombre de copies", "Durée", "Action"};
+        DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
+        Object[][] data = new Object[lesContratsAttenteRecepisse.size()][5];
+        int i=0;
+        for (int key : lesContratsAttenteRecepisse.keySet()) {
+            contrat con = lesContratsAttenteRecepisse.get(key);
+            data[i][0] = con.getTitreC().getNomT();
+            data[i][1] = con.getEditeurC().getNomE();
+            data[i][2] = con.getNbCopieC();
+            data[i][3] = con.getDureeC();
+            data[i][4] = "Répondre";
+            i++;
+        }
+        
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        jTableContrat.setModel(model);
+
+        TableColumn column = jTableContrat.getColumnModel().getColumn(4);
+        column.setCellRenderer(new ListContratAttenteRecepisse.ButtonRenderer());
+        column.setCellEditor(new ListContratAttenteRecepisse.ButtonEditor(new JCheckBox()));
+
     }
 
     /**
@@ -39,22 +89,15 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
         jTableContrat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Titre", "Editeur", "Nombre de copies", "Durée", "Action "
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -101,7 +144,10 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        // Menu
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -148,4 +194,90 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableContrat;
     // End of variables declaration//GEN-END:variables
+
+
+
+/**
+ * Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
+ */    
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+
+        private String label;
+
+        private boolean isPushed;
+        
+        private int row;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+            boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            this.row = row;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                
+                // Afficher le bon contrat en attente d'un récépissé
+                contrat con = lesContratsAttenteRecepisse.get(row+1);
+                EnvoyerRecepisse envoyerRecepisse = new EnvoyerRecepisse(con);
+                envoyerRecepisse.setVisible(true);
+                ListContratAttenteRecepisse.this.setVisible(false);
+                
+            }
+            isPushed = false;
+            return new String(label);
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
 }
