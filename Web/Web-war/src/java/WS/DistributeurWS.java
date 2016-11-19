@@ -10,6 +10,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import com.google.gson.Gson;
+import presse.distributeur;
 import services.ContratBeanLocal;
 import services.DistributeurBeanLocal;
 import services.EditeurBeanLocal;
@@ -50,11 +51,11 @@ public class DistributeurWS {
      */
     @WebMethod(operationName="inscription")
     public String inscription(@WebParam(name="mail") String mail, @WebParam(name="nom") String nom) {
-        try {
-            return this.gson.toJson(this.distributeurBean.inscrire(mail, nom));
-        } catch (Throwable e) {
-            return this.gson.toJson(e);
+        distributeur d = this.distributeurBean.inscrire(mail, nom);
+        if (d == null) {
+            return this.gson.toJson(new Exception("Le mail ou le nom est déjà utilisé !", new Exception()));
         }
+        return this.gson.toJson(d);
     }
     
     /**
@@ -67,11 +68,11 @@ public class DistributeurWS {
      */
     @WebMethod(operationName="connection")
     public String connection(@WebParam(name="mail") String mail, @WebParam(name="mdp") String mdp) {
-        try {
-            return this.gson.toJson(this.distributeurBean.connecter(mail, mdp));
-        } catch (Throwable e) {
-            return this.gson.toJson(e);
+        distributeur d = this.distributeurBean.connecter(mail, mdp);
+        if (d == null) {
+            return this.gson.toJson(new Exception("La connexion a échouée !", new Exception()));
         }
+        return this.gson.toJson(d);
     }
     
     

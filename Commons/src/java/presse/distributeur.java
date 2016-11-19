@@ -24,6 +24,13 @@ public class distributeur {
         this.mailD = mailD;
         this.mdpD = Integer.toString(1 + (int)(Math.random() * ((1000 - 1) + 1)));
     }
+    
+    public distributeur(int numD, String nomD, String mailD, String mdp) {
+        this.numD = numD;
+        this.nomD = nomD;
+        this.mailD = mailD;
+        this.mdpD = mdp;
+    }
 
     public int getNumD() {
         return numD;

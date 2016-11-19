@@ -7,11 +7,13 @@ package services;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import javax.ejb.Singleton;
 import presse.contrat;
 import presse.distributeur;
 import presse.editeur;
 import presse.titre;
+import static services.DistributeurBean.lesdistributeurs;
 
 /**
  *
@@ -28,6 +30,7 @@ public class ContratBean implements ContratBeanLocal {
         lesContrats = new HashMap<Integer, contrat>();
         dernierId = 1;
         
+        lesEtats = new HashMap<Integer, String>();
         lesEtats.put(1, "ATTENTECOUT");
         lesEtats.put(2, "ATTENTEVALDISTRIB");
         lesEtats.put(3, "ATTENTERECEPISSE");
@@ -49,10 +52,21 @@ public class ContratBean implements ContratBeanLocal {
         String etat = lesEtats.get(1);
         
         editeur ed = EditeurBean.lesEditeurs.get(editeurId);
-        distributeur distrib = DistributeurBean.lesdistributeurs.get(distributeurId);
+        distributeur distrib = null;
+        HashMap<String, distributeur> listDis = DistributeurBean.lesdistributeurs;
+        Iterator i = listDis.keySet().iterator();
+        while (i.hasNext()) {
+            String distribI = (String) i.next();
+            distributeur dis = listDis.get(distribI);
+            if (dis.getNumD() == distributeurId) {
+                distrib = dis;
+            }
+        }
         titre t = TitreBean.lesTitres.get(titreId);
         
-        return new contrat(numC, nbCopies, duree, cout, dateVal, datePaie, etat, ed, distrib, t);
+        contrat con = new contrat(numC, nbCopies, duree, cout, dateVal, datePaie, etat, ed, distrib, t);
+        DistributeurBean.lesdistributeurs.get(distrib.getMailD()).getListeContrats().put(numC, con);
+        return con;
     }
 
     
