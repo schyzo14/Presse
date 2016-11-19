@@ -5,8 +5,6 @@
  */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
-import client.distributeur.Vue.ValiderContrat.*;
-
 /**
  *
  * @author Aurore

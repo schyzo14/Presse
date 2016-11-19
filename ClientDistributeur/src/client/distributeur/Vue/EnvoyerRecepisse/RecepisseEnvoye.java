@@ -5,10 +5,6 @@
  */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
-import client.distributeur.Vue.PasserContrat.*;
-import client.distributeur.Vue.SeConnecter.*;
-import client.distributeur.Vue.CreerCompte.*;
-
 /**
  *
  * @author Aurore

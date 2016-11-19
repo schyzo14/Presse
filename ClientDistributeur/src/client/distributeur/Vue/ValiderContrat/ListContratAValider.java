@@ -29,7 +29,6 @@ import presse.titre;
  */
 public class ListContratAValider extends javax.swing.JFrame {
 
-    
     HashMap<Integer, contrat> lesContratsAValiderDistrib = new HashMap<Integer, contrat>();
         
     /**
@@ -257,8 +256,8 @@ public class ListContratAValider extends javax.swing.JFrame {
                 contrat con = lesContratsAValiderDistrib.get(row+1);
                 ValiderContrat validerContrat = new ValiderContrat(con);
                 validerContrat.setVisible(true);
-                // TODO : fermer liste contrat
-              
+                ListContratAValider.this.setVisible(false);
+                
             }
             isPushed = false;
             return new String(label);

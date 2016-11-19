@@ -5,6 +5,8 @@
  */
 package client.distributeur.Vue.ValiderContrat;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+import javax.swing.JOptionPane;
 import presse.contrat;
 
 /**
@@ -192,15 +194,30 @@ public class ValiderContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        // TODO add your handling code here:
+        // TODO : envoyer validerContrat
+        // Fentre de confirmation
+        ConfirmationValidationContrat confirmationValidationContrat = new ConfirmationValidationContrat(con);
+        confirmationValidationContrat.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonRefuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefuserActionPerformed
-        // TODO add your handling code here:
+        // TODO : envoyer refus le contrat
+        // Fenetre de confirmation
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "Votre refus de contrat a été envoyé !", "Refus de contrat", JOptionPane.WARNING_MESSAGE);
+        // Menu
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
+
     }//GEN-LAST:event_jButtonRefuserActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        // Menu
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
