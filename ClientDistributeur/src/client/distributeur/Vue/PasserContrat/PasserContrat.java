@@ -5,6 +5,11 @@
  */
 package client.distributeur.Vue.PasserContrat;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import presse.distributeur;
+import presse.editeur;
+
 /**
  *
  * @author Aurore
@@ -16,6 +21,20 @@ public class PasserContrat extends javax.swing.JFrame {
      */
     public PasserContrat() {
         initComponents();
+        
+        // Liste des éditeur
+        // TODO : a remplir avec WS
+        HashMap<Integer, editeur> listeEditeur = new HashMap<Integer, editeur>();
+        listeEditeur.put(1, new editeur(1, "test1", "t1"));
+        listeEditeur.put(2, new editeur(2, "test2", "t1"));
+        Iterator i = listeEditeur.keySet().iterator();
+        while (i.hasNext()) {
+            editeur edit = (editeur) i.next();
+            jComboBoxEditeur.addItem(edit.getNomE());
+        }
+        
+        // Liste des ...
+        
     }
 
     /**

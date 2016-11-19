@@ -6,6 +6,7 @@
 package client.distributeur;
 
 import client.distributeur.Vue.Menu.MenuAvantConnexion;
+import presse.distributeur;
 
 /**
  *
@@ -13,6 +14,8 @@ import client.distributeur.Vue.Menu.MenuAvantConnexion;
  */
 public class ClientDistributeur {
 
+    public static distributeur monDistributeur;
+    
     /**
      * @param args the command line arguments
      */

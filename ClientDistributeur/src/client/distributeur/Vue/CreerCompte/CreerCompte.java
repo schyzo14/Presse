@@ -5,9 +5,9 @@
  */
 package client.distributeur.Vue.CreerCompte;
 
-import client.distributeur.Vue.Menu.MenuDistributeur;
-import client.distributeur.Vue.SeConnecter.SeConnecter;
+import client.distributeur.ClientDistributeur;
 import javax.swing.JOptionPane;
+import presse.distributeur;
 
 /**
  *
@@ -20,6 +20,10 @@ public class CreerCompte extends javax.swing.JFrame {
      */
     public CreerCompte() {
         initComponents();
+        
+        // initialisation des champs
+        jTextFieldMail.setText("");
+        jTextFieldNom.setText("");
     }
 
     /**
@@ -112,14 +116,25 @@ public class CreerCompte extends javax.swing.JFrame {
             jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
             //
-            // TO DO : Créer un compte auprès du serveur web --> récupérer mdp
+            // TO DO : Créer un compte auprès du serveur web
             //
-            String mdp = "XXX";
+        /*    if (mail déjà utilisé) {
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, messageErreur, "Erreur de création", JOptionPane.WARNING_MESSAGE);
+            } else { // Compte créé */
+                String mdp = "XXX";
+                
+                // Garder le compte distributeur
+            //    ClientDistributeur.monDistributeur = distributeurRenvoye;
             
-            // Compte créé --> fenêtre de confirmation
-            ConfirmationCreationCompte confirmationCreationCompte = new ConfirmationCreationCompte(mdp);
-            confirmationCreationCompte.setVisible(true);
-            this.setVisible(false);
+                // Compte créé --> fenêtre de confirmation
+                ConfirmationCreationCompte confirmationCreationCompte = new ConfirmationCreationCompte(mdp);
+                confirmationCreationCompte.setVisible(true);
+                this.setVisible(false);
+        /*    } */
+            
+            
+           
         }
         
     }//GEN-LAST:event_jButtonValiderActionPerformed

@@ -5,6 +5,7 @@
  */
 package client.distributeur.Vue.SeConnecter;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -99,9 +100,30 @@ public class SeConnecter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        MenuDistributeur menuDistributeur = new MenuDistributeur();
-        menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        // On récupère le contenu des champs
+        String mail = jTextFieldMail.getText();
+        String mdp = jTextFieldMdp.getText();
+        
+        // On vérifie que les champs sont complétés
+        if (mail.equals("") || mdp.equals("")) {
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
+        } else {
+            //
+            // TO DO : se connecter auprès du serveur web
+            //
+        /*    if (refus connection) {
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, messageErreur, "Erreur de création", JOptionPane.WARNING_MESSAGE);
+            } else { // connection ok */
+                // Garder le compte distributeur
+            //    ClientDistributeur.monDistributeur = distributeurRenvoye;
+                MenuDistributeur menuDistributeur = new MenuDistributeur();
+                menuDistributeur.setVisible(true);
+                this.setVisible(false);
+        //    }
+        }
+        
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**
