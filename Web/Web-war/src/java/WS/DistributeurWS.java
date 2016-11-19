@@ -9,11 +9,11 @@ import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import services.DistributeurBean;
 import com.google.gson.Gson;
-import services.ContratBean;
-import services.EditeurBean;
-import services.TitreBean;
+import services.ContratBeanLocal;
+import services.DistributeurBeanLocal;
+import services.EditeurBeanLocal;
+import services.TitreBeanLocal;
 
 /**
  *
@@ -23,16 +23,16 @@ import services.TitreBean;
 public class DistributeurWS {
     
     @EJB
-    private DistributeurBean distributeurBean;
+    private DistributeurBeanLocal distributeurBean;
     
     @EJB
-    private EditeurBean editeurBean;
+    private EditeurBeanLocal editeurBean;
     
     @EJB
-    private TitreBean titreBean;
+    private TitreBeanLocal titreBean;
     
     @EJB
-    private ContratBean contratBean;
+    private ContratBeanLocal contratBean;
 
     private Gson gson;
 

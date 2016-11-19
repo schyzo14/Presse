@@ -6,12 +6,14 @@
 package services;
 
 import java.util.HashMap;
+import javax.ejb.Singleton;
 import presse.editeur;
 
 /**
  *
  * @author Aurore
  */
+@Singleton
 public class EditeurBean implements EditeurBeanLocal{
     
     public static HashMap<Integer, editeur> lesEditeurs = new HashMap<Integer, editeur>();

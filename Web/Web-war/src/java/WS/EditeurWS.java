@@ -10,7 +10,7 @@ import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import services.ContratBean;
+import services.ContratBeanLocal;
 
 /**
  *
@@ -20,7 +20,7 @@ import services.ContratBean;
 public class EditeurWS {
     
     @EJB
-    private ContratBean contratBean;
+    private ContratBeanLocal contratBean;
 
     private Gson gson;
 

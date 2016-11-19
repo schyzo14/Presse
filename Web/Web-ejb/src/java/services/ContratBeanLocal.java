@@ -35,4 +35,5 @@ public interface ContratBeanLocal {
     public HashMap<Integer, contrat> listeContratAValiderEditeur(int editeurId);
     
     public contrat validerContratEditeur(int contratId);
+    
 }

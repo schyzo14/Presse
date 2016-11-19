@@ -7,12 +7,14 @@ package services;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.ejb.Singleton;
 import presse.distributeur;
 
 /**
  *
  * @author Aurore
  */
+@Singleton
 public class DistributeurBean implements DistributeurBeanLocal {
     
     public static HashMap<String, distributeur> lesdistributeurs;

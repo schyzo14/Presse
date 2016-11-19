@@ -7,6 +7,7 @@ package services;
 
 import java.util.Date;
 import java.util.HashMap;
+import javax.ejb.Singleton;
 import presse.contrat;
 import presse.distributeur;
 import presse.editeur;
@@ -16,6 +17,7 @@ import presse.titre;
  *
  * @author Aurore
  */
+@Singleton
 public class ContratBean implements ContratBeanLocal {
     
     public HashMap<Integer, contrat> lesContrats;

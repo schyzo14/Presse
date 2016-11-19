@@ -6,12 +6,14 @@
 package services;
 
 import java.util.HashMap;
+import javax.ejb.Singleton;
 import presse.titre;
 
 /**
  *
  * @author Aurore
  */
+@Singleton
 public class TitreBean implements TitreBeanLocal{
     
     public static HashMap<Integer, titre> lesTitres = new HashMap<Integer, titre>();
