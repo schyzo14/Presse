@@ -8,6 +8,7 @@ package services;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.ejb.Singleton;
+import presse.contrat;
 import presse.distributeur;
 
 /**
@@ -17,12 +18,10 @@ import presse.distributeur;
 @Singleton
 public class DistributeurBean implements DistributeurBeanLocal {
     
-    public static HashMap<String, distributeur> lesdistributeurs;
+    public static HashMap<String, distributeur> lesdistributeurs = new HashMap<String, distributeur>();
     int lastId;
 
-    public DistributeurBean() {
-        lesdistributeurs = new HashMap<>();
-        
+    public DistributeurBean() {        
         // Compte distributeur déjà existant
         // TODO : récupérer les distributeurs de GestionDistributeurs
         lesdistributeurs.put("CONTACT@HACHETTEDIFF.FR", new distributeur(1, "DISTRIBUTEURDIFF", "CONTACT@HACHETTEDIFF.FR", "111"));

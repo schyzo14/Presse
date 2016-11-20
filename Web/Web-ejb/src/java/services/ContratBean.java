@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +29,13 @@ public class ContratBean implements ContratBeanLocal {
 
     public ContratBean() {
         lesContrats = new HashMap<Integer, contrat>();
-        dernierId = 1;
+        lesContrats.put(1, new contrat(1, 10, 12, 0, null, null, "ATTENTECOUT", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(1)));
+        lesContrats.put(2, new contrat(2, 10, 12, 0, null, null, "ATTENTEVALDISTRIB", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(2)));
+        lesContrats.put(3, new contrat(3, 10, 12, 0, null, null, "ATTENTERECEPISSE", EditeurBean.lesEditeurs.get(2), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(3)));
+        lesContrats.put(4, new contrat(4, 10, 12, 0, null, null, "ATTENTEVALEDITEUR", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(1)));
+        lesContrats.put(5, new contrat(5, 10, 12, 0, null, null, "VALIDATIONEDITEUR", EditeurBean.lesEditeurs.get(2), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(2)));
+        lesContrats.put(6, new contrat(6, 10, 12, 0, null, null, "REFUSDISTRIBUTEUR", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(3)));
+        dernierId = 6;
         
         lesEtats = new HashMap<Integer, String>();
         lesEtats.put(1, "ATTENTECOUT");
@@ -52,21 +59,20 @@ public class ContratBean implements ContratBeanLocal {
         String etat = lesEtats.get(1);
         
         editeur ed = EditeurBean.lesEditeurs.get(editeurId);
+        titre t = TitreBean.lesTitres.get(titreId);
         distributeur distrib = null;
-        HashMap<String, distributeur> listDis = DistributeurBean.lesdistributeurs;
-        Iterator i = listDis.keySet().iterator();
+        Iterator i = DistributeurBean.lesdistributeurs.values().iterator();
         while (i.hasNext()) {
-            String distribI = (String) i.next();
-            distributeur dis = listDis.get(distribI);
+            distributeur dis = (distributeur) i.next();
             if (dis.getNumD() == distributeurId) {
                 distrib = dis;
+                System.out.println(distrib.getNomD());
+                contrat con = new contrat(numC, nbCopies, duree, cout, dateVal, datePaie, etat, ed, distrib, t);
+                lesContrats.put(numC, con);
+                return con;
             }
         }
-        titre t = TitreBean.lesTitres.get(titreId);
-        
-        contrat con = new contrat(numC, nbCopies, duree, cout, dateVal, datePaie, etat, ed, distrib, t);
-        DistributeurBean.lesdistributeurs.get(distrib.getMailD()).getListeContrats().put(numC, con);
-        return con;
+        return null;
     }
 
     

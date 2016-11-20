@@ -11,9 +11,13 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import com.google.gson.Gson;
 import presse.distributeur;
+import services.ContratBean;
 import services.ContratBeanLocal;
+import services.DistributeurBean;
 import services.DistributeurBeanLocal;
+import services.EditeurBean;
 import services.EditeurBeanLocal;
+import services.TitreBean;
 import services.TitreBeanLocal;
 
 /**
@@ -24,16 +28,16 @@ import services.TitreBeanLocal;
 public class DistributeurWS {
     
     @EJB
-    private DistributeurBeanLocal distributeurBean;
+    private DistributeurBeanLocal distributeurBean = new DistributeurBean();
     
     @EJB
-    private EditeurBeanLocal editeurBean;
+    private EditeurBeanLocal editeurBean = new EditeurBean();
     
     @EJB
-    private TitreBeanLocal titreBean;
+    private TitreBeanLocal titreBean = new TitreBean();
     
     @EJB
-    private ContratBeanLocal contratBean;
+    private ContratBeanLocal contratBean = new ContratBean();
 
     private Gson gson;
 
