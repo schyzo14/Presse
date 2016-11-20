@@ -25,7 +25,7 @@ import services.TitreBeanLocal;
  * @author Aurore
  */
 @WebService(serviceName = "DistributeurWS")
-public class DistributeurWS {
+public class DistributeurEditeurWS {
     
     @EJB
     private DistributeurBeanLocal distributeurBean = new DistributeurBean();
@@ -41,7 +41,7 @@ public class DistributeurWS {
 
     private Gson gson;
 
-    public DistributeurWS() {
+    public DistributeurEditeurWS() {
         this.gson = new Gson();
     }
 
@@ -176,6 +176,64 @@ public class DistributeurWS {
     @WebMethod(operationName="envoiRecepisse")
     public String envoiRecepisse(@WebParam(name="contratId") Integer contratId, @WebParam(name="recepisse") String recepisse) {
         return this.gson.toJson(this.contratBean.setRecepisse(contratId, recepisse));
+    }
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Liste des contrats en attente du cout
+     * 
+     * @param editeurId
+     * 
+     * @return liste des contrat
+     */
+    @WebMethod(operationName="listeContratAttenteCout")
+    public String listeContratAttenteCout(@WebParam(name="editeurId") Integer editeurId) {
+        return this.gson.toJson(this.contratBean.listeContratAttenteCout(editeurId));
+    }
+
+    
+    /**
+     * cout d'un contrat
+     * 
+     * @param contratId
+     * @param cout
+     * 
+     * @return le contrat
+     */
+    @WebMethod(operationName="coutContrat")
+    public String coutContrat(@WebParam(name="contratId") Integer contratId, @WebParam(name="cout") float cout) {
+        return this.gson.toJson(this.contratBean.setCout(contratId, cout));
+    }
+    
+    
+    /**
+     * liste des contrat a valider par l'éditeur
+     * 
+     * @param editeurId
+     * 
+     * @return liste des contrats
+     */
+    @WebMethod(operationName="listeContratAValiderEditeur")
+    public String listeContratAValiderEditeur(@WebParam(name="editeurId") Integer editeurId) {
+        return this.gson.toJson(this.contratBean.listeContratAValiderEditeur(editeurId));
+    }
+    
+
+    /**
+     * validation du contrat après récéption d'un récépissé
+     * 
+     * @param numContrat    numéro du contrat à valider
+     *
+     * @return le contrat
+     */
+    @WebMethod(operationName="validerContratEditeur")
+    public String validerContratEditeur(@WebParam(name="numContrat") Integer numContrat) {
+        return this.gson.toJson(this.contratBean.validerContratEditeur(numContrat));
     }
 
 }

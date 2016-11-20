@@ -155,19 +155,22 @@ public class ContratBean implements ContratBeanLocal {
     }
 
     
+    
+    
+
     @Override
     public HashMap<Integer, contrat> listeContratAttenteCout(int editeurId) {
-        // Initialisation : Liste des contrats en attente de cout
+        // Initialisation : Liste des contrats en attente de recepisse
         HashMap<Integer, contrat> listeContratAttenteCout = new HashMap<Integer, contrat>();
         
         // parcours des contrats
         for (int key : lesContrats.keySet()) {
             contrat con = lesContrats.get(key);
             
-            // Si l'état est en attente du cout
+            // Si l'état est en attente de recepisse
             if (con.getEtatC().equals(lesEtats.get(1))) {
                 
-                // Si le contrat est à l'éditeur
+                // Si le contrat est au distributeur
                 if (con.getEditeurC().getNumE()== editeurId) {
                     
                     // on ajoute le contrat à la liste qui sera renvoyée
@@ -178,7 +181,6 @@ public class ContratBean implements ContratBeanLocal {
         
         return listeContratAttenteCout;
     }
-
     
     @Override
     public contrat setCout(int contratId, float cout) {
