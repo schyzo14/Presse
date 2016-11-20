@@ -26,6 +26,7 @@ public class ListenerJMS implements MessageListener {
                 String text = ((StreamMessage) message).readString();
                 System.out.println(text);
                 NotificationNouveauVolume nnv = new NotificationNouveauVolume();
+                nnv.setReceived(text);
                 nnv.setVisible(true);
             } catch (JMSException ex) {
                 Logger.getLogger(ListenerJMS.class.getName()).log(Level.SEVERE, null, ex);

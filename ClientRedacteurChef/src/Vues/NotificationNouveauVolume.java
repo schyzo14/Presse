@@ -5,17 +5,36 @@
  */
 package Vues;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import presse.article;
+import presse.volume;
+
 /**
  *
  * @author Khadija
  */
 public class NotificationNouveauVolume extends javax.swing.JFrame {
-
+    private String received;
+    private Gson gson;
+    
     /**
      * Creates new form NotificationNouveauVolume
      */
     public NotificationNouveauVolume() {
+        gson = new Gson();
         initComponents();
+    }
+    
+    public void setReceived(String s) {
+        //Transformation du json à HashMap Pub
+        java.lang.reflect.Type typeVolume = new TypeToken<volume>(){}.getType();
+        volume v = gson.fromJson(s, typeVolume);
+        String affichage = "Volume " + Integer.toString(v.getNumV()) + " :\n";
+        for(article a : v.getListeArticles().values()) {
+            affichage += Integer.toString(a.getNumA()) + "- " + a.getNomA() + "\n";
+        }
+        this.jTextAreaNouveauVolume.setText(affichage);
     }
 
     /**
@@ -29,17 +48,18 @@ public class NotificationNouveauVolume extends javax.swing.JFrame {
 
         jLabelNouveauVolume = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaNouveauVolume = new javax.swing.JTextArea();
         jButtonOk = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nouveau volume");
 
         jLabelNouveauVolume.setText("Le volume suivant a été ajouté au serveur d'archives :");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaNouveauVolume.setEditable(false);
+        jTextAreaNouveauVolume.setColumns(20);
+        jTextAreaNouveauVolume.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaNouveauVolume);
 
         jButtonOk.setText("Ok");
         jButtonOk.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +99,7 @@ public class NotificationNouveauVolume extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButtonOkActionPerformed
 
     /**
@@ -121,6 +141,6 @@ public class NotificationNouveauVolume extends javax.swing.JFrame {
     private javax.swing.JButton jButtonOk;
     private javax.swing.JLabel jLabelNouveauVolume;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaNouveauVolume;
     // End of variables declaration//GEN-END:variables
 }
