@@ -7,17 +7,24 @@ package REST_MiseSousPresse;
 
 import REST.PresseBeanLocal;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import presse.article;
+import presse.volume;
 
 /**
  *
@@ -44,6 +51,13 @@ public class articlesRessource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getListeArticles() {
         return this.gson.toJson(this.presseBean.getListeArticles());
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String postJsonArticle(@QueryParam("unArticle") String art) {
+        System.out.println("postJsonArticle articlesRessource : "+art);
+        return this.gson.toJson(this.presseBean.addArticleSelect(art));
     }
     
     /**

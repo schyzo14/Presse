@@ -25,6 +25,7 @@ public class PresseBean implements PresseBeanLocal{
     private HashMap<Integer, publicite> listePublicite;
     private HashMap<Integer, volume> listeVolume;
     private int lastid;
+    private HashMap<Integer, article> listeArticlesSelect = new HashMap<Integer, article>();
     
     public PresseBean() {
                
@@ -128,5 +129,17 @@ public class PresseBean implements PresseBeanLocal{
     public HashMap<Integer, publicite> getListePublicite() {
         return this.listePublicite;
     }
+    
+    @Override
+    public HashMap<Integer, article> listeArticleSelect() {
+        return this.listeArticlesSelect;
+    }
+    
+    @Override
+    public String addArticleSelect(String unArtSel){
+        System.out.println("unArtSel : "+unArtSel);
+        return "ok";
+    }
+    
    
 }
