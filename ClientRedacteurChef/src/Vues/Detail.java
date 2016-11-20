@@ -36,7 +36,8 @@ public class Detail extends javax.swing.JFrame {
                 Object cle = itMC.next();
                 String motscles = listeMC.get(cle).getMotCle();
                 System.out.println("modele : "+motscles);
-                modele.addElement(motscles);
+                String strMC = motscles.replaceAll("\\[", "").replaceAll("\\]","");
+                modele.addElement(strMC);
             }
         
         jTextArea_ContenuDetailArticle.setText(contenu);
