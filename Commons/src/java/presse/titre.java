@@ -21,6 +21,9 @@ public class titre {
     public titre(int numT, String nomT) {
         this.numT = numT;
         this.nomT = nomT;
+        this.listeMotsCles = new HashMap<>();
+        this.listeVolumes = new HashMap<>();
+        this.listeContrats = new HashMap<>();
     }
 
     public int getNumT() {

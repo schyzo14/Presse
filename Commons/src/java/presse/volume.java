@@ -14,10 +14,11 @@ import java.util.HashMap;
 public class volume {
     private int numV;
     private HashMap<Integer,article> listeArticles;
-    private titre t;
+    private int numT;
 
     public volume(int numV) {
         this.numV = numV;
+        this.listeArticles = new HashMap<>();
     }
 
     public int getNumV() {
@@ -36,11 +37,11 @@ public class volume {
         this.listeArticles = listeArticles;
     }
 
-    public titre getT() {
-        return t;
+    public int getNumT() {
+        return numT;
     }
 
-    public void setT(titre t) {
-        this.t = t;
+    public void setNumT(int numT) {
+        this.numT = numT;
     }
 }
