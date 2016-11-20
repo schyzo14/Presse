@@ -43,12 +43,13 @@ public class ClientREST_ArticleJournaliste {
 
     public String postJsonArticleJournaliste(String nomArticle, String nomAuteur, String contenu, String motscles) throws ClientErrorException {
         System.out.println("postJsonArticle : "+contenu);
-        webTarget = webTarget.queryParam("nomArticle", nomArticle);
-        webTarget = webTarget.queryParam("nomAuteur", nomAuteur);
-        webTarget = webTarget.queryParam("contenu", contenu);
-        webTarget = webTarget.queryParam("motscles", motscles);
+        WebTarget web = client.target(BASE_URI).path("articles");
+        web = web.queryParam("nomArticle", nomArticle);
+        web = web.queryParam("nomAuteur", nomAuteur);
+        web = web.queryParam("contenu", contenu);
+        web = web.queryParam("motscles", motscles);
         
-        return webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(MediaType.APPLICATION_JSON), String.class);
+        return web.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(MediaType.APPLICATION_JSON), String.class);
     
     }
 
