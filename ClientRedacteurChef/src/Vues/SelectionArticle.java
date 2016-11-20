@@ -6,6 +6,7 @@
 package Vues;
 
 import JMS.ReceptionJMSNotification;
+import REST.ClientREST_MiseSousPresse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import REST.ClientREST_TransmissionArticles;
@@ -27,6 +28,7 @@ import presse.motsCles;
 public class SelectionArticle extends javax.swing.JFrame {
 
     ClientREST_TransmissionArticles restTransmissionArticles = new ClientREST_TransmissionArticles();
+    ClientREST_MiseSousPresse restMiseSousPresse = new ClientREST_MiseSousPresse();
     private HashMap<Integer, article> listeArticles;
     private HashMap<Integer, article> detailArticles;
     
@@ -263,6 +265,7 @@ public class SelectionArticle extends javax.swing.JFrame {
         //Récupérer les articles sélectionnés
         article art;
         HashMap<Integer,article> listeArticleSelect = new HashMap<Integer,article>();
+        Gson gson = new Gson();
         for(int i=0; i<jTable_SelectionArticle.getRowCount(); i++)
         {
             if((jTable_SelectionArticle.getModel().getValueAt(i, 3))!=null && jTable_SelectionArticle.getModel().getValueAt(i, 0)!=null)
@@ -270,18 +273,14 @@ public class SelectionArticle extends javax.swing.JFrame {
                 int numArt = Integer.parseInt(jTable_SelectionArticle.getModel().getValueAt(i, 0).toString());
                 String nomArt = jTable_SelectionArticle.getModel().getValueAt(i, 1).toString();
                 String contenu = (String) jTable_SelectionArticle.getModel().getValueAt(i, 2);
-                System.out.println("nomArt : "+nomArt + " et contenu : "+contenu);
+
                 //Stockage de l'article 
                 art = new article(numArt, nomArt, contenu);
-                listeArticleSelect.put(i, art);
-                
-                
+                System.out.println("envoi post : ");
+                restMiseSousPresse.postJsonArticle(gson.toJson(art));
             }
             
-        }
-        
-        //Partie Réseau (envoi POST à MiseSousPresse)
-
+        }        
     }//GEN-LAST:event_jButton_MettrePresseActionPerformed
 
     /**
