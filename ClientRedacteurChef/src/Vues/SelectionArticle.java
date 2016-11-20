@@ -5,6 +5,7 @@
  */
 package Vues;
 
+import JMS.ReceptionJMSNotification;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import REST.ClientREST_TransmissionArticles;
@@ -31,6 +32,7 @@ public class SelectionArticle extends javax.swing.JFrame {
      */
     public SelectionArticle() {
         Gson gson = new Gson();
+        ReceptionJMSNotification rjmsn = new ReceptionJMSNotification();
 
         initComponents();
 
