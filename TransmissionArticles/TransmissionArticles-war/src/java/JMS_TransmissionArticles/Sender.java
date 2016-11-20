@@ -5,6 +5,8 @@
  */
 package JMS_TransmissionArticles;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,6 +18,7 @@ import javax.jms.ConnectionFactory;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
+import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 import presse.article;
 
@@ -24,33 +27,33 @@ import presse.article;
  * @author manou
  */
 public class Sender {
-    public static void main(String[] args) {
-        Context context = null;
-        ConnectionFactory factory = null;
-        Connection connection = null;
-        String factoryName = "ConnectionFactory";
-        String destName = null;
-        Destination dest = null;
-        int count = 1;
-        Session session = null;
-        MessageProducer sender = null;
-        String text = "Message ";
-        
 
-        if (args.length < 1 || args.length > 2) {
-            System.out.println("usage: Sender <destination> [count]");
-            System.exit(1);
-        }
+    private InitialContext context;
+    private ConnectionFactory factory;
+    private Connection connection;
+    private String factoryName;
+    private String destName;
+    private Destination dest;
+    private Session session;
+    private MessageProducer sender;
 
-        destName = args[0];
-        if (args.length == 2) {
-            count = Integer.parseInt(args[1]);
-        }
+    public Sender() {
+        factory = null;
+        connection = null;
+        factoryName = "jms/__defaultConnectionFactory";
+        destName = null;
+        dest = null;
+        session = null;
+        sender = null;
+
+        destName = "jms/ArticleTransmis";
 
         try {
-            // create the JNDI initial context (charger le JNDI.properties).
+            System.setProperty("java.naming.factory.initial",
+                    "com.sun.enterprise.naming.SerialInitContextFactory");
+            System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
+            System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             context = new InitialContext();
-
             // look up the ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
@@ -62,47 +65,36 @@ public class Sender {
 
             // create the session
             session = connection.createSession(
-                false, Session.AUTO_ACKNOWLEDGE);
+                    false, Session.AUTO_ACKNOWLEDGE);
 
             // create the sender
             sender = session.createProducer(dest);
 
-            // start the connection, to enable message sends (thread)
+            // start the connection, to enable message sends
             connection.start();
-            
-            //Construction du message puis envoie
-            //On envoie un Objet contenant les champs récupérer via REST (A FAIRE)
-                ObjectMessage message = session.createObjectMessage();
-                //article a = new article();
-                //auteur a = new auteur();
-                //motscles mc = new motscles();
-                message.setObject("Les elements saisis par l'utilisateur");
-                sender.send(message);
-                //A refaire 2 deux 
-                System.out.println("Sent: ");
-        } catch (JMSException exception) {
+        } catch (JMSException | NamingException exception) {
             exception.printStackTrace();
-        } catch (NamingException exception) {
-            exception.printStackTrace();
-        } finally {
-            // close the context
-            if (context != null) {
-                try {
-                    context.close();
-                } catch (NamingException exception) {
-                    exception.printStackTrace();
-                }
-            }
-
-            // close the connection
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (JMSException exception) {
-                    exception.printStackTrace();
-                }
-            }
         }
     }
     
+    public void sendArticle(Object art) {
+        try {
+            StreamMessage sm = session.createStreamMessage();
+            sm.writeObject(art);
+            sender.send(sm);
+        } catch (JMSException ex) {
+            Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void closeConnexion() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (JMSException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
 }
