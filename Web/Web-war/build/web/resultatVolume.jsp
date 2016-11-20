@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Résultat de la recherche du volume : <%= request.getParameter("nomVolume") %></h1>
+        <h2>Titre : <%= request.getParameter("selectionTitre") %></h2>
         <table></table>
     </body>
 </html>
