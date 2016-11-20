@@ -34,6 +34,7 @@ public interface PresseBeanLocal {
     public publicite getPublicite(int numPub);
     public HashMap<Integer, publicite> getListePublicite();
     
-    
+    public HashMap<Integer, article> listeArticleSelect();
+    public String addArticleSelect(String unArtSel);
     
 }

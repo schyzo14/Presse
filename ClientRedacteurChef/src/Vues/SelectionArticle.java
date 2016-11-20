@@ -6,6 +6,7 @@
 package Vues;
 
 import JMS.ReceptionJMSNotification;
+import REST.ClientREST_MiseSousPresse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import REST.ClientREST_TransmissionArticles;
@@ -13,6 +14,9 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import presse.article;
 import presse.motsCles;
@@ -24,8 +28,10 @@ import presse.motsCles;
 public class SelectionArticle extends javax.swing.JFrame {
 
     ClientREST_TransmissionArticles restTransmissionArticles = new ClientREST_TransmissionArticles();
+    ClientREST_MiseSousPresse restMiseSousPresse = new ClientREST_MiseSousPresse();
     private HashMap<Integer, article> listeArticles;
     private HashMap<Integer, article> detailArticles;
+    
 
     /**
      * Creates new form SelectionArticle
@@ -35,7 +41,8 @@ public class SelectionArticle extends javax.swing.JFrame {
         ReceptionJMSNotification rjmsn = new ReceptionJMSNotification();
 
         initComponents();
-
+        
+        
         //Récupérer la notification et afficher s'il y a
         //Afficher la liste des articles
         String articles = restTransmissionArticles.getListeArticles();
@@ -51,8 +58,8 @@ public class SelectionArticle extends javax.swing.JFrame {
         while (itArt.hasNext()) {
             Object cle = itArt.next();
             jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getNumA(), i, 0);
-            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getContenuA(), i, 1);
-            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getNomA(), i, 2);
+            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getNomA(), i, 1);
+            jTable_SelectionArticle.setValueAt(listeArticles.get(cle).getContenuA(), i, 2);           
             
             i++;
         }
@@ -70,6 +77,7 @@ public class SelectionArticle extends javax.swing.JFrame {
 
         jPanel_SelectionArticle = new javax.swing.JPanel();
         jScrollPane_SelectionArticle = new javax.swing.JScrollPane();
+        JCheckBox checkBox = new javax.swing.JCheckBox();
         jTable_SelectionArticle = new javax.swing.JTable();
         jButton_QuitterSelection = new javax.swing.JButton();
         jButton_DetailSelection = new javax.swing.JButton();
@@ -111,14 +119,14 @@ public class SelectionArticle extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nom", "Contenu", "Auteur", "Ajouter au volume"
+                "Numéro", "Nom", "Contenu", "Ajouter au volume"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -131,6 +139,7 @@ public class SelectionArticle extends javax.swing.JFrame {
         });
         jTable_SelectionArticle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane_SelectionArticle.setViewportView(jTable_SelectionArticle);
+        jTable_SelectionArticle.getColumn("Ajouter au volume").setCellEditor(new DefaultCellEditor(checkBox));
 
         jButton_QuitterSelection.setText("Quitter");
         jButton_QuitterSelection.addActionListener(new java.awt.event.ActionListener() {
@@ -222,8 +231,7 @@ public class SelectionArticle extends javax.swing.JFrame {
             String detailArt = restTransmissionArticles.getDetailArticle(idArticle);
 
             //Transformation du json à HashMap Articles
-            java.lang.reflect.Type detailArtic = new TypeToken<article>() {
-            }.getType();
+            java.lang.reflect.Type detailArtic = new TypeToken<article>() {}.getType();
             article art = gson.fromJson(detailArt, detailArtic);
 
             String nomArt = art.getNomA();
@@ -254,8 +262,25 @@ public class SelectionArticle extends javax.swing.JFrame {
 
     private void jButton_MettrePresseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_MettrePresseActionPerformed
         // TODO add your handling code here:
-        //Partie Réseau
+        //Récupérer les articles sélectionnés
+        article art;
+        HashMap<Integer,article> listeArticleSelect = new HashMap<Integer,article>();
+        Gson gson = new Gson();
+        for(int i=0; i<jTable_SelectionArticle.getRowCount(); i++)
+        {
+            if((jTable_SelectionArticle.getModel().getValueAt(i, 3))!=null && jTable_SelectionArticle.getModel().getValueAt(i, 0)!=null)
+            {
+                int numArt = Integer.parseInt(jTable_SelectionArticle.getModel().getValueAt(i, 0).toString());
+                String nomArt = jTable_SelectionArticle.getModel().getValueAt(i, 1).toString();
+                String contenu = (String) jTable_SelectionArticle.getModel().getValueAt(i, 2);
 
+                //Stockage de l'article 
+                art = new article(numArt, nomArt, contenu);
+                System.out.println("envoi post : ");
+                restMiseSousPresse.postJsonArticle(gson.toJson(art));
+            }
+            
+        }        
     }//GEN-LAST:event_jButton_MettrePresseActionPerformed
 
     /**
