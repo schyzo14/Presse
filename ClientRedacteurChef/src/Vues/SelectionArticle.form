@@ -91,10 +91,10 @@
                     <Column editable="false" title="Nom" type="java.lang.String"/>
                     <Column editable="false" title="Contenu" type="java.lang.String"/>
                     <Column editable="false" title="Auteur" type="java.lang.String"/>
-                    <Column editable="false" title="Ajouter au volume" type="java.lang.Object"/>
+                    <Column editable="true" title="Ajouter au volume" type="java.lang.Boolean"/>
                   </Table>
                 </Property>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="jTable_SelectionArticle.getColumn(&quot;Ajouter au volume&quot;).setCellEditor(new DefaultCellEditor(checkBox));">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
@@ -125,6 +125,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="JCheckBox checkBox = new javax.swing.JCheckBox();"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
