@@ -5,6 +5,10 @@
  */
 package client.integrateur;
 
+import client.jms.NotificationJMS;
+import client.rest.ClientRESTVolume;
+import client.rest.ClientRESTPublicites;
+import client.rest.ClientRESTArticles;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
     private HashMap<Integer,publicite> listePub;
     private HashMap<Integer,article> listeArticles;
     Gson gson;
+    NotificationJMS notif;
     
     /**
      * Creates new form IntegrateurFen
@@ -56,6 +61,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
         
         //Affichage
         initComponents();
+        notif = new NotificationJMS();
         jListPubZone1.setModel(lesPubs);
         jListPubZone2.setModel(lesPubs);
     }
@@ -257,6 +263,9 @@ public class IntegrateurFen extends javax.swing.JFrame {
         String rep = clientVolume.addVolume(this.gson.toJson(v));
         System.out.println("Reponse : \n"+rep);
         
+        //Envoyer notification au rédacteur chef
+        notif.sendNotification(this.gson.toJson(v));
+        
         //Dialog Box Quitter
         Object[] options = {"Créer un nouveau volume",
             "Quitter"};
@@ -270,6 +279,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
                 options[1]);
 
         if(options[reponse].equals("Quitter")){
+            notif.closeConnexion();
             this.dispose();
         } else if(options[reponse].equals("Créer un nouveau volume")) {
             //Remettre tous les champs à vide

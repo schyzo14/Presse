@@ -3,37 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.integrateur;
+package client.rest;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * Jersey REST client generated for REST resource:publicitesRessource
- * [publicites]<br>
+ * Jersey REST client generated for REST resource:articlesRessource
+ * [articles]<br>
  * USAGE:
  * <pre>
-        ClientRESTPublicites client = new ClientRESTPublicites();
-        Object response = client.XXX(...);
-        // do whatever with response
-        client.close();
- </pre>
+ *        ClientRESTArticles client = new ClientRESTArticles();
+ *        Object response = client.XXX(...);
+ *        // do whatever with response
+ *        client.close();
+ * </pre>
  *
  * @author Khadija
  */
-public class ClientRESTPublicites {
+public class ClientRESTArticles {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/GestionPublicites-war/webresources";
+    private static final String BASE_URI = "http://localhost:8080/MiseSousPresse-war/webresources";
 
-    public ClientRESTPublicites() {
+    public ClientRESTArticles() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("publicites");
+        webTarget = client.target(BASE_URI).path("articles");
     }
 
-    public String getListePubs() throws ClientErrorException {
+    public String getListeArticles() throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
