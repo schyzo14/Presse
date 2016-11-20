@@ -5,7 +5,10 @@
  */
 package services;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.ejb.Local;
+import presse.titre;
 import presse.volume;
 
 
@@ -16,4 +19,6 @@ import presse.volume;
 @Local
 public interface archivesBeanLocal {
     public volume addVolume(String vol);
+    public ArrayList<titre> getTitreParNom(String nomT);
+    public ArrayList<titre> getTitreParMC(String nomT);
 }
