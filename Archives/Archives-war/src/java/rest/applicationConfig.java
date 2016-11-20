@@ -26,6 +26,7 @@ public class applicationConfig extends Application {
      * comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(rest.titreRessource.class);
         resources.add(rest.volumeRessource.class);
     }
 }
