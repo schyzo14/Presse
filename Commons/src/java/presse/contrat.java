@@ -21,7 +21,7 @@ public class contrat {
     private distributeur distributeurC;
     private editeur editeurC;
     private titre titreC;
-    private String etatC; // ATTENTECOUT, ATTENTEVALDISTRIB, ATTENTERECEPISSE, ATTENTEVALEDITEUR
+    private String etatC; // ATTENTECOUT, ATTENTEVALDISTRIB, ATTENTERECEPISSE, ATTENTEVALEDITEUR, VALIDATIONEDITEUR, REFUSDISTRIBUTEUR
     private String recepisseC;
 
     public contrat(int numC, int nbCopieC, int dureeC, float coutC, Date dateValC, Date datePaieC, String etat, editeur ed, distributeur distrib, titre t) {

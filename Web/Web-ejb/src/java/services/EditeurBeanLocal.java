@@ -15,5 +15,7 @@ import presse.editeur;
  */
 @Local
 public interface EditeurBeanLocal {
+    
     public HashMap<Integer, editeur> getListeEditeur();
+    
 }

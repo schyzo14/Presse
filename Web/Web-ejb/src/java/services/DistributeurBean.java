@@ -7,49 +7,49 @@ package services;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.ejb.Singleton;
+import presse.contrat;
 import presse.distributeur;
 
 /**
  *
  * @author Aurore
  */
+@Singleton
 public class DistributeurBean implements DistributeurBeanLocal {
     
-    public static HashMap<String, distributeur> lesdistributeurs;
+    public static HashMap<String, distributeur> lesdistributeurs = new HashMap<String, distributeur>();
+    int lastId;
 
-    public DistributeurBean() {
-        lesdistributeurs = new HashMap<>();
-        
+    public DistributeurBean() {        
         // Compte distributeur déjà existant
         // TODO : récupérer les distributeurs de GestionDistributeurs
-        lesdistributeurs.put("contact@hachetteDiff.fr", new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"));
-        lesdistributeurs.put("union@union.com", new distributeur(2, "Union", "union@union.com"));
-        lesdistributeurs.put("sodis@sodis.com", new distributeur(3, "Sodis", "sodis@sodis.com"));
+        lesdistributeurs.put("CONTACT@HACHETTEDIFF.FR", new distributeur(1, "DISTRIBUTEURDIFF", "CONTACT@HACHETTEDIFF.FR", "111"));
+        lesdistributeurs.put("UNION@UNION.COM", new distributeur(2, "UNION", "UNION@UNION.COM", "222"));
+        lesdistributeurs.put("SODIS@SODIS.COM", new distributeur(3, "SODIS", "SODIS@SODIS.COM", "333"));
+        
+        lastId = 4;
     }
     
     
     @Override
-    public distributeur inscrire(String mail, String nom) {
-        // On vérifie si le mail est déjà utilisé
-        if (! lesdistributeurs.containsKey(mail)) {
-            
-            // On vérifie si le nom est déjà utilisé
-            Iterator i = lesdistributeurs.keySet().iterator();
-            while (i.hasNext()) {
-                distributeur distrib = (distributeur) i.next();
-                if (distrib.getMailD().equals(nom)) {
-                    new Throwable("Le nom est déjà utilisé !");
-                }
+    public distributeur inscrire(String mail, String nom) {            
+        // On vérifie si le nom est déjà utilisé
+        Iterator i = lesdistributeurs.keySet().iterator();
+        boolean trouve = false;
+        while (i.hasNext()) {
+            String distribI = (String) i.next();
+            distributeur distrib = lesdistributeurs.get(distribI);
+            if (distrib.getMailD().toUpperCase().equals(mail.toUpperCase()) || distrib.getNomD().toUpperCase().equals(nom.toUpperCase())) {
+                return null;
             }
-            
-            // On créait un distributeur
-            distributeur distrib = new distributeur(0, nom, mail);
-            return distrib;
-            
-        } else {
-            new Throwable("Le mail est déjà utilisé !");
         }
-        return null;
+        
+        // On créait un distributeur
+        distributeur distrib = new distributeur(lastId, nom.toUpperCase(), mail.toUpperCase());
+        lastId = lastId+1;
+        lesdistributeurs.put(mail.toUpperCase(), distrib);
+        return distrib;
     }
 
     
@@ -62,16 +62,9 @@ public class DistributeurBean implements DistributeurBeanLocal {
             // On vérifie le mdp
             if (distrib.getMdpD().equals(mdp)) {
                 return distrib;
-            } else {
-                new Throwable("Le mot de passe est incorrect !");
             }
-            
-        } else {
-            new Throwable("Le mail est inconnu !");
         }
         return null;
-        
     }
 
-     
 }

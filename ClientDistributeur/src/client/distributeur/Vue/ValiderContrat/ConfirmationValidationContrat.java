@@ -5,17 +5,36 @@
  */
 package client.distributeur.Vue.ValiderContrat;
 
+import client.distributeur.Vue.Menu.MenuDistributeur;
+import java.util.HashMap;
+import presse.contrat;
+
+
 /**
  *
  * @author Aurore
  */
 public class ConfirmationValidationContrat extends javax.swing.JFrame {
+    
+    private static contrat con;
 
     /**
      * Creates new form ConfirmationValidationContrat
      */
-    public ConfirmationValidationContrat() {
+    public ConfirmationValidationContrat(contrat con) {
         initComponents();
+        this.con = con;
+        
+        // Montant
+        jLabelCout.setText("<html><b>"+con.getCoutC() + " €</b></html>");
+        
+        // Compte
+        // Liste des compte <editeur,compte>
+        HashMap<Integer, Integer> listeCompteEditeur = new HashMap<Integer, Integer>();
+        listeCompteEditeur.put(1, 11110000);
+        listeCompteEditeur.put(2, 22220000);
+        // Récupérer le compte de l'éditeur
+        jLabelCompte.setText(""+listeCompteEditeur.get(con.getEditeurC().getNumE()));
     }
 
     /**
@@ -40,11 +59,11 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
 
         jLabelContratValidé.setText("Vous venez de valider votre contrat.");
 
-        jLabelMerciFaireVirement.setText("Merci de faire un virement de ");
+        jLabelMerciFaireVirement.setText("Merci de faire un virement de :");
 
         jLabelCout.setToolTipText("");
 
-        jLabelSurLeCompte.setText("sur le compte");
+        jLabelSurLeCompte.setText("sur le compte :");
 
         jLabelCompte.setToolTipText("");
 
@@ -67,7 +86,7 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelMerciFaireVirement)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelCout, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelCout, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelSurLeCompte)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -106,7 +125,9 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
-        // TODO add your handling code here:
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**
@@ -139,7 +160,7 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfirmationValidationContrat().setVisible(true);
+                new ConfirmationValidationContrat(con).setVisible(true);
             }
         });
     }

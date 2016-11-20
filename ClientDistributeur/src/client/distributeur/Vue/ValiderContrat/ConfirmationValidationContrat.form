@@ -30,7 +30,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelMerciFaireVirement" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelCout" min="-2" pref="91" max="-2" attributes="0"/>
+                      <Component id="jLabelCout" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelSurLeCompte" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -84,7 +84,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelMerciFaireVirement">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Merci de faire un virement de "/>
+        <Property name="text" type="java.lang.String" value="Merci de faire un virement de :"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelCout">
@@ -94,7 +94,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelSurLeCompte">
       <Properties>
-        <Property name="text" type="java.lang.String" value="sur le compte"/>
+        <Property name="text" type="java.lang.String" value="sur le compte :"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelCompte">

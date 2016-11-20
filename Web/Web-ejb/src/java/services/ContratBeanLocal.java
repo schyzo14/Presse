@@ -22,7 +22,18 @@ public interface ContratBeanLocal {
     
     public contrat validerContrat(int contratId);
     
+    public contrat refuserContrat(int contratId);
+    
     public HashMap<Integer, contrat> listeContratRecepisse(int distributeurId);
     
     public contrat setRecepisse(int contratId, String recepisse);
+    
+    public HashMap<Integer, contrat> listeContratAttenteCout(int editeurId);
+    
+    public contrat setCout(int contratId, float cout);
+    
+    public HashMap<Integer, contrat> listeContratAValiderEditeur(int editeurId);
+    
+    public contrat validerContratEditeur(int contratId);
+    
 }

@@ -16,13 +16,20 @@ public class distributeur {
     private String nomD;
     private String mailD;
     private String mdpD;
-    private HashMap<Integer,contrat> listeContrats;
+
 
     public distributeur(int numD, String nomD, String mailD) {
         this.numD = numD;
         this.nomD = nomD;
         this.mailD = mailD;
         this.mdpD = Integer.toString(1 + (int)(Math.random() * ((1000 - 1) + 1)));
+    }
+    
+    public distributeur(int numD, String nomD, String mailD, String mdp) {
+        this.numD = numD;
+        this.nomD = nomD;
+        this.mailD = mailD;
+        this.mdpD = mdp;
     }
 
     public int getNumD() {
@@ -57,11 +64,4 @@ public class distributeur {
         this.mdpD = mdpD;
     }
 
-    public HashMap<Integer, contrat> getListeContrats() {
-        return listeContrats;
-    }
-
-    public void setListeContrats(HashMap<Integer, contrat> listeContrats) {
-        this.listeContrats = listeContrats;
-    }
 }

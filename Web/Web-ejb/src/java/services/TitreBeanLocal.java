@@ -17,4 +17,5 @@ import presse.titre;
 public interface TitreBeanLocal {
     
     public HashMap<Integer, titre> getListeTitre();
+    
 }
