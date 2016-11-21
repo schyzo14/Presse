@@ -7,8 +7,6 @@ package Vues;
 
 import com.google.gson.Gson;
 import REST.ClientREST_ArticleJournaliste;
-import REST.ClientREST_AuteurJournaliste;
-import REST.ClientREST_MotsClesJournaliste;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
@@ -22,9 +20,8 @@ import javax.swing.JOptionPane;
  * @author manou
  */
 public class TransmettreArticle extends javax.swing.JFrame {
+    //Création d'un objet Client REST
     ClientREST_ArticleJournaliste restArticle = new ClientREST_ArticleJournaliste();
-    ClientREST_AuteurJournaliste restAuteur = new ClientREST_AuteurJournaliste();
-    ClientREST_MotsClesJournaliste restMotsCles = new ClientREST_MotsClesJournaliste();
 
     /**
      * Creates new form TransmettreArticle
@@ -230,8 +227,6 @@ public class TransmettreArticle extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Fermer toutes les connexion je suppose
         restArticle.close();
-        restAuteur.close();
-        restMotsCles.close();
         
         //Fermeture de la fenêtre
         this.dispose();
@@ -242,18 +237,15 @@ public class TransmettreArticle extends javax.swing.JFrame {
         //On vérifie que tout les champs ont été saisi (sauf les mots-clés)
         if(!jTextField_NomArticle.getText().isEmpty() && !jTextField_AuteurArticle.getText().isEmpty() && !jTextArea_ContenuArticle.getText().isEmpty())
         {
+            //On récupère les élements saisis
             String nomArticle = jTextField_NomArticle.getText();
             String nomAuteur = jTextField_AuteurArticle.getText();
             String contenu = jTextArea_ContenuArticle.getText();
             DefaultListModel modele = (DefaultListModel) jList_MotsClesArticle.getModel();
             String motscles = modele.toString();
-            
-            System.out.println("AVANT post : "+contenu);
-            
-            //Transmettre à TransmissionArticles via REST (RESEAU)
+                        
+            //Transmettre les éléments à TransmissionArticles via REST (RESEAU)
             restArticle.postJsonArticleJournaliste(nomArticle, nomAuteur, contenu, motscles);
-            //restAuteur.postJsonAuteurJournaliste(nomArticle, nomAuteur, contenu, motscles);
-            //restMotsCles.postJsonMotsClesJournaliste(nomArticle, nomAuteur, contenu, motscles);
             
             //Affichage de la pop up 
             popUpArticle();
@@ -267,6 +259,7 @@ public class TransmettreArticle extends javax.swing.JFrame {
 
     private void popUpArticle() {
         //Custom button text
+        //Bouton Quitter ou Ecrire un autre article une fois que les éléments ont été envoyés à TransmettreArticle
         Object[] options = {"Quitter",
             "Ecrire un autre article"};
         int reponse = JOptionPane.showOptionDialog(this,
@@ -278,17 +271,18 @@ public class TransmettreArticle extends javax.swing.JFrame {
                 options,
                 options[1]);
         
+        //Clic sur le bouton Quitter
         if(options[reponse].equals("Quitter")){
             //Fermer toutes les connexion réseaux
             restArticle.close();
-            restAuteur.close();
-            restMotsCles.close();
             
             //Quitter
-            System.exit(0);
+            this.dispose();
+            
+        //Clic sur le bouton Ecrire un autre article
         }else if(options[reponse].equals("Ecrire un autre article"))
         {
-            //Remettre tous les champs à vide
+            //Remettre tous les champs à vide et vider la liste des mots-cles
             jTextField_NomArticle.setText("");
             jTextField_AuteurArticle.setText("");
             jTextArea_ContenuArticle.setText("");
@@ -300,6 +294,7 @@ public class TransmettreArticle extends javax.swing.JFrame {
     }
     private void jList_MotsClesArticleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList_MotsClesArticleKeyPressed
         // TODO add your handling code here:
+        //Possibilité de supprimer un mot-clé de la liste par appui sur la touche Suppr
         if (evt.getKeyChar() == Event.DELETE) {
             DefaultListModel modele = (DefaultListModel) jList_MotsClesArticle.getModel();
             modele.remove(jList_MotsClesArticle.getSelectedIndex());
@@ -308,7 +303,9 @@ public class TransmettreArticle extends javax.swing.JFrame {
 
     private void jTextField_MotsClesAjoutArticleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_MotsClesAjoutArticleKeyPressed
         // TODO add your handling code here:
+        //Possibilité d'ajouter un mot-clé par appui sur la touche Entrée du clavier
         if (evt.getKeyChar() == Event.ENTER) {
+            //Appel de la méthode pour ajouter un mot-clé dans la liste
             jButton_AjouterMotCléArticle.doClick();
         }
     }//GEN-LAST:event_jTextField_MotsClesAjoutArticleKeyPressed

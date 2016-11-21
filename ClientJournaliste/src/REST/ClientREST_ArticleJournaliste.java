@@ -35,12 +35,14 @@ public class ClientREST_ArticleJournaliste {
         webTarget = client.target(BASE_URI).path("articles");
     }
     
+    //Pour récupérer le détail d'un article en particulier
     public String getDetailArticle(String idArticle) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("articles/{0}", new Object[]{idArticle}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
 
+    //Pour envoyer les informations saisis par l'utilisateur au serveur TransmettreArticle
     public String postJsonArticleJournaliste(String nomArticle, String nomAuteur, String contenu, String motscles) throws ClientErrorException {
         System.out.println("postJsonArticle : "+contenu);
         WebTarget web = client.target(BASE_URI).path("articles");
