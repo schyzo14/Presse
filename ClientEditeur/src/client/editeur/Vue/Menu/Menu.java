@@ -5,17 +5,47 @@
  */
 package client.editeur.Vue.Menu;
 
+import client.editeur.ClientEditeur;
+import client.editeur.Vue.ContratCout.ListContratAttenteCout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import presse.editeur;
+
 /**
  *
  * @author Aurore
  */
 public class Menu extends javax.swing.JFrame {
 
+    public HashMap<Integer, editeur> listeEditeur = new HashMap<Integer, editeur>();
+    
     /**
      * Creates new form MenuAvantConnexion
      */
     public Menu() {
         initComponents();
+        
+        // Les éditeurs
+        try {
+            String s = ClientEditeur.port.getListeEditeur();
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<HashMap<Integer, editeur>>(){}.getType();
+            listeEditeur = gson.fromJson(s, type);
+            Iterator ie = listeEditeur.keySet().iterator();
+            while (ie.hasNext()) {
+                int editL = (int) ie.next();
+                jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
 
     /**
@@ -30,11 +60,13 @@ public class Menu extends javax.swing.JFrame {
         jButtonRepondreDemandes = new javax.swing.JButton();
         jButtonValiderContrat = new javax.swing.JButton();
         jButtonQuitter = new javax.swing.JButton();
+        jComboBoxEditeur = new javax.swing.JComboBox<>();
+        jLabelEditeur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
 
-        jButtonRepondreDemandes.setText("Répondre aux demandes de contrats");
+        jButtonRepondreDemandes.setText("Répondre aux demandes de coût des contrats");
         jButtonRepondreDemandes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRepondreDemandesActionPerformed(evt);
@@ -55,6 +87,8 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        jLabelEditeur.setText("Editeur :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -62,21 +96,29 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonRepondreDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                    .addComponent(jButtonRepondreDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonValiderContrat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonValiderContrat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabelEditeur)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxEditeur, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxEditeur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelEditeur))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(jButtonRepondreDemandes)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonValiderContrat)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
                 .addComponent(jButtonQuitter)
                 .addContainerGap())
         );
@@ -85,7 +127,22 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRepondreDemandesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRepondreDemandesActionPerformed
-        // TODO add your handling code here:
+        // Editeur choisi
+        String edChoix = (String) jComboBoxEditeur.getSelectedItem();
+        // On garde l'éditeur
+        Iterator ie = listeEditeur.keySet().iterator();
+        while (ie.hasNext()) {
+            int editL =  (int) ie.next();
+            editeur editLL = listeEditeur.get(editL);
+            if (editLL.getNomE().equals(edChoix)) {
+                ClientEditeur.monEditeur = editLL;
+            }
+        }
+        
+        // Ouvrir la liste des contrats en attente d'un cout
+        ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
+        listContratAttenteCout.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonRepondreDemandesActionPerformed
 
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
@@ -136,5 +193,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonQuitter;
     private javax.swing.JButton jButtonRepondreDemandes;
     private javax.swing.JButton jButtonValiderContrat;
+    private javax.swing.JComboBox<String> jComboBoxEditeur;
+    private javax.swing.JLabel jLabelEditeur;
     // End of variables declaration//GEN-END:variables
 }
