@@ -5,7 +5,13 @@
  */
 package client.distributeur.Vue.ValiderContrat;
 
+import client.distributeur.ClientDistributeur;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import presse.contrat;
 
@@ -194,23 +200,58 @@ public class ValiderContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        // TODO : envoyer validerContrat
-        // Fentre de confirmation
-        ConfirmationValidationContrat confirmationValidationContrat = new ConfirmationValidationContrat(con);
-        confirmationValidationContrat.setVisible(true);
-        this.setVisible(false);
+        try {
+            // on enregistre le cout
+            String s = ClientDistributeur.port.validerContrat(con.getNumC());
+            // On récupère le contrat
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
+            contrat con = gson.fromJson(s, type);
+            // SI le contrat est vide, il y a eu une erreur
+            if (con.getNumC() <= 0) {
+                String detailMessage = "Oups... Une erreur est survenue...";
+                // On affiche l'erreur
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // corfirmation validation
+                ConfirmationValidationContrat confirmationValidationContrat = new ConfirmationValidationContrat(con);
+                confirmationValidationContrat.setVisible(true);
+                this.setVisible(false);
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(ValiderContrat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonRefuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefuserActionPerformed
-        // TODO : envoyer refus le contrat
-        // Fenetre de confirmation
-        JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "Votre refus de contrat a été envoyé !", "Refus de contrat", JOptionPane.WARNING_MESSAGE);
-        // Menu
-        MenuDistributeur menuDistributeur = new MenuDistributeur();
-        menuDistributeur.setVisible(true);
-        this.setVisible(false);
-
+        try {
+            // on enregistre le cout
+            String s = ClientDistributeur.port.validerContrat(con.getNumC());
+            // On récupère le contrat
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
+            contrat con = gson.fromJson(s, type);
+            // SI le contrat est vide, il y a eu une erreur
+            if (con.getNumC() <= 0) {
+                String detailMessage = "Oups... Une erreur est survenue...";
+                // On affiche l'erreur
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // Fenetre de confirmation
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "Votre refus de contrat a été envoyé !", "Refus de contrat", JOptionPane.WARNING_MESSAGE);
+                // Menu
+                MenuDistributeur menuDistributeur = new MenuDistributeur();
+                menuDistributeur.setVisible(true);
+                this.setVisible(false);
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(ValiderContrat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonRefuserActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
