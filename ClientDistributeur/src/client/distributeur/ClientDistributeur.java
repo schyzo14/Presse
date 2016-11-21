@@ -11,7 +11,6 @@ import client.distributeur.ws.DistributeurEditeurWS_Service;
 import client.distributeur.ws.DistributeurEditeurWS_ServiceLocator;
 import java.rmi.RemoteException;
 import javax.xml.rpc.ServiceException;
-import javax.xml.ws.WebServiceRef;
 import presse.distributeur;
 
 /**
@@ -22,8 +21,8 @@ public class ClientDistributeur {
 
     public static distributeur monDistributeur;
     
-    static DistributeurEditeurWS_Service  service = new DistributeurEditeurWS_ServiceLocator();
-    static DistributeurEditeurWS_PortType  port;
+    public static DistributeurEditeurWS_Service  service = new DistributeurEditeurWS_ServiceLocator();
+    public static DistributeurEditeurWS_PortType  port;
     
      /**
      * @param args the command line arguments
@@ -32,14 +31,9 @@ public class ClientDistributeur {
         // WS
         port = service.getDistributeurEditeurWSPort();
         
-        String s = port.getListTitre();
-        System.out.println("retour = " + s);
-        String s1 = port.getListeEditeur();
-        System.out.println("retour = " + s1);
-        
         // Afficher la fenetre
-//        MenuAvantConnexion menuAvantConnexion = new MenuAvantConnexion();
-//        menuAvantConnexion.setVisible(true);
+        MenuAvantConnexion menuAvantConnexion = new MenuAvantConnexion();
+        menuAvantConnexion.setVisible(true);
         
     }
     
