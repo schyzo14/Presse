@@ -5,6 +5,14 @@
  */
 package client.editeur.Vue.ValiderContrat;
 
+import client.editeur.ClientEditeur;
+import client.editeur.Vue.Menu.Menu;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import presse.contrat;
 
 /**
@@ -21,6 +29,13 @@ public class ValiderContrat extends javax.swing.JFrame {
     public ValiderContrat(contrat con) {
         this.con = con;
         initComponents();
+        
+        // remplir les champs
+        jLabelChampCout.setText(con.getCoutC() + " €");
+        jLabelChampDuree.setText(con.getDureeC() + " mois");
+        jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());
+        jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
+        jLabelChampTitre.setText(con.getTitreC().getNomT());
     }
 
     /**
@@ -183,11 +198,35 @@ public class ValiderContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        // TODO add your handling code here:
+                try {
+            // on enregistre la validation
+            String s = ClientEditeur.port.listeContratAValiderEditeur(con.getNumC());
+            // On récupère le contrat
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
+            contrat con = gson.fromJson(s, type);
+            // SI le contrat est vide, il y a eu une erreur
+            if (con.getNumC() <= 0) {
+                String detailMessage = "Oups... Une erreur est survenue...";
+                // On affiche l'erreur
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // corfirmation validation
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "Le contrat a été validé !", "Erreur de validation", JOptionPane.WARNING_MESSAGE);
+                this.setVisible(false);
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(ValiderContrat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
