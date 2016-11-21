@@ -83,6 +83,17 @@ public class archivesBean implements archivesBeanLocal {
         
         return titresTrouves;
     }
+    
+    @Override
+    public ArrayList<titre> getTitres() {
+        ArrayList<titre> titresTrouves = new ArrayList<>();
+        
+        for(titre t : listeTitres.values()) {
+            titresTrouves.add(t);
+        }
+        
+        return titresTrouves;
+    }
 
     @Override
     public ArrayList<titre> getTitreParMC(String nomT) {

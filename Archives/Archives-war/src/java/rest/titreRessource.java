@@ -29,7 +29,7 @@ import services.archivesBeanLocal;
  *
  * @author Schyzo
  */
-@Path("titre/{nomT}")
+@Path("titre")
 public class titreRessource {
     //Accès backoffice
     archivesBeanLocal archivesBean;
@@ -46,10 +46,18 @@ public class titreRessource {
         this.archivesBean = lookupArchivesBeanLocal();
     }
     
+    @Path("/{nomT}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTitreParNom(@PathParam("nomT") String nomTitre) {
         return this.gson.toJson(this.archivesBean.getTitreParNom(nomTitre));
+    }
+    
+    @Path("/getTitres")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTitres() {
+        return this.gson.toJson(this.archivesBean.getTitres());
     }
     
     /**
