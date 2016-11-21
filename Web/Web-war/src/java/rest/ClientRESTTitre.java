@@ -36,15 +36,10 @@ public class ClientRESTTitre {
         webTarget = client.target(BASE_URI).path("titre");
     }
 
-    public String getTitres() throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path("getTitres");
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-    }
-
     public ArrayList<titre> getTitreParNom(String nomT) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{nomT}));
+        WebTarget resource;
+        resource = webTarget
+                .queryParam("nomT", nomT);
         String titres = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         
         Gson gson = new Gson();
@@ -53,6 +48,27 @@ public class ClientRESTTitre {
         ArrayList<titre> listeTitres = gson.fromJson(titres, typeTitre);
         
         return listeTitres;
+    }
+    
+        public ArrayList<titre> getTitreParMC(String mc) throws ClientErrorException {
+            WebTarget resource;
+            resource = webTarget
+                    .queryParam("motsCles", mc);
+            resource = resource.path("motsCles");
+            String titres = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+
+            Gson gson = new Gson();
+
+            java.lang.reflect.Type typeTitre = new TypeToken<ArrayList<titre>>(){}.getType();
+            ArrayList<titre> listeTitres = gson.fromJson(titres, typeTitre);
+
+            return listeTitres;
+        }
+
+    public String getTitres() throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("getTitres");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
 
     public void close() {

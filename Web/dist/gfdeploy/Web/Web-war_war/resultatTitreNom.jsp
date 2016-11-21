@@ -18,7 +18,7 @@
             function validateForm() {
                 var x = document.forms["formulaire"]["numVolume"].value;
                 if (x === "") {
-                    alert("Il faut saisir un nom de volume");
+                    alert("Il faut saisir un numéro de volume");
                     return false;
                 }
                 var x = document.forms["formulaire"]["selectionTitre"].checked;
