@@ -30,6 +30,12 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         
+        // éditeur identifié
+        int idE = -1;
+        if (ClientEditeur.monEditeur != null) {
+            idE = ClientEditeur.monEditeur.getNumE();
+        }
+        
         // Les éditeurs
         try {
             String s = ClientEditeur.port.getListeEditeur();
@@ -41,6 +47,10 @@ public class Menu extends javax.swing.JFrame {
             while (ie.hasNext()) {
                 int editL = (int) ie.next();
                 jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
+                // Si identifié
+                if (idE == editL) {
+                    jComboBoxEditeur.setSelectedItem(listeEditeur.get(editL).getNomE());
+                }
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
