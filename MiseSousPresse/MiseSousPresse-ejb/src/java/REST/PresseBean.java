@@ -5,6 +5,8 @@
  */
 package REST;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import javax.ejb.Singleton;
 import presse.article;
@@ -15,7 +17,7 @@ import presse.volume;
 
 /**
  *
- * @author manou
+ * @author Manon
  */
 @Singleton
 public class PresseBean implements PresseBeanLocal{
@@ -110,6 +112,7 @@ public class PresseBean implements PresseBeanLocal{
         this.listeMotsCles = listeMC;
     }
 
+    //Récupérer les volumes
     @Override
     public volume getVolume(int numVol) {
         return this.listeVolume.get(numVol);
@@ -120,6 +123,7 @@ public class PresseBean implements PresseBeanLocal{
         return this.listeVolume;
     }
 
+    //Récupérer les publicités
     @Override
     public publicite getPublicite(int numPub) {
         return this.listePublicite.get(numPub);
@@ -130,14 +134,20 @@ public class PresseBean implements PresseBeanLocal{
         return this.listePublicite;
     }
     
+    //Gestion des articles sélectionnés
     @Override
     public HashMap<Integer, article> listeArticleSelect() {
         return this.listeArticlesSelect;
     }
     
+    
     @Override
     public String addArticleSelect(String unArtSel){
         System.out.println("unArtSel : "+unArtSel);
+        Gson gson = new Gson();
+        java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer, article>>() {}.getType();
+        listeArticlesSelect = gson.fromJson(unArtSel, typeArticles);
+        
         return "ok";
     }
     

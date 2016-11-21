@@ -47,12 +47,14 @@ public class articlesRessource {
         this.presseBean = lookupPresseBeanLocal();
     }
     
+    //Récupérer la liste des articles
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getListeArticles() {
         return this.gson.toJson(this.presseBean.getListeArticles());
     }
     
+    //Gérer les articles sélectionnés par le rédacteurChef
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String postJsonArticle(@QueryParam("unArticle") String art) {
