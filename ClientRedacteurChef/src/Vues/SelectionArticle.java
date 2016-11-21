@@ -275,6 +275,7 @@ public class SelectionArticle extends javax.swing.JFrame {
     private void jButton_MettrePresseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_MettrePresseActionPerformed
         // TODO add your handling code here:
         //Récupérer les articles sélectionnés
+        HashMap<Integer, article> list = new HashMap<Integer, article>();
         article art;
         Gson gson = new Gson();
         //On parcourt la jTable à la recherche des lignes sélectionnés (checkbox à true)
@@ -290,10 +291,11 @@ public class SelectionArticle extends javax.swing.JFrame {
 
                 //Stockage de l'article 
                 art = new article(numArt, nomArt, contenu);
-                restMiseSousPresse.postJsonArticle(gson.toJson(art));
+                list.put(i, art);
             }
             
-        }        
+        }   
+        restMiseSousPresse.postJsonArticle(gson.toJson(list));
     }//GEN-LAST:event_jButton_MettrePresseActionPerformed
 
     /**
