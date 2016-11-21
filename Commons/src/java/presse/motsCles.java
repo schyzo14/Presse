@@ -5,6 +5,7 @@
  */
 package presse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,11 +16,13 @@ public class motsCles {
     private int numMC;
     private String motCle;
     private HashMap<Integer,article> listeArticles;
-    private HashMap<Integer,titre> listeTitres;
+    private ArrayList<Integer> listeTitres;
     
     public motsCles(int n, String m) {
         this.numMC = n;
         this.motCle = m;
+        listeArticles = new HashMap<>();
+        listeTitres = new ArrayList<Integer>();
     }
 
     public int getNumMC() {
@@ -46,11 +49,11 @@ public class motsCles {
         this.listeArticles = listeArticles;
     }
 
-    public HashMap<Integer, titre> getListeTitres() {
+    public ArrayList<Integer> getListeTitres() {
         return listeTitres;
     }
 
-    public void setListeTitres(HashMap<Integer, titre> listeTitres) {
+    public void setListeTitres(ArrayList<Integer> listeTitres) {
         this.listeTitres = listeTitres;
     }
 }
