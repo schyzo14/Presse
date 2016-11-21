@@ -4,8 +4,19 @@
  * and open the template in the editor.
  */
 package client.distributeur.Vue.SeConnecter;
+import client.distributeur.ClientDistributeur;
+import client.distributeur.Vue.CreerCompte.ConfirmationCreationCompte;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import client.distributeur.Vue.VirementBancaire.VirementBancaire;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.json.JSONException;
+import org.json.JSONObject;
+import presse.distributeur;
 
 /**
  *
@@ -109,19 +120,43 @@ public class SeConnecter extends javax.swing.JFrame {
             JOptionPane jop = new JOptionPane();
             jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
-            //
-            // TO DO : se connecter auprès du serveur web
-            //
-        /*    if (refus connection) {
-                JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, messageErreur, "Erreur de création", JOptionPane.WARNING_MESSAGE);
-            } else { // connection ok */
-                // Garder le compte distributeur
-            //    ClientDistributeur.monDistributeur = distributeurRenvoye;
-                MenuDistributeur menuDistributeur = new MenuDistributeur();
-                menuDistributeur.setVisible(true);
-                this.setVisible(false);
-        //    }
+            try {
+                // On récupère avec le WS le distributeur qui veut se connecter
+                String s = ClientDistributeur.port.connection(mail, mdp);
+                System.out.println(s);
+                
+                // On transforme le retour en distributeur
+                Gson gson = new Gson();
+                java.lang.reflect.Type type = new TypeToken<distributeur>(){}.getType();
+                distributeur distri = gson.fromJson(s, type);
+                
+                // Le distributeur n'a pas été renvoyé
+                if (distri.getNumD() == 0) {
+                    String detailMessage = "Oups... Une erreur est survenue...";
+                    try {
+                        // On récupère la cause de l'erreur
+                        JSONObject obj;
+                        obj = new JSONObject(s);
+                        detailMessage = obj.getString("detailMessage");
+                        
+                        // On affiche l'erreur à l'utilisateur
+                        JOptionPane jop = new JOptionPane();
+                        jop.showMessageDialog(null, detailMessage, "Erreur de création", JOptionPane.WARNING_MESSAGE);
+                    } catch (JSONException ex) {
+                        Logger.getLogger(SeConnecter.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {                
+                    // Garder le compte distributeur
+                    ClientDistributeur.monDistributeur = distri;
+                    
+                    // Fenetre menu
+                    MenuDistributeur menuDistributeur = new MenuDistributeur();
+                    menuDistributeur.setVisible(true);
+                    this.setVisible(false);
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(SeConnecter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }//GEN-LAST:event_jButtonValiderActionPerformed

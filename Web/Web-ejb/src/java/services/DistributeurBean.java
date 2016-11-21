@@ -56,11 +56,11 @@ public class DistributeurBean implements DistributeurBeanLocal {
     @Override
     public distributeur connecter(String mail, String mdp) {
         // On vérifie si le mail est déjà utilisé
-        if (lesdistributeurs.containsKey(mail)) {
-            distributeur distrib = lesdistributeurs.get(mail);
+        if (lesdistributeurs.containsKey(mail.toUpperCase())) {
+            distributeur distrib = lesdistributeurs.get(mail.toUpperCase());
             
             // On vérifie le mdp
-            if (distrib.getMdpD().equals(mdp)) {
+            if (distrib.getMdpD().toUpperCase().equals(mdp.toUpperCase())) {
                 return distrib;
             }
         }

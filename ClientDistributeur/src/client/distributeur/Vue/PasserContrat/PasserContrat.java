@@ -5,10 +5,21 @@
  */
 package client.distributeur.Vue.PasserContrat;
 
+import client.distributeur.ClientDistributeur;
+import client.distributeur.Vue.CreerCompte.CreerCompte;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.json.JSONException;
+import org.json.JSONObject;
+import presse.contrat;
+import presse.distributeur;
 import presse.editeur;
 import presse.titre;
 
@@ -26,24 +37,32 @@ public class PasserContrat extends javax.swing.JFrame {
     public PasserContrat() {
         initComponents();
         
-        // Liste des éditeur
-        // TODO : a remplir avec WS
-        listeEditeur.put(1, new editeur(1, "test1", "t1"));
-        listeEditeur.put(2, new editeur(2, "test2", "t1"));
-        Iterator ie = listeEditeur.keySet().iterator();
-        while (ie.hasNext()) {
-            int editL = (int) ie.next();
-            jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
-        }
-        
-        // Liste des titres
-        // TODO : à remplir avec WS
-        listeTitre.put(100, new titre(100, "blam1"));
-        listeTitre.put(200, new titre(200, "blam2"));
-        Iterator it = listeTitre.keySet().iterator();
-        while (it.hasNext()) {
-            int titr = (int) it.next();
-            jComboBoxTitre.addItem(listeTitre.get(titr).getNomT());
+        try {
+            // Liste des éditeur
+            String s = ClientDistributeur.port.getListeEditeur();
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<HashMap<Integer, editeur>>(){}.getType();
+            listeEditeur = gson.fromJson(s, type);
+            Iterator ie = listeEditeur.keySet().iterator();
+            while (ie.hasNext()) {
+                int editL = (int) ie.next();
+                jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
+            }
+            
+            // Liste des titres
+            String st = ClientDistributeur.port.getListTitre();
+            System.out.println(st);
+            java.lang.reflect.Type typet = new TypeToken<HashMap<Integer, titre>>(){}.getType();
+            listeTitre = gson.fromJson(st, typet);
+            Iterator it = listeTitre.keySet().iterator();
+            while (it.hasNext()) {
+                int titr = (int) it.next();
+                jComboBoxTitre.addItem(listeTitre.get(titr).getNomT());
+            }
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(PasserContrat.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         // Nombre de copie
@@ -177,42 +196,63 @@ public class PasserContrat extends javax.swing.JFrame {
                 // On récupère les champs
                 // editeur
                 String edChoix = (String) jComboBoxEditeur.getSelectedItem();
+                System.out.println(edChoix);
                 Iterator ie = listeEditeur.keySet().iterator();
-                editeur edit;
+                int editId = -1;
                 while (ie.hasNext()) {
                     int editL =  (int) ie.next();
                     editeur editLL = listeEditeur.get(editL);
                     if (editLL.getNomE().equals(edChoix)) {
-                        edit = editLL;
+                        editId = editLL.getNumE();
                     }
                 }
                 // titre
                 String titreChoix = (String) jComboBoxTitre.getSelectedItem();
                 Iterator it = listeTitre.keySet().iterator();
-                titre titr;
-                while (ie.hasNext()) {
-                    int titrL = (int) ie.next();
+                int titrId = -1;
+                while (it.hasNext()) {
+                    int titrL = (int) it.next();
                     titre titrLL = listeTitre.get(titrL);
                     if (titrLL.getNomT().equals(titreChoix)) {
-                        titr = titrLL;
+                        titrId = titrLL.getNumT();
                     }
                 }
-
                 // mois
                 int mois = Integer.parseInt(jComboBoxDuree.getSelectedItem().toString());
-
-                //
-                // TODO : créer le contrat avec le WS
-                // on récupère le contrat
                 
-                // validation contrat envoyé
-                JOptionPane d = new JOptionPane();
-                String lesTextes[]={"OK"}; 
-                int retour = d.showOptionDialog(this, "Votre contrat a été envoyé avec succés !", "Contrat demandé", JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, lesTextes, lesTextes[0]);
-                if (lesTextes[retour].equals("OK")) {
-                    MenuDistributeur menuDistributeur = new MenuDistributeur();
-                    menuDistributeur.setVisible(true);
-                    this.setVisible(false);
+                // distributeur
+                System.out.println(ClientDistributeur.monDistributeur.getNumD());
+                System.out.println(editId + " t: " + titrId);
+                
+                try {
+                    // Avec le WS on passe le contrat
+                    String s = ClientDistributeur.port.demandeContrat(ClientDistributeur.monDistributeur.getNumD(), editId, titrId, nbCopie, mois);
+                    System.out.println(s);
+
+                    // On transforme le retour en contrat
+                    Gson gson = new Gson();
+                    java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
+                    contrat con = gson.fromJson(s, type);
+                    
+                    if (con.getNumC() == 0) {
+                        String detailMessage = "Oups... Une erreur est survenue...";
+                        // On affiche l'erreur
+                        JOptionPane jop = new JOptionPane();
+                        jop.showMessageDialog(null, detailMessage, "Erreur de création", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        // validation contrat envoyé
+                        JOptionPane d = new JOptionPane();
+                        String lesTextes[]={"OK"}; 
+                        int retour = d.showOptionDialog(this, "Votre contrat a été envoyé avec succés !", "Contrat demandé", JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, lesTextes, lesTextes[0]);
+                        if (lesTextes[retour].equals("OK")) {
+                            MenuDistributeur menuDistributeur = new MenuDistributeur();
+                            menuDistributeur.setVisible(true);
+                            this.setVisible(false);
+                        }
+                    }
+
+                } catch (RemoteException ex) {
+                    Logger.getLogger(PasserContrat.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             } else {

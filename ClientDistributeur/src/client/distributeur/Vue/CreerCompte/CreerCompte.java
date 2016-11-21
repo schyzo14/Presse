@@ -6,8 +6,6 @@
 package client.distributeur.Vue.CreerCompte;
 
 import client.distributeur.ClientDistributeur;
-import client.distributeur.Payement;
-import client.distributeur.Vue.VirementBancaire.VirementBancaire;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.rmi.RemoteException;
@@ -125,11 +123,16 @@ public class CreerCompte extends javax.swing.JFrame {
             jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
+                // Avec le WS on inscrit le distributeur
                 String s = ClientDistributeur.port.inscription(mail, nom);
                 System.out.println(s);
+                
+                // On transforme le retour en distributeur
                 Gson gson = new Gson();
                 java.lang.reflect.Type type = new TypeToken<distributeur>(){}.getType();
                 distributeur distri = gson.fromJson(s, type);
+                
+                // Le distributeur n'a pas été renvoyé
                 if (distri.getNumD() == 0) {
                     String detailMessage = "Oups... Une erreur est survenue...";
                     try {
@@ -137,18 +140,19 @@ public class CreerCompte extends javax.swing.JFrame {
                         JSONObject obj;
                         obj = new JSONObject(s);
                         detailMessage = obj.getString("detailMessage");
+                        
+                        // On affiche l'erreur
                         JOptionPane jop = new JOptionPane();
                         jop.showMessageDialog(null, detailMessage, "Erreur de création", JOptionPane.WARNING_MESSAGE);
                     } catch (JSONException ex) {
-                        Logger.getLogger(VirementBancaire.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(CreerCompte.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    String mdp = distri.getMdpD();
-                
                     // Garder le compte distributeur
                     ClientDistributeur.monDistributeur = distri;
             
                     // Compte créé --> fenêtre de confirmation
+                    String mdp = distri.getMdpD();
                     ConfirmationCreationCompte confirmationCreationCompte = new ConfirmationCreationCompte(mdp);
                     confirmationCreationCompte.setVisible(true);
                     this.setVisible(false);
@@ -156,7 +160,6 @@ public class CreerCompte extends javax.swing.JFrame {
             } catch (RemoteException ex) {
                 Logger.getLogger(CreerCompte.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
         }
         
     }//GEN-LAST:event_jButtonValiderActionPerformed
