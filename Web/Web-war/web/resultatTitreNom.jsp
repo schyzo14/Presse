@@ -21,28 +21,35 @@
           ClientTitre c = new ClientTitre(request.getParameter("titreNom"));
           ArrayList<titre> liste = c.getTitreParNom();
         %>
-        <table border="1">
-            <tr>
-                <th>Numéro du titre</th>
-                <th>Nom du titre</th>
-                <th>Sélection</th>
-            </tr>
-            <%
-                for(titre t : liste) {
-                    out.write("<tr>");
-                        out.write("<td>");
-                            out.write(Integer.toString(t.getNumT()));
-                        out.write("</td>");
-                        out.write("<td>");
-                            out.write(t.getNomT());
-                        out.write("</td>");
-                        out.write("<td>");
-                            out.write("<input type='radio' name='selectionTitre' />");
-                        out.write("</td>");
-                    out.write("</tr>");
-                }
-            %>
-        </table>
-        <%@include file="rechercheVolume.html" %>
+        
+        <form action='resultatVolume.jsp' method='get' target='_blank'>
+            <table border="1">
+                <tr>
+                    <th>Numéro du titre</th>
+                    <th>Nom du titre</th>
+                    <th>Sélection</th>
+                </tr>
+                <%
+                    for(titre t : liste) {
+                        out.write("<tr>");
+                            out.write("<td>");
+                                out.write(Integer.toString(t.getNumT()));
+                            out.write("</td>");
+                            out.write("<td>");
+                                out.write(t.getNomT());
+                            out.write("</td>");
+                            out.write("<td>");
+                                out.write("<input type='radio' name=selectionTitre value='"+t.getNomT()+"'/>");
+                            out.write("</td>");
+                        out.write("</tr>");
+                    }
+                %>
+            </table>
+        
+            <h1>Rechercher un volume</h1>
+            <label>Nom du volume :</label>
+            <input type='text' name='nomVolume' />
+            <input type='submit' value='Rechercher' />
+        </form>
     </body>
 </html>
