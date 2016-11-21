@@ -19,12 +19,13 @@ public class CoutContrat extends javax.swing.JFrame {
      * Creates new form ValiderContrat
      */
     public CoutContrat(contrat con) {
+        
         this.con = con;
         initComponents();
         
         // remplir les champs
         jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());
-        jLabelChampDuree.setText(con.getDureeC() + " €");
+        jLabelChampDuree.setText(con.getDureeC() + " mois");
         jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
         jLabelChampTitre.setText(con.getTitreC().getNomT());
         
@@ -175,7 +176,7 @@ public class CoutContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEnvoyerCoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerCoutActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButtonEnvoyerCoutActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
