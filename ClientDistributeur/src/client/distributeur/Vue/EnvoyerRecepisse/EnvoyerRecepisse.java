@@ -5,7 +5,14 @@
  */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
+import client.distributeur.ClientDistributeur;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import client.distributeur.Vue.ValiderContrat.ValiderContrat;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import presse.contrat;
 
@@ -213,15 +220,34 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
             jop.showMessageDialog(null, "Veillez saisir le récépissé !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
             String recepisse = jTextAreaRecepisse.getText();
-            // TODO : envoyer récépissé WS
-            JOptionPane jop = new JOptionPane();
-            jop.showMessageDialog(null, "Le récépissé a été envoyé !", "Récépissé envoyé", JOptionPane.WARNING_MESSAGE);
-            // retour au menu
-            MenuDistributeur menuDistributeur = new MenuDistributeur();
-            menuDistributeur.setVisible(true);
-            this.setVisible(false);
+            
+             try {
+                // on enregistre le recepisse
+                String s = ClientDistributeur.port.envoiRecepisse(con.getNumC(), recepisse);
+                // On récupère le contrat
+                System.out.println(s);
+                Gson gson = new Gson();
+                java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
+                contrat con = gson.fromJson(s, type);
+                // SI le contrat est vide, il y a eu une erreur
+                if (con.getNumC() <= 0) {
+                    String detailMessage = "Oups... Une erreur est survenue...";
+                    // On affiche l'erreur
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, detailMessage, "Erreur d'envoi du récépissé", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    // Fenetre de confirmation
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, "Le récépissé a été envoyé !", "Récépissé envoyé", JOptionPane.WARNING_MESSAGE);
+                    // retour au menu
+                    MenuDistributeur menuDistributeur = new MenuDistributeur();
+                    menuDistributeur.setVisible(true);
+                    this.setVisible(false);
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(EnvoyerRecepisse.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
