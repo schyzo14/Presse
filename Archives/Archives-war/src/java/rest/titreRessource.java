@@ -46,11 +46,17 @@ public class titreRessource {
         this.archivesBean = lookupArchivesBeanLocal();
     }
     
-    @Path("/{nomT}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getTitreParNom(@PathParam("nomT") String nomTitre) {
+    public String getTitreParNom(@QueryParam("nomT") String nomTitre) {
         return this.gson.toJson(this.archivesBean.getTitreParNom(nomTitre));
+    }
+    
+    @Path("/motsCles")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTitreParMC(@QueryParam("motsCles") String mc) {
+        return this.gson.toJson(this.archivesBean.getTitreParMC(mc));
     }
     
     @Path("/getTitres")

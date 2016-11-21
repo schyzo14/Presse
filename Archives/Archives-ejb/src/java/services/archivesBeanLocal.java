@@ -19,8 +19,9 @@ import presse.volume;
 @Local
 public interface archivesBeanLocal {
     public volume addVolume(String vol);
+    public ArrayList<titre> getTitreParParam(String nomT, String motsCles);
     public ArrayList<titre> getTitreParNom(String nomT);
+    public ArrayList<titre> getTitreParMC(String motsCles);
     public ArrayList<titre> getTitres();
-    public ArrayList<titre> getTitreParMC(String nomT);
     public volume getVolume(String numV, String nomT);
 }

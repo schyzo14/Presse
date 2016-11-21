@@ -10,8 +10,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 import javax.ejb.Singleton;
 import presse.article;
+import presse.motsCles;
 import presse.volume;
 import presse.titre;
 
@@ -43,6 +45,11 @@ public class archivesBean implements archivesBeanLocal {
         //Création d'un article
         article a = new article(1, "Final Fantasy XV", "C'est trop bien !");
         
+        //Création des mots-clés
+        motsCles mc1 = new motsCles(1, "Microsoft");
+        motsCles mc2 = new motsCles(2, "Xbox");
+        motsCles mc3 = new motsCles(3, "Kinect");
+        
         //Ajout du volume à l'article
         a.setNumV(v3.getNumV());
         
@@ -52,6 +59,11 @@ public class archivesBean implements archivesBeanLocal {
         v3.setNumT(t2.getNumT());
         v4.setNumT(t2.getNumT());
         
+        //Ajout du titre aux MC
+        mc1.getListeTitres().add(t2.getNumT());
+        mc2.getListeTitres().add(t2.getNumT());
+        mc3.getListeTitres().add(t2.getNumT());
+        
         //Ajout de l'article au volume
         v3.getListeArticles().put(a.getNumA(), a);
         
@@ -60,6 +72,11 @@ public class archivesBean implements archivesBeanLocal {
         t1.getListeVolumes().put(v2.getNumV(), v2);
         t2.getListeVolumes().put(v3.getNumV(), v3);
         t2.getListeVolumes().put(v4.getNumV(), v4);
+        
+        //Ajout des MC au titre
+        t2.getListeMotsCles().put(mc1.getNumMC(), mc1);
+        t2.getListeMotsCles().put(mc2.getNumMC(), mc2);
+        t2.getListeMotsCles().put(mc3.getNumMC(), mc3);
         
         listeVolumes.put(v1.getNumV(), v1);
         listeVolumes.put(v2.getNumV(), v2);
@@ -80,14 +97,34 @@ public class archivesBean implements archivesBeanLocal {
         
         return v;
     }
-
+    
     @Override
-    public ArrayList<titre> getTitreParNom(String nomT) {
+    public ArrayList<titre> getTitreParParam(String nomT, String mc) {
         ArrayList<titre> titresTrouves = new ArrayList<>();
         
-        for(titre t : listeTitres.values()) {
-            if(t.getNomT().equals(nomT)) {
-                titresTrouves.add(t);
+        if(!nomT.equals("")) {
+            for(titre t : listeTitres.values()) {
+                if(t.getNomT().equals(nomT)) {
+                    titresTrouves.add(t);
+                }
+            }
+        } else if(!mc.equals("")) {
+            ArrayList<motsCles> listeMC = new ArrayList<motsCles>();
+            StringTokenizer st = new StringTokenizer(mc, " ");
+            int i = 0;
+            while(st.hasMoreTokens()) {
+                motsCles m = new motsCles(i, st.nextToken());
+                i++;
+            }
+
+            for(titre t : listeTitres.values()) {
+                for(motsCles m : listeMC) {
+                    if(t.getListeMotsCles().containsValue(m)) {
+                        if(!titresTrouves.contains(t)) {
+                            titresTrouves.add(t);
+                        }
+                    }
+                }
             }
         }
         
@@ -104,29 +141,58 @@ public class archivesBean implements archivesBeanLocal {
         
         return titresTrouves;
     }
-
-    @Override
-    public ArrayList<titre> getTitreParMC(String nomT) {
-        ArrayList<titre> titresTrouves = new ArrayList<>();
-        
-        /*for(titre t : listeTitres.values()) {
-            if(t.getNomT().equals(nomT)) {
-                titresTrouves.add(t);
-            }
-        }*/
-        
-        return titresTrouves;
-    }
     
     @Override
     public volume getVolume(String numV, String nomT) {
         volume v = null;
         for(titre t : this.listeTitres.values()) {
-            if(t.getNomT().equals(nomT)) {
+            if(t.getNomT().equalsIgnoreCase(nomT)) {
                 v = t.getListeVolumes().get(Integer.parseInt(numV));
             }
         }
         
         return v;
+    }
+
+    @Override
+    public ArrayList<titre> getTitreParNom(String nomT) {
+        ArrayList<titre> titresTrouves = new ArrayList<>();
+        
+        for(titre t : listeTitres.values()) {
+            if(t.getNomT().equals(nomT)) {
+                titresTrouves.add(t);
+            }
+        }
+        
+        return titresTrouves;
+    }
+
+    @Override
+    public ArrayList<titre> getTitreParMC(String motsCles) {
+        ArrayList<titre> titresTrouves = new ArrayList<>();
+        
+        ArrayList<motsCles> listeMC = new ArrayList<motsCles>();
+        StringTokenizer st = new StringTokenizer(motsCles, " ");
+        int i = 0;
+        while(st.hasMoreTokens()) {
+            motsCles m = new motsCles(i, st.nextToken());
+            listeMC.add(m);
+            i++;
+        }
+
+        for(titre t : listeTitres.values()) {
+            for(motsCles m : listeMC) {
+                ArrayList<motsCles> listeMCT = new ArrayList<motsCles>(t.getListeMotsCles().values());
+                for(motsCles m2 : listeMCT) {
+                    if(m2.getMotCle().equalsIgnoreCase(m.getMotCle())) {
+                        if(!titresTrouves.contains(t)) {
+                            titresTrouves.add(t);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return titresTrouves;
     }
 }
