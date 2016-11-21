@@ -240,6 +240,7 @@ public class PasserContrat extends javax.swing.JFrame {
                         JOptionPane jop = new JOptionPane();
                         jop.showMessageDialog(null, detailMessage, "Erreur de création", JOptionPane.WARNING_MESSAGE);
                     } else {
+                        this.setVisible(false);
                         // validation contrat envoyé
                         JOptionPane d = new JOptionPane();
                         String lesTextes[]={"OK"}; 
@@ -247,7 +248,7 @@ public class PasserContrat extends javax.swing.JFrame {
                         if (lesTextes[retour].equals("OK")) {
                             MenuDistributeur menuDistributeur = new MenuDistributeur();
                             menuDistributeur.setVisible(true);
-                            this.setVisible(false);
+                            
                         }
                     }
 

@@ -205,9 +205,14 @@ public class CoutContrat extends javax.swing.JFrame {
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    Menu menu = new Menu();
-                    menu.setVisible(true);
+                    // on ferme la fenetre
                     this.setVisible(false);
+                    // On confirme que le cout est envoyé
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, "Le cout est envoyé !", "Cout envoyé", JOptionPane.WARNING_MESSAGE);
+                    // On passe a la fenetre de la liste de contrat en attente de cout
+                    ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
+                    listContratAttenteCout.setVisible(true);
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(CoutContrat.class.getName()).log(Level.SEVERE, null, ex);
