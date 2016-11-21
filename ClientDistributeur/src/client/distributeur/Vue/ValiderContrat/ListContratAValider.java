@@ -6,6 +6,7 @@
 package client.distributeur.Vue.ValiderContrat;
 
 import client.distributeur.ClientDistributeur;
+import client.distributeur.Vue.Menu.MenuDistributeur;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.awt.Component;
@@ -163,7 +164,9 @@ public class ListContratAValider extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        MenuDistributeur menuDistributeur = new MenuDistributeur();
+        menuDistributeur.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -210,7 +213,7 @@ public class ListContratAValider extends javax.swing.JFrame {
 
     
     
-    /**
+/**
 * Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
 */    
     class ButtonRenderer extends JButton implements TableCellRenderer {

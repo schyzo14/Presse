@@ -5,12 +5,20 @@
  */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
+import client.distributeur.ClientDistributeur;
 import client.distributeur.Vue.Menu.MenuDistributeur;
+import client.distributeur.Vue.ValiderContrat.ListContratAValider;
+import client.distributeur.Vue.ValiderContrat.ValiderContrat;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -38,34 +46,47 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
     public ListContratAttenteRecepisse() {
         initComponents();
         
-        // Liste des contrats
-        // TODO : récupérer la liste des contrats en attente d'un récépissé
-        lesContratsAttenteRecepisse.put(1, new contrat(1, 2, 12, (float) 900.0, new Date(), new Date(), "ATTENTEVALDISTRIB", new editeur(1, "Flammarion", "contact@flam.fr"), new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"), new titre(1, "Titre 1")));
-        lesContratsAttenteRecepisse.put(2, new contrat(2, 3, 24, (float) 800.0, new Date(), new Date(), "ATTENTEVALDISTRIB", new editeur(2, "Chucou", "contact@flam.fr"), new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"), new titre(2, "Titre 2")));
-        lesContratsAttenteRecepisse.put(3, new contrat(3, 4, 6, (float) 700.0, new Date(), new Date(), "ATTENTEVALDISTRIB", new editeur(1, "Flammarion", "contact@flam.fr"), new distributeur(1, "DistributeurDiff", "contact@hachetteDiff.fr"), new titre(3, "Titre 3")));
-
-                // Remplir le tableau
-        String[] columnNames = {"Titre", "Editeur", "Nombre de copies", "Durée", "Action"};
-        DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
-        Object[][] data = new Object[lesContratsAttenteRecepisse.size()][5];
-        int i=0;
-        for (int key : lesContratsAttenteRecepisse.keySet()) {
-            contrat con = lesContratsAttenteRecepisse.get(key);
-            data[i][0] = con.getTitreC().getNomT();
-            data[i][1] = con.getEditeurC().getNomE();
-            data[i][2] = con.getNbCopieC();
-            data[i][3] = con.getDureeC();
-            data[i][4] = "Répondre";
-            i++;
-        }
+        // On récupère le distributeur
+        int distributeurId = ClientDistributeur.monDistributeur.getNumD();
         
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        jTableContrat.setModel(model);
+        // Liste des contrats
+        try {
+            // liste contrat
+            String s = ClientDistributeur.port.listeContratRecepisse(distributeurId);
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<HashMap<Integer, contrat>>(){}.getType();
+            lesContratsAttenteRecepisse = gson.fromJson(s, type);
+            
+            // init tableau
+            String[] columnNames = {"", "Titre", "Editeur", "Nombre de copies", "Durée", "Action"};
+            DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
+            Object[][] data = new Object[lesContratsAttenteRecepisse.size()][6];
+            int i=0;
+            
+            for (int key : lesContratsAttenteRecepisse.keySet()) {
+                contrat con = lesContratsAttenteRecepisse.get(key);
+                
+                // remplir le tableau
+                data[i][0] = con.getNumC();
+                data[i][1] = con.getTitreC().getNomT();
+                data[i][2] = con.getEditeurC().getNomE();
+                data[i][3] = con.getNbCopieC();
+                data[i][4] = con.getDureeC();
+                data[i][5] = "Répondre";
+                i++;
+            }
+            
+            DefaultTableModel model = new DefaultTableModel(data, columnNames);
+            jTableContrat.setModel(model);
 
-        TableColumn column = jTableContrat.getColumnModel().getColumn(4);
-        column.setCellRenderer(new ListContratAttenteRecepisse.ButtonRenderer());
-        column.setCellEditor(new ListContratAttenteRecepisse.ButtonEditor(new JCheckBox()));
-
+            TableColumn column = jTableContrat.getColumnModel().getColumn(5);
+            column.setCellRenderer(new ListContratAttenteRecepisse.ButtonRenderer());
+            column.setCellEditor(new ListContratAttenteRecepisse.ButtonEditor(new JCheckBox()));
+        
+        } catch (RemoteException ex) {
+            Logger.getLogger(ListContratAValider.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -92,11 +113,11 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Titre", "Editeur", "Nombre de copies", "Durée", "Action "
+                "", "Titre", "Editeur", "Nombre de copies", "Durée", "Action "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -197,9 +218,9 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
 
 
-/**
- * Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
- */    
+    /**
+* Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
+*/    
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
@@ -258,9 +279,12 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
         public Object getCellEditorValue() {
             if (isPushed) {
+                // On récupère l'id
+                int id = (int) jTableContrat.getModel().getValueAt(row, 0);
                 
-                // Afficher le bon contrat en attente d'un récépissé
-                contrat con = lesContratsAttenteRecepisse.get(row+1);
+                // Afficher le bon contrat en attente de cout
+                contrat con = lesContratsAttenteRecepisse.get(id);
+                
                 EnvoyerRecepisse envoyerRecepisse = new EnvoyerRecepisse(con);
                 envoyerRecepisse.setVisible(true);
                 ListContratAttenteRecepisse.this.setVisible(false);
