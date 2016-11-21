@@ -5,17 +5,84 @@
  */
 package client.editeur.Vue.ContratCout;
 
+import client.editeur.ClientEditeur;
+import client.editeur.Vue.Menu.Menu;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import presse.contrat;
+import presse.editeur;
+
 /**
  *
  * @author Aurore
  */
 public class ListContratAttenteCout extends javax.swing.JFrame {
 
+    HashMap<Integer, contrat> lesContratsAttenteCout = new HashMap<Integer, contrat>();
+    
     /**
      * Creates new form ListContratAValider
      */
     public ListContratAttenteCout() {
         initComponents();
+        
+        // On récupère l'éditeur
+        int editeurId = ClientEditeur.monEditeur.getNumE();
+        
+        // Liste contrat
+        try {        
+            // liste contrat
+            String s = ClientEditeur.port.listeContratAttenteCout(editeurId);
+            System.out.println(s);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<HashMap<Integer, contrat>>(){}.getType();
+            lesContratsAttenteCout = gson.fromJson(s, type);
+            
+            // init tableau
+            String[] columnNames = {"Titre", "Distributeur", "Nombre de copies", "Durée", "Action"};
+            DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
+            Object[][] data = new Object[lesContratsAttenteCout.size()][5];
+            int i=0;
+            
+            for (int key : lesContratsAttenteCout.keySet()) {
+                contrat con = lesContratsAttenteCout.get(key);
+                
+                // remplir le tableau
+                data[i][0] = con.getTitreC().getNomT();
+                data[i][1] = con.getDistributeurC().getNomD();
+                data[i][2] = con.getNbCopieC();
+                data[i][3] = con.getDureeC();
+                data[i][4] = "Répondre";
+                i++;
+            }
+            
+            DefaultTableModel model = new DefaultTableModel(data, columnNames);
+            jTableContrat.setModel(model);
+
+            TableColumn column = jTableContrat.getColumnModel().getColumn(4);
+            column.setCellRenderer(new ButtonRenderer());
+            column.setCellEditor(new ButtonEditor(new JCheckBox()));
+
+        } catch (RemoteException ex) {
+            Logger.getLogger(ListContratAttenteCout.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -39,22 +106,15 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
 
         jTableContrat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Titre", "Distributeur", "Nombre de copies", "Durée", "Action "
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -101,7 +161,9 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -146,4 +208,91 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableContrat;
     // End of variables declaration//GEN-END:variables
+
+
+
+
+/**
+* Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
+*/    
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+
+        private String label;
+
+        private boolean isPushed;
+        
+        private int row;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+            boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            this.row = row;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                
+                // Afficher le bon contrat à valider
+                contrat con = lesContratsAttenteCout.get(row+1);
+                CoutContrat coutContrat = new CoutContrat(con);
+                coutContrat.setVisible(true);
+                ListContratAttenteCout.this.setVisible(false);
+                
+            }
+            isPushed = false;
+            return new String(label);
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
 }

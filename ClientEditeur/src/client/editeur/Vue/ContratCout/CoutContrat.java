@@ -5,17 +5,30 @@
  */
 package client.editeur.Vue.ContratCout;
 
+import presse.contrat;
+
 /**
  *
  * @author Aurore
  */
 public class CoutContrat extends javax.swing.JFrame {
 
+    private static contrat con;
+    
     /**
      * Creates new form ValiderContrat
      */
-    public CoutContrat() {
+    public CoutContrat(contrat con) {
+        this.con = con;
         initComponents();
+        
+        // remplir les champs
+        jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());
+        jLabelChampDuree.setText(con.getDureeC() + " €");
+        jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
+        jLabelChampTitre.setText(con.getTitreC().getNomT());
+        
+        jTextFieldCout.setText("");
     }
 
     /**
@@ -200,7 +213,7 @@ public class CoutContrat extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CoutContrat().setVisible(true);
+                new CoutContrat(con).setVisible(true);
             }
         });
     }
