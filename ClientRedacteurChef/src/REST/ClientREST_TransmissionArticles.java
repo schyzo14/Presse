@@ -20,7 +20,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author manou
+ * @author Manon
  */
 public class ClientREST_TransmissionArticles {
 
@@ -33,12 +33,14 @@ public class ClientREST_TransmissionArticles {
         webTarget = client.target(BASE_URI).path("articles");
     }
 
+    //Récupération d'un article en particulier
     public String getDetailArticle(int idArticle) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("articles/{0}", new Object[]{idArticle}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
 
+    //Envoi d'un article saisie
     public String postJsonArticleJournaliste() throws ClientErrorException {
         return webTarget.request().post(null, String.class);
     }

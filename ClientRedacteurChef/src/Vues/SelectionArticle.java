@@ -23,13 +23,17 @@ import presse.motsCles;
 
 /**
  *
- * @author manou
+ * @author Manon
  */
 public class SelectionArticle extends javax.swing.JFrame {
-
+    //Définition des objets Client REST permettant de faire le lien avec les serveurs TransmissionArticle et MiseSousPresse
     ClientREST_TransmissionArticles restTransmissionArticles = new ClientREST_TransmissionArticles();
     ClientREST_MiseSousPresse restMiseSousPresse = new ClientREST_MiseSousPresse();
+    
+    //Création d'une HashMap pour récupérer la liste des articles
     private HashMap<Integer, article> listeArticles;
+    
+    //Création d'une HashMap pour récupérer le détail d'un article
     private HashMap<Integer, article> detailArticles;
     
 
@@ -42,8 +46,6 @@ public class SelectionArticle extends javax.swing.JFrame {
 
         initComponents();
         
-        
-        //Récupérer la notification et afficher s'il y a
         //Afficher la liste des articles
         String articles = restTransmissionArticles.getListeArticles();
 
@@ -52,6 +54,7 @@ public class SelectionArticle extends javax.swing.JFrame {
         }.getType();
         listeArticles = gson.fromJson(articles, typeArticles);
 
+        //Alimentation du tableau 
         Set clesArt = listeArticles.keySet();
         Iterator itArt = clesArt.iterator();
         int i=0;
@@ -217,27 +220,36 @@ public class SelectionArticle extends javax.swing.JFrame {
     private void jButton_QuitterSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_QuitterSelectionActionPerformed
         // TODO add your handling code here:
         //Fermeture des connexion réseau
-
+        restTransmissionArticles.close();
+        restMiseSousPresse.close();
+        
         //Fermeture fenêtre
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_jButton_QuitterSelectionActionPerformed
 
     private void jButton_DetailSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DetailSelectionActionPerformed
         // TODO add your handling code here:
         Gson gson = new Gson();
-        //Vérification qu'une ligne est bien sélectionné sinon message d'erreur
+        
+        //Vérification qu'une seule ligne est bien sélectionné sinon message d'erreur
         if (jTable_SelectionArticle.getSelectedRow() != -1) {
+            
+            //Récupération du numéro de l'article sélectionné
             int idArticle = (int) jTable_SelectionArticle.getValueAt(jTable_SelectionArticle.getSelectedRow(), 0);
+            
+            //Récupération des infos sur le serveur TransmissionArticles relatives à l'article sélectionné 
             String detailArt = restTransmissionArticles.getDetailArticle(idArticle);
 
-            //Transformation du json à HashMap Articles
+            //Transformation du json en HashMap Articles
             java.lang.reflect.Type detailArtic = new TypeToken<article>() {}.getType();
             article art = gson.fromJson(detailArt, detailArtic);
 
+            //Récupération des infos pour alimenter la fenêtre détail
             String nomArt = art.getNomA();
             String contenu = art.getContenuA();
             String nomAut = null;
 
+            
             Set cles = art.getListeAuteurs().keySet();
             Iterator it = cles.iterator();
             while (it.hasNext()) {
@@ -254,7 +266,7 @@ public class SelectionArticle extends javax.swing.JFrame {
             detail.setVisible(true);
 
         } else {
-            //Popup erreur
+            //Popup erreur Plus d'une ligne sélectionnée
             JOptionPane erreurMess = new JOptionPane();
             erreurMess.showMessageDialog(null, "Vous devez sélectionner une ligne pour afficher son détail!", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -264,19 +276,20 @@ public class SelectionArticle extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Récupérer les articles sélectionnés
         article art;
-        HashMap<Integer,article> listeArticleSelect = new HashMap<Integer,article>();
         Gson gson = new Gson();
+        //On parcourt la jTable à la recherche des lignes sélectionnés (checkbox à true)
         for(int i=0; i<jTable_SelectionArticle.getRowCount(); i++)
         {
+            //Si la ligne sélectionné n'est pas vide, on la traite
             if((jTable_SelectionArticle.getModel().getValueAt(i, 3))!=null && jTable_SelectionArticle.getModel().getValueAt(i, 0)!=null)
             {
+                //Récupération des infos 
                 int numArt = Integer.parseInt(jTable_SelectionArticle.getModel().getValueAt(i, 0).toString());
                 String nomArt = jTable_SelectionArticle.getModel().getValueAt(i, 1).toString();
                 String contenu = (String) jTable_SelectionArticle.getModel().getValueAt(i, 2);
 
                 //Stockage de l'article 
                 art = new article(numArt, nomArt, contenu);
-                System.out.println("envoi post : ");
                 restMiseSousPresse.postJsonArticle(gson.toJson(art));
             }
             

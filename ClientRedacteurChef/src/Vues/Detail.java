@@ -13,7 +13,7 @@ import presse.motsCles;
 
 /**
  *
- * @author manou
+ * @author Manon
  */
 public class Detail extends javax.swing.JFrame {
 
@@ -25,21 +25,24 @@ public class Detail extends javax.swing.JFrame {
         
     }
     
+    //Permet d'alimenter les champs à partir des informations reçues du serveur
     public void setChamp(String nomArt, String contenu, String nomAut, HashMap<Integer,motsCles> listeMC){
+        //Alimentation des champs Nom de l'article et Nom de l'auteur
         jTextField_NomDetailArticle.setText(nomArt);
         jTextField_AuteurDetailArticle.setText(nomAut);
         
+        //Alimentation de la liste des mots-clés
         DefaultListModel modele = (DefaultListModel) jList_MotsClesDetailArticle.getModel();
         Set clesMC = listeMC.keySet();
             Iterator itMC = clesMC.iterator();
             while (itMC.hasNext()){
                 Object cle = itMC.next();
                 String motscles = listeMC.get(cle).getMotCle();
-                System.out.println("modele : "+motscles);
                 String strMC = motscles.replaceAll("\\[", "").replaceAll("\\]","");
                 modele.addElement(strMC);
             }
         
+        //Alimentation du champ Contenu
         jTextArea_ContenuDetailArticle.setText(contenu);
     }
 
@@ -164,7 +167,6 @@ public class Detail extends javax.swing.JFrame {
 
     private void jButton_FermerDetailArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FermerDetailArticleActionPerformed
         // TODO add your handling code here:
-        //Fermer toutes les connexion je suppose
         //Fermeture de la fenêtre
         this.setVisible(false);
     }//GEN-LAST:event_jButton_FermerDetailArticleActionPerformed

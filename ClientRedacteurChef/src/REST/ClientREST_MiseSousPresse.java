@@ -24,7 +24,7 @@ import org.glassfish.jersey.uri.UriComponent;
  *        client.close();
  * </pre>
  *
- * @author manou
+ * @author Manon
  */
 public class ClientREST_MiseSousPresse {
 
@@ -37,9 +37,10 @@ public class ClientREST_MiseSousPresse {
         webTarget = client.target(BASE_URI).path("articles");
     }
 
+    //Envoie d'un article
     public String postJsonArticle(String art) throws ClientErrorException {
+        //Gestion des espaces
         String encoded = UriComponent.encode(art, UriComponent.Type.QUERY_PARAM_SPACE_ENCODED);
-        System.out.println("postJsonArticle ClientREST : "+art);
         WebTarget web = client.target(BASE_URI).path("articles");
         web = web.queryParam("unArticle", encoded);
         
