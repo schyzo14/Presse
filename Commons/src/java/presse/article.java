@@ -16,7 +16,7 @@ public class article {
     private int numA;
     private String nomA;
     private String contenuA;
-    private volume v;
+    private int numV;
     private HashMap<Integer,auteur> listeAuteurs;
     private HashMap<Integer,motsCles> listeMotsCles;
     private ArrayList<publicite> listePublicites;
@@ -78,11 +78,11 @@ public class article {
         this.listePublicites = listePublicites;
     }
 
-    public volume getV() {
-        return v;
+    public int getNumV() {
+        return numV;
     }
 
-    public void setV(volume v) {
-        this.v = v;
+    public void setNumV(int numV) {
+        this.numV = numV;
     }
 }
