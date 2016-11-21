@@ -5,7 +5,17 @@
  */
 package client.editeur.Vue.ContratCout;
 
+import client.editeur.ClientEditeur;
+import client.editeur.Vue.Menu.Menu;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import presse.contrat;
+import presse.editeur;
 
 /**
  *
@@ -19,12 +29,13 @@ public class CoutContrat extends javax.swing.JFrame {
      * Creates new form ValiderContrat
      */
     public CoutContrat(contrat con) {
+        
         this.con = con;
         initComponents();
         
         // remplir les champs
         jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());
-        jLabelChampDuree.setText(con.getDureeC() + " €");
+        jLabelChampDuree.setText(con.getDureeC() + " mois");
         jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
         jLabelChampTitre.setText(con.getTitreC().getNomT());
         
@@ -175,11 +186,44 @@ public class CoutContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEnvoyerCoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerCoutActionPerformed
-        // TODO add your handling code here:
+        try {
+            // on récupère le cout
+            float cout = Float.parseFloat(jTextFieldCout.getText());
+        
+            try {
+                // on enregistre le cout
+                String s = ClientEditeur.port.coutContrat(con.getNumC(), cout);
+                // On récupère le contrat
+                System.out.println(s);
+                Gson gson = new Gson();
+                java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
+                contrat con = gson.fromJson(s, type);
+                // SI le contrat est vide, il y a eu une erreur
+                if (con.getNumC() <= 0) {
+                    String detailMessage = "Oups... Une erreur est survenue...";
+                    // On affiche l'erreur
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Menu menu = new Menu();
+                    menu.setVisible(true);
+                    this.setVisible(false);
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(CoutContrat.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
+            // On affiche une pop-up pour le signaler
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "<html>Le cout est de la forme 123.45 !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonEnvoyerCoutActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

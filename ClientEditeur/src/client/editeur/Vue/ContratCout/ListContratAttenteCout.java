@@ -23,6 +23,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import presse.contrat;
@@ -55,27 +56,28 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
             lesContratsAttenteCout = gson.fromJson(s, type);
             
             // init tableau
-            String[] columnNames = {"Titre", "Distributeur", "Nombre de copies", "Durée", "Action"};
+            String[] columnNames = {"", "Titre", "Distributeur", "Nombre de copies", "Durée", "Action"};
             DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
-            Object[][] data = new Object[lesContratsAttenteCout.size()][5];
+            Object[][] data = new Object[lesContratsAttenteCout.size()][6];
             int i=0;
             
             for (int key : lesContratsAttenteCout.keySet()) {
                 contrat con = lesContratsAttenteCout.get(key);
                 
                 // remplir le tableau
-                data[i][0] = con.getTitreC().getNomT();
-                data[i][1] = con.getDistributeurC().getNomD();
-                data[i][2] = con.getNbCopieC();
-                data[i][3] = con.getDureeC();
-                data[i][4] = "Répondre";
+                data[i][0] = con.getNumC();
+                data[i][1] = con.getTitreC().getNomT();
+                data[i][2] = con.getDistributeurC().getNomD();
+                data[i][3] = con.getNbCopieC();
+                data[i][4] = con.getDureeC();
+                data[i][5] = "Répondre";
                 i++;
             }
             
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             jTableContrat.setModel(model);
 
-            TableColumn column = jTableContrat.getColumnModel().getColumn(4);
+            TableColumn column = jTableContrat.getColumnModel().getColumn(5);
             column.setCellRenderer(new ButtonRenderer());
             column.setCellEditor(new ButtonEditor(new JCheckBox()));
 
@@ -109,11 +111,11 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Titre", "Distributeur", "Nombre de copies", "Durée", "Action "
+                "", "Titre", "Distributeur", "Nombre de copies", "Durée", "Action "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -273,9 +275,12 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
 
         public Object getCellEditorValue() {
             if (isPushed) {
+                // On récupère l'id
+                int id = (int) jTableContrat.getModel().getValueAt(row, 0);
                 
-                // Afficher le bon contrat à valider
-                contrat con = lesContratsAttenteCout.get(row+1);
+                // Afficher le bon contrat en attente de cout
+                contrat con = lesContratsAttenteCout.get(id);
+                
                 CoutContrat coutContrat = new CoutContrat(con);
                 coutContrat.setVisible(true);
                 ListContratAttenteCout.this.setVisible(false);
