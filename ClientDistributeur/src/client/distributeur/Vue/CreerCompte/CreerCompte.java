@@ -6,8 +6,6 @@
 package client.distributeur.Vue.CreerCompte;
 
 import client.distributeur.ClientDistributeur;
-import client.distributeur.Payement;
-import client.distributeur.Vue.VirementBancaire.VirementBancaire;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.rmi.RemoteException;
