@@ -7,6 +7,7 @@ package client.editeur.Vue.Menu;
 
 import client.editeur.ClientEditeur;
 import client.editeur.Vue.ContratCout.ListContratAttenteCout;
+import client.editeur.Vue.ValiderContrat.ListContratAValider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.rmi.RemoteException;
@@ -156,11 +157,26 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRepondreDemandesActionPerformed
 
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
-        // TODO add your handling code here:
+        // Editeur choisi
+        String edChoix = (String) jComboBoxEditeur.getSelectedItem();
+        // On garde l'éditeur
+        Iterator ie = listeEditeur.keySet().iterator();
+        while (ie.hasNext()) {
+            int editL =  (int) ie.next();
+            editeur editLL = listeEditeur.get(editL);
+            if (editLL.getNomE().equals(edChoix)) {
+                ClientEditeur.monEditeur = editLL;
+            }
+        }
+        
+        ListContratAValider listContratAValider = new ListContratAValider();
+        listContratAValider.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonValiderContratActionPerformed
 
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 
     /**

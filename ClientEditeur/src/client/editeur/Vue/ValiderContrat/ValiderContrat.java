@@ -5,16 +5,21 @@
  */
 package client.editeur.Vue.ValiderContrat;
 
+import presse.contrat;
+
 /**
  *
  * @author Aurore
  */
 public class ValiderContrat extends javax.swing.JFrame {
 
+    private static contrat con;
+    
     /**
      * Creates new form ValiderContrat
      */
-    public ValiderContrat() {
+    public ValiderContrat(contrat con) {
+        this.con = con;
         initComponents();
     }
 
@@ -218,7 +223,7 @@ public class ValiderContrat extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ValiderContrat().setVisible(true);
+                new ValiderContrat(con).setVisible(true);
             }
         });
     }
