@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -38,6 +39,12 @@ public class volumeRessource {
     public volumeRessource() {
         this.gson = new Gson();
         this.archivesBean = lookupArchivesBeanLocal();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getVolume(@QueryParam("nomT") String nomT, @QueryParam("numV") String numV) {
+        return this.gson.toJson(this.archivesBean.getVolume(numV, nomT));
     }
     
     @POST

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import javax.ejb.Singleton;
+import presse.article;
 import presse.volume;
 import presse.titre;
 
@@ -39,11 +40,20 @@ public class archivesBean implements archivesBeanLocal {
         volume v3 = new volume(3);
         volume v4 = new volume(4);
         
+        //Création d'un article
+        article a = new article(1, "Final Fantasy XV", "C'est trop bien !");
+        
+        //Ajout du volume à l'article
+        a.setNumV(v3.getNumV());
+        
         //Ajout des titres aux volumes
         v1.setNumT(t1.getNumT());
         v2.setNumT(t1.getNumT());
         v3.setNumT(t2.getNumT());
         v4.setNumT(t2.getNumT());
+        
+        //Ajout de l'article au volume
+        v3.getListeArticles().put(a.getNumA(), a);
         
         //Ajout des volumes aux titres
         t1.getListeVolumes().put(v1.getNumV(), v1);
@@ -108,5 +118,15 @@ public class archivesBean implements archivesBeanLocal {
         return titresTrouves;
     }
     
-    
+    @Override
+    public volume getVolume(String numV, String nomT) {
+        volume v = null;
+        for(titre t : this.listeTitres.values()) {
+            if(t.getNomT().equals(nomT)) {
+                v = t.getListeVolumes().get(Integer.parseInt(numV));
+            }
+        }
+        
+        return v;
+    }
 }
