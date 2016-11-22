@@ -91,17 +91,17 @@ public class MenuAvantConnexion extends javax.swing.JFrame {
     private void jButtonCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreerCompteActionPerformed
         CreerCompte creerCompte = new CreerCompte();
         creerCompte.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonCreerCompteActionPerformed
 
     private void jButtonSeConnecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeConnecterActionPerformed
         SeConnecter seConnecter = new SeConnecter();
         seConnecter.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonSeConnecterActionPerformed
 
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
-        this.setVisible(false);
+        this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 

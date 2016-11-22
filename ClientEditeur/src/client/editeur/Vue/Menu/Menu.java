@@ -153,7 +153,7 @@ public class Menu extends javax.swing.JFrame {
         // Ouvrir la liste des contrats en attente d'un cout
         ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
         listContratAttenteCout.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonRepondreDemandesActionPerformed
 
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
@@ -171,11 +171,11 @@ public class Menu extends javax.swing.JFrame {
         
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonValiderContratActionPerformed
 
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
-        this.setVisible(false);
+        this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 

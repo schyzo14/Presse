@@ -245,14 +245,14 @@ public class VirementBancaire extends javax.swing.JFrame {
                     } else { // Sinon on le renvoie sur le menu
                         MenuDistributeur menuDistributeur = new MenuDistributeur();
                         menuDistributeur.setVisible(true);
-                        this.setVisible(false);
+                        this.dispose();
                     }
 
                 } else {
                     // Le payement a réussi, on affiche la pop-up de confirmation avec le récépissé
                     PaiementValide paiementValide = new PaiementValide(payement);
                     paiementValide.setVisible(true);
-                    this.setVisible(false);
+                    this.dispose();
                 }
             
             } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
@@ -267,7 +267,7 @@ public class VirementBancaire extends javax.swing.JFrame {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

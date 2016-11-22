@@ -150,7 +150,7 @@ public class SeConnecter extends javax.swing.JFrame {
                     // Fenetre menu
                     MenuDistributeur menuDistributeur = new MenuDistributeur();
                     menuDistributeur.setVisible(true);
-                    this.setVisible(false);
+                    this.dispose();
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(SeConnecter.class.getName()).log(Level.SEVERE, null, ex);

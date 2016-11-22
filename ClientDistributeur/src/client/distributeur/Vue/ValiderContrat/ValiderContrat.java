@@ -216,7 +216,7 @@ public class ValiderContrat extends javax.swing.JFrame {
                 jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
             } else {
                 // fermer la fenetre
-                this.setVisible(false);
+                this.dispose();
                 // corfirmation validation
                 ConfirmationValidationContrat confirmationValidationContrat = new ConfirmationValidationContrat(con);
                 confirmationValidationContrat.setVisible(true);
@@ -243,7 +243,7 @@ public class ValiderContrat extends javax.swing.JFrame {
                 jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
             } else {
                 // fermer la fenetre
-                this.setVisible(false);
+                this.dispose();
                 // Fenetre de confirmation
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, "Votre refus de contrat a été envoyé !", "Refus de contrat", JOptionPane.WARNING_MESSAGE);
@@ -260,7 +260,7 @@ public class ValiderContrat extends javax.swing.JFrame {
         // Menu
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

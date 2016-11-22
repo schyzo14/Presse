@@ -5,7 +5,6 @@
  */
 package client.distributeur.Vue.ValiderContrat;
 
-import client.distributeur.Vue.Menu.MenuDistributeur;
 import java.util.HashMap;
 import presse.contrat;
 
@@ -127,7 +126,7 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**

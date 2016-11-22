@@ -118,7 +118,7 @@ public class PaiementValide extends javax.swing.JFrame {
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**

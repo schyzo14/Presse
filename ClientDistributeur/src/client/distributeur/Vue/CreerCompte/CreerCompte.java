@@ -149,7 +149,7 @@ public class CreerCompte extends javax.swing.JFrame {
                     }
                 } else {
                     // fermer la fenetre
-                    this.setVisible(false);
+                    this.dispose();
                     
                     // Garder le compte distributeur
                     ClientDistributeur.monDistributeur = distri;

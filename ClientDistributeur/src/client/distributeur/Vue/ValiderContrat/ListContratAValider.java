@@ -162,7 +162,7 @@ public class ListContratAValider extends javax.swing.JFrame {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -278,7 +278,7 @@ public class ListContratAValider extends javax.swing.JFrame {
                 
                 ValiderContrat validerContrat = new ValiderContrat(con);
                 validerContrat.setVisible(true);
-                ListContratAValider.this.setVisible(false);
+                ListContratAValider.this.dispose();
                 
             }
             isPushed = false;

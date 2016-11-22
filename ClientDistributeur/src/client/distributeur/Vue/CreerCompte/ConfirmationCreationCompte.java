@@ -89,7 +89,7 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
         // on arrive au menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     /**

@@ -8,14 +8,12 @@ package client.distributeur.Vue.EnvoyerRecepisse;
 import client.distributeur.ClientDistributeur;
 import client.distributeur.Vue.Menu.MenuDistributeur;
 import client.distributeur.Vue.ValiderContrat.ListContratAValider;
-import client.distributeur.Vue.ValiderContrat.ValiderContrat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +26,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import presse.contrat;
-import presse.distributeur;
-import presse.editeur;
-import presse.titre;
 
 /**
  *
@@ -168,7 +163,7 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
         // Menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -287,7 +282,7 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
                 
                 EnvoyerRecepisse envoyerRecepisse = new EnvoyerRecepisse(con);
                 envoyerRecepisse.setVisible(true);
-                ListContratAttenteRecepisse.this.setVisible(false);
+                ListContratAttenteRecepisse.this.dispose();
                 
             }
             isPushed = false;

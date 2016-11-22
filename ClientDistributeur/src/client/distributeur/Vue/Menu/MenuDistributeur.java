@@ -117,29 +117,29 @@ public class MenuDistributeur extends javax.swing.JFrame {
     private void jButtonPasserContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPasserContratActionPerformed
         PasserContrat passerContrat = new PasserContrat();
         passerContrat.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonPasserContratActionPerformed
 
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonValiderContratActionPerformed
 
     private void jButtonRealiserVirementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealiserVirementActionPerformed
         VirementBancaire virementBancaire = new VirementBancaire();
         virementBancaire.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonRealiserVirementActionPerformed
 
     private void jButtonEnvoyerRecepisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerRecepisseActionPerformed
         ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
         listContratAttenteRecepisse.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
-        this.setVisible(false);
+        this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 

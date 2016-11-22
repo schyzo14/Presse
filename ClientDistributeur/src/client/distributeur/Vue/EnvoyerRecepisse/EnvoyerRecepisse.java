@@ -235,7 +235,7 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
                     jop.showMessageDialog(null, detailMessage, "Erreur d'envoi du récépissé", JOptionPane.WARNING_MESSAGE);
                 } else {
                     // fermer la fenetre
-                    this.setVisible(false);
+                    this.dispose();
                     // Fenetre de confirmation
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, "Le récépissé a été envoyé !", "Récépissé envoyé", JOptionPane.WARNING_MESSAGE);
@@ -254,7 +254,7 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
         // Liste contrats attente récépissé
         ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
         listContratAttenteRecepisse.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

@@ -165,7 +165,7 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         Menu menu = new Menu();
         menu.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
@@ -283,7 +283,7 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
                 
                 CoutContrat coutContrat = new CoutContrat(con);
                 coutContrat.setVisible(true);
-                ListContratAttenteCout.this.setVisible(false);
+                ListContratAttenteCout.this.dispose();
                 
             }
             isPushed = false;

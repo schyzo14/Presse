@@ -206,7 +206,7 @@ public class CoutContrat extends javax.swing.JFrame {
                     jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
                 } else {
                     // on ferme la fenetre
-                    this.setVisible(false);
+                    this.dispose();
                     // On confirme que le cout est envoyé
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, "Le cout est envoyé !", "Cout envoyé", JOptionPane.WARNING_MESSAGE);
@@ -229,7 +229,7 @@ public class CoutContrat extends javax.swing.JFrame {
         // On passe a la fenetre de la liste de contrat en attente de cout
         ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
         listContratAttenteCout.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**

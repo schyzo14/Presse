@@ -6,7 +6,6 @@
 package client.distributeur.Vue.PasserContrat;
 
 import client.distributeur.ClientDistributeur;
-import client.distributeur.Vue.CreerCompte.CreerCompte;
 import client.distributeur.Vue.Menu.MenuDistributeur;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,10 +15,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.json.JSONException;
-import org.json.JSONObject;
 import presse.contrat;
-import presse.distributeur;
 import presse.editeur;
 import presse.titre;
 
@@ -183,7 +179,7 @@ public class PasserContrat extends javax.swing.JFrame {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     private void jButtonEnvoyerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerActionPerformed
@@ -233,7 +229,7 @@ public class PasserContrat extends javax.swing.JFrame {
                         JOptionPane jop = new JOptionPane();
                         jop.showMessageDialog(null, detailMessage, "Erreur de création", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        this.setVisible(false);
+                        this.dispose();
                         // validation contrat envoyé
                         JOptionPane d = new JOptionPane();
                         String lesTextes[]={"OK"}; 

@@ -214,7 +214,7 @@ public class ValiderContrat extends javax.swing.JFrame {
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
             } else {
-                this.setVisible(false);
+                this.dispose();
                 // corfirmation validation
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, "Le contrat a été validé !", "Contrat validé", JOptionPane.WARNING_MESSAGE);
@@ -230,7 +230,7 @@ public class ValiderContrat extends javax.swing.JFrame {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     /**
