@@ -12,7 +12,12 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
+import java.util.HashMap;
 import presse.distributeur;
+import presse.titre;
+import rest.ClientRESTTitre;
 import services.ContratBean;
 import services.ContratBeanLocal;
 import services.DistributeurBean;
@@ -100,7 +105,21 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="getListTitre")
     public String getListeTitre() {
-        return this.gson.toJson(this.titreBean.getListeTitre());
+        //return this.gson.toJson(this.titreBean.getListeTitre());
+        
+        // On récupère les titres dans Archive avec REST
+        ClientRESTTitre clientRESTTitre = new ClientRESTTitre();
+        String s = clientRESTTitre.getTitres();
+        java.lang.reflect.Type type = new TypeToken<ArrayList<titre>>(){}.getType();
+        Gson gson = new Gson();
+        ArrayList<titre> lesTitres = gson.fromJson(s, type);
+        // On parcours les titres REST pour les transformer et les envoyer en WS
+        HashMap<Integer, titre> lesTitresMap = new HashMap<Integer, titre>();
+        for (titre titr : lesTitres) {
+            lesTitresMap.put(titr.getNumT(), titr);
+        }
+        titreBean.setListeTitre(lesTitresMap);
+        return this.gson.toJson(lesTitresMap);
     }
 
     
@@ -116,6 +135,20 @@ public class DistributeurEditeurWS {
     @WebMethod(operationName="demandeContrat")
     public String demandeContrat(@WebParam(name="distributeurId") Integer distributeurId, @WebParam(name="editeurId") Integer editeurId, @WebParam(name="titreId") Integer titreId, 
             @WebParam(name="nbCopies") Integer nbCopies, @WebParam(name="duree") Integer duree) {
+        
+        // On récupère les titres dans Archive avec REST
+        ClientRESTTitre clientRESTTitre = new ClientRESTTitre();
+        String s = clientRESTTitre.getTitres();
+        java.lang.reflect.Type type = new TypeToken<ArrayList<titre>>(){}.getType();
+        Gson gson = new Gson();
+        ArrayList<titre> lesTitres = gson.fromJson(s, type);
+        // On parcours les titres REST pour les transformer et les envoyer en WS
+        HashMap<Integer, titre> lesTitresMap = new HashMap<Integer, titre>();
+        for (titre titr : lesTitres) {
+            lesTitresMap.put(titr.getNumT(), titr);
+        }
+        titreBean.setListeTitre(lesTitresMap);
+        
         return this.gson.toJson(this.contratBean.créerContrat(distributeurId, editeurId, titreId, nbCopies, duree));
     }
 	

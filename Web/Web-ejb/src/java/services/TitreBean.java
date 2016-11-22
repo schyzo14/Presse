@@ -19,16 +19,18 @@ public class TitreBean implements TitreBeanLocal{
     public static HashMap<Integer, titre> lesTitres = new HashMap<Integer, titre>();
 
     public TitreBean() {
-        // TODO : récupérer les titres de quelques part
-        lesTitres.put(1, new titre(1, "Titre 1"));
-        lesTitres.put(2, new titre(2, "Titre 2"));
-        lesTitres.put(3, new titre(3, "Titre 3"));
+
     }
     
 
     @Override
     public HashMap<Integer, titre> getListeTitre() {
         return lesTitres;
+    }
+
+    @Override
+    public void setListeTitre(HashMap<Integer, titre> listTitres) {
+        lesTitres = listTitres;
     }
     
 }

@@ -18,4 +18,6 @@ public interface TitreBeanLocal {
     
     public HashMap<Integer, titre> getListeTitre();
     
+    public void setListeTitre(HashMap<Integer, titre> listTitres);
+    
 }

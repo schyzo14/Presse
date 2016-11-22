@@ -52,7 +52,6 @@ public class PasserContrat extends javax.swing.JFrame {
             
             // Liste des titres
             String st = ClientDistributeur.port.getListTitre();
-            System.out.println(st);
             java.lang.reflect.Type typet = new TypeToken<HashMap<Integer, titre>>(){}.getType();
             listeTitre = gson.fromJson(st, typet);
             Iterator it = listeTitre.keySet().iterator();
@@ -213,6 +212,7 @@ public class PasserContrat extends javax.swing.JFrame {
                 while (it.hasNext()) {
                     int titrL = (int) it.next();
                     titre titrLL = listeTitre.get(titrL);
+                    System.out.println(titrL);
                     if (titrLL.getNomT().equals(titreChoix)) {
                         titrId = titrLL.getNumT();
                     }
@@ -222,12 +222,10 @@ public class PasserContrat extends javax.swing.JFrame {
                 
                 // distributeur
                 System.out.println(ClientDistributeur.monDistributeur.getNumD());
-                System.out.println(editId + " t: " + titrId);
                 
                 try {
                     // Avec le WS on passe le contrat
                     String s = ClientDistributeur.port.demandeContrat(ClientDistributeur.monDistributeur.getNumD(), editId, titrId, nbCopie, mois);
-                    System.out.println(s);
 
                     // On transforme le retour en contrat
                     Gson gson = new Gson();
