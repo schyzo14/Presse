@@ -27,6 +27,8 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
      */
     public EnvoyerRecepisse(contrat con) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
         this.con = con;
         
         // éditeut

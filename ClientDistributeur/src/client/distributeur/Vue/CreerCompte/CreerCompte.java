@@ -27,6 +27,7 @@ public class CreerCompte extends javax.swing.JFrame {
      */
     public CreerCompte() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // initialisation des champs
         jTextFieldMail.setText("");

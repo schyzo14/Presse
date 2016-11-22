@@ -27,6 +27,7 @@ public class SeConnecter extends javax.swing.JFrame {
      */
     public SeConnecter() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

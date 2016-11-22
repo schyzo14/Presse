@@ -40,6 +40,7 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
      */
     public ListContratAttenteRecepisse() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // On récupère le distributeur
         int distributeurId = ClientDistributeur.monDistributeur.getNumD();

@@ -22,6 +22,8 @@ public class PaiementValide extends javax.swing.JFrame {
      */
     public PaiementValide(Payement payement) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
         this.payement = payement;
         
         DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);

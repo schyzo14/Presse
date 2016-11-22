@@ -22,6 +22,8 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
      */
     public ConfirmationValidationContrat(contrat con) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
         this.con = con;
         
         // Montant

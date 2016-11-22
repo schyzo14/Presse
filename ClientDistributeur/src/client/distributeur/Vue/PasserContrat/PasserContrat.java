@@ -32,6 +32,7 @@ public class PasserContrat extends javax.swing.JFrame {
      */
     public PasserContrat() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         try {
             // Liste des éditeur

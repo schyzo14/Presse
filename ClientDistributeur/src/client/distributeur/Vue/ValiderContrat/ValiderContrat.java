@@ -29,6 +29,7 @@ public class ValiderContrat extends javax.swing.JFrame {
     public ValiderContrat(contrat con) {
         this.con = con;
         initComponents();
+        this.setLocationRelativeTo(null);
         
         jLabelChampCout.setText(con.getCoutC() + " €");
         jLabelChampDuree.setText(con.getDureeC() + " mois");

@@ -21,6 +21,7 @@ public class MenuDistributeur extends javax.swing.JFrame {
      */
     public MenuDistributeur() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

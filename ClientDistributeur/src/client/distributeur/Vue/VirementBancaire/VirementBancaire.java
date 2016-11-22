@@ -26,6 +26,7 @@ public class VirementBancaire extends javax.swing.JFrame {
      */
     public VirementBancaire() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

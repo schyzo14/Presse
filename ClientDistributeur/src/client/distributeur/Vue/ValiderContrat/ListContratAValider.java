@@ -39,6 +39,7 @@ public class ListContratAValider extends javax.swing.JFrame {
      */
     public ListContratAValider() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // On récupère le distributeur
         int distributeurId = ClientDistributeur.monDistributeur.getNumD();

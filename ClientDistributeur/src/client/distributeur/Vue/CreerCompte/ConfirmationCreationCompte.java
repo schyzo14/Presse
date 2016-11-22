@@ -20,6 +20,7 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
      */
     public ConfirmationCreationCompte(String mdp) {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // Champ MDP
         this.mdp = mdp;
