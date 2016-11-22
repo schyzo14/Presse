@@ -8,17 +8,20 @@ package client.integrateur;
 import client.jms.NotificationJMS;
 import client.rest.ClientRESTVolume;
 import client.rest.ClientRESTPublicites;
-import client.rest.ClientRESTArticles;
+import client.rest.ClientRESTArticlesSelectionnes;
+import client.rest.ClientRESTTitre;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import presse.article;
 import presse.publicite;
+import presse.titre;
 import presse.volume;
 
 /**
@@ -27,7 +30,12 @@ import presse.volume;
  */
 public class IntegrateurFen extends javax.swing.JFrame {
     private HashMap<Integer,publicite> listePub;
-    private HashMap<Integer,article> listeArticles;
+    private HashMap<Integer,article> listeArticlesSelectionnes;
+    ArrayList<article> listeArticlesSel;
+    private ArrayList<titre> listeTitres;
+    
+    private int i;
+    
     Gson gson;
     NotificationJMS notif;
     
@@ -39,31 +47,47 @@ public class IntegrateurFen extends javax.swing.JFrame {
         
         //Init clients REST
         ClientRESTPublicites clientPublicites = new ClientRESTPublicites();
-        ClientRESTArticles clientArticles = new ClientRESTArticles();
+        ClientRESTArticlesSelectionnes clientArticles = new ClientRESTArticlesSelectionnes();
+        ClientRESTTitre clientTitres = new ClientRESTTitre();
         
         //Récupération de toutes les publicités au format json
         String publicites = clientPublicites.getListePubs();
-        //Récupération de tous les articles au format json
-        String articles = clientArticles.getListeArticles();
+        //Récupération de tous les articlesSelectionnes au format json
+        String articlesSelectionnes = clientArticles.getListeArticlesSelectionnes();
+        //Récupération de tous les titres au format json
+        String titres = clientTitres.getTitres();
         
         //Transformation du json à HashMap Pub
         java.lang.reflect.Type typePublicites = new TypeToken<HashMap<Integer,publicite>>(){}.getType();
         listePub = gson.fromJson(publicites, typePublicites);
         //Transformation du json à HashMap Articles
         java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer,article>>(){}.getType();
-        listeArticles = gson.fromJson(articles, typeArticles);
+        listeArticlesSelectionnes = gson.fromJson(articlesSelectionnes, typeArticles);
+        //Transformation du json à HashMap Titres
+        java.lang.reflect.Type typeTitres = new TypeToken<ArrayList<titre>>(){}.getType();
+        listeTitres = gson.fromJson(titres, typeTitres);
         
-        //Récupération sous forme de liste
+        //Récupération sous forme de liste des pubs
         DefaultListModel<String> lesPubs = new DefaultListModel<>();
         for(publicite p : listePub.values()) {
             lesPubs.addElement("#" + p.getNumP() + " : " + p.getCompagnie() + " - " + p.getContenuP());
         }
+        //Récupération sous forme de liste des titres
+        DefaultComboBoxModel<String> lesTitres = new DefaultComboBoxModel<>();
+        for(titre t : listeTitres) {
+            lesTitres.addElement("#" + t.getNumT() + " - " + t.getNomT());
+        }
         
         //Affichage
         initComponents();
+        listeArticlesSel = new ArrayList<article>(listeArticlesSelectionnes.values());
+        i = 0;
+        jLabelArticle.setText("#" + (i+1) + "/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSel.get(i).getNomA());
+        jTextAreaArticle.setText(listeArticlesSel.get(i).getContenuA());
         notif = new NotificationJMS();
         jListPubZone1.setModel(lesPubs);
         jListPubZone2.setModel(lesPubs);
+        jComboBoxTitres.setModel(lesTitres);
     }
 
     /**
@@ -90,6 +114,8 @@ public class IntegrateurFen extends javax.swing.JFrame {
         jLabelArticle = new javax.swing.JLabel();
         jButtonSuivant = new javax.swing.JButton();
         jButtonPrecedent = new javax.swing.JButton();
+        jComboBoxTitres = new javax.swing.JComboBox<>();
+        jLabelTitre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nouveau Volume");
@@ -112,7 +138,6 @@ public class IntegrateurFen extends javax.swing.JFrame {
         jTextAreaArticle.setColumns(20);
         jTextAreaArticle.setLineWrap(true);
         jTextAreaArticle.setRows(5);
-        jTextAreaArticle.setText(listeArticles.get(1).getContenuA());
         jScrollPane3.setViewportView(jTextAreaArticle);
 
         jButtonAnnuler.setText("Annuler");
@@ -129,8 +154,6 @@ public class IntegrateurFen extends javax.swing.JFrame {
             }
         });
 
-        jLabelArticle.setText("#1/" + listeArticles.size() + " : " + listeArticles.get(1).getNomA());
-
         jButtonSuivant.setText("Suivant");
         jButtonSuivant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,44 +168,49 @@ public class IntegrateurFen extends javax.swing.JFrame {
             }
         });
 
+        jLabelTitre.setText("Titre");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonPrecedent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelArticle)
+                        .addGap(118, 118, 118)
+                        .addComponent(jButtonSuivant)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(jLabelPubZone1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonPrecedent)
+                                .addGap(79, 79, 79)
+                                .addComponent(jLabelPubZone2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabelArticle)
-                                .addGap(118, 118, 118)
-                                .addComponent(jButtonSuivant)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(133, 133, 133)
-                                .addComponent(jLabelPubZone1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(79, 79, 79)
-                                        .addComponent(jLabelPubZone2))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane2)
-                                    .addComponent(jScrollPane1))))
-                        .addContainerGap(34, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelNumVolume)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldNumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(342, 342, 342))))
+                                .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane1))))
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jLabelNumVolume)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldNumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelTitre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxTitres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(194, 194, 194))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +218,9 @@ public class IntegrateurFen extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNumVolume))
+                    .addComponent(jLabelNumVolume)
+                    .addComponent(jComboBoxTitres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTitre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelArticle)
@@ -223,7 +253,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         //Enregistrement du dernier article et de ses pubs
-        int numA = getNumArticleCourant();
+        int numA = getNumArticleCourant()-1;
         if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Il faut choisir deux pubs par article",
@@ -245,8 +275,8 @@ public class IntegrateurFen extends javax.swing.JFrame {
             return;
         }
         
-        //Vérification que tous les articles ont été traités
-        for(article a : this.listeArticles.values()) {
+        //Vérification que tous les articlesSelectionnes ont été traités
+        for(article a : this.listeArticlesSelectionnes.values()) {
             if(a.getListePublicites().size() != 2) {
                 JOptionPane.showMessageDialog(this,
                 "Vous n'avez pas traité tous les articles",
@@ -258,10 +288,15 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
         //Envoyer le volume sur le serveur 
         volume v = new volume(Integer.parseInt(this.jTextFieldNumVolume.getText()));
-        v.setListeArticles(this.listeArticles);
+            v.setListeArticles(this.listeArticlesSelectionnes);
+            //Récupération de l'id Titre
+            Pattern pattern = Pattern.compile("#(.*) -");
+            Matcher matcher = pattern.matcher((String) this.jComboBoxTitres.getSelectedItem());
+            if(matcher.find()) {
+                v.setNumT(Integer.parseInt(matcher.group(1)));
+            }
         ClientRESTVolume clientVolume = new ClientRESTVolume();
         String rep = clientVolume.addVolume(this.gson.toJson(v));
-        System.out.println("Reponse : \n"+rep);
         
         //Envoyer notification au rédacteur chef
         notif.sendNotification(this.gson.toJson(v));
@@ -284,19 +319,19 @@ public class IntegrateurFen extends javax.swing.JFrame {
         } else if(options[reponse].equals("Créer un nouveau volume")) {
             //Remettre tous les champs à vide
             this.jTextFieldNumVolume.setText("");
-            for(article a : this.listeArticles.values()) {
+            for(article a : this.listeArticlesSelectionnes.values()) {
                 a.getListePublicites().clear();
             }
             this.jListPubZone1.clearSelection();
             this.jListPubZone2.clearSelection();
-            jLabelArticle.setText("#1/" + listeArticles.size() + " : " + listeArticles.get(1).getNomA());
-            jTextAreaArticle.setText(listeArticles.get(1).getContenuA());
+            jLabelArticle.setText("#1/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSelectionnes.get(1).getNomA());
+            jTextAreaArticle.setText(listeArticlesSelectionnes.get(1).getContenuA());
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonSuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuivantActionPerformed
         //Récupérer le numéro d'article courant
-        int numA = getNumArticleCourant();
+        int numA = getNumArticleCourant()-1;
         if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Il faut choisir deux pubs par article",
@@ -306,19 +341,19 @@ public class IntegrateurFen extends javax.swing.JFrame {
             enregistrerArticlePubs(numA);
 
             //Affichage de l'article suivant
-            if(numA < this.listeArticles.size()) {
+            if((i+1) < this.listeArticlesSelectionnes.size()) {
                 //Déselection des JList
                 this.jListPubZone1.clearSelection();
                 this.jListPubZone2.clearSelection();
 
-                numA++;
-                //Actualisation jLabel
-                this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
-                //Actualisation jText
-                this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+                i++;
+                //Actualisation jLabel et jText
+                jLabelArticle.setText("#" + (i+1) + "/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSel.get(i).getNomA());
+                jTextAreaArticle.setText(listeArticlesSel.get(i).getContenuA());
 
                 //Sélection des pubs liées
-                ArrayList<publicite> pubs = this.listeArticles.get(numA).getListePublicites();
+                numA = getNumArticleCourant()-1;
+                ArrayList<publicite> pubs = this.listeArticlesSelectionnes.get(numA).getListePublicites();
                 if(!pubs.isEmpty()) {
                     this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
                     this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
@@ -329,7 +364,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
     private void jButtonPrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrecedentActionPerformed
         //Récupérer le numéro d'article courant
-        int numA = getNumArticleCourant();
+        int numA = getNumArticleCourant()-1;
         if(this.jListPubZone1.isSelectionEmpty() || this.jListPubZone2.isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Il faut choisir deux pubs par article",
@@ -339,19 +374,19 @@ public class IntegrateurFen extends javax.swing.JFrame {
             enregistrerArticlePubs(numA);
             
             //Affichage de l'article suivant
-            if(numA > 1) {
+            if((i+1) > 1) {
                 //Déselection des JList
                 this.jListPubZone1.clearSelection();
                 this.jListPubZone2.clearSelection();
 
-                numA--;
-                //Actualisation jLabel
-                this.jLabelArticle.setText("#" + numA + "/" + listeArticles.size() + " : " + listeArticles.get(numA).getNomA());
-                //Actualisation jText
-                this.jTextAreaArticle.setText(listeArticles.get(numA).getContenuA());
+                i--;
+                //Actualisation jLabel et jText
+                jLabelArticle.setText("#" + (i+1) + "/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSel.get(i).getNomA());
+                jTextAreaArticle.setText(listeArticlesSel.get(i).getContenuA());
 
                 //Sélection des pubs liées
-                ArrayList<publicite> pubs = this.listeArticles.get(numA).getListePublicites();
+                numA = getNumArticleCourant()-1;
+                ArrayList<publicite> pubs = this.listeArticlesSelectionnes.get(numA).getListePublicites();
                 if(!pubs.isEmpty()) {
                     this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
                     this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
@@ -361,14 +396,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPrecedentActionPerformed
 
     public int getNumArticleCourant() {
-        int numA = 0;
-        Pattern pattern = Pattern.compile("#(.*)/");
-        Matcher matcher = pattern.matcher(this.jLabelArticle.getText());
-        if(matcher.find()) {
-            numA = Integer.parseInt(matcher.group(1));
-        }
-        
-        return numA;
+        return this.listeArticlesSel.get(i).getNumA();
     }
     
     public int getNumPub1Courante() {
@@ -401,7 +429,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
         pubs.add(this.listePub.get(numPub1));
         pubs.add(this.listePub.get(numPub2));
         
-        this.listeArticles.get(numA).setListePublicites(pubs);
+        this.listeArticlesSelectionnes.get(numA).setListePublicites(pubs);
     }
     
     /**
@@ -444,10 +472,12 @@ public class IntegrateurFen extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPrecedent;
     private javax.swing.JButton jButtonSuivant;
     private javax.swing.JButton jButtonValider;
+    private javax.swing.JComboBox<String> jComboBoxTitres;
     private javax.swing.JLabel jLabelArticle;
     private javax.swing.JLabel jLabelNumVolume;
     private javax.swing.JLabel jLabelPubZone1;
     private javax.swing.JLabel jLabelPubZone2;
+    private javax.swing.JLabel jLabelTitre;
     private javax.swing.JList<String> jListPubZone1;
     private javax.swing.JList<String> jListPubZone2;
     private javax.swing.JScrollPane jScrollPane1;
