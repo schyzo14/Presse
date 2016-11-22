@@ -27,5 +27,6 @@ public class applicationConfig extends Application{
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(REST_MiseSousPresse.articlesRessource.class);
+        resources.add(REST_MiseSousPresse.articlesSelectionnesRessource.class);
     }
 }

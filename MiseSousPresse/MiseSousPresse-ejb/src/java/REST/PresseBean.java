@@ -27,17 +27,17 @@ public class PresseBean implements PresseBeanLocal{
     private HashMap<Integer, publicite> listePublicite;
     private HashMap<Integer, volume> listeVolume;
     private int lastid;
-    private HashMap<Integer, article> listeArticlesSelect = new HashMap<Integer, article>();
+    private HashMap<Integer, article> listeArticlesSelect;
     
     public PresseBean() {
-               
-        //Initialisation de la table Articles
+        //Initialisation des tables
         this.listeArticles = new HashMap<>();
         this.listeAuteurs = new HashMap<>();
         this.listeMotsCles = new HashMap<>();
         this.listePublicite = new HashMap<>();
         this.listeVolume = new HashMap<>();
-        this.lastid = 3;
+        this.listeArticlesSelect = new HashMap<>();
+        this.lastid = 0;
         
         //Alimentation des articles
         article a1 = new article(1, "Final Fantasy XV", "Final Fantasy XV, annoncé originellement sous le titre Final Fantasy Versus XIII, est un jeu vidéo développé et édité par Square-Enix, prévu pour le 29 novembre 2016 sur PlayStation 4 et Xbox One.");
@@ -64,7 +64,9 @@ public class PresseBean implements PresseBeanLocal{
         a2.getListeMotsCles().put(2, mc2);
         a3.getListeMotsCles().put(3, mc3);
         
-
+        //Alimentation de listeArticleSelect
+        this.listeArticlesSelect.put(lastid, a1);
+        lastid++;
     }
     
     //Récupérer les articles
@@ -139,8 +141,7 @@ public class PresseBean implements PresseBeanLocal{
     public HashMap<Integer, article> listeArticleSelect() {
         return this.listeArticlesSelect;
     }
-    
-    
+
     @Override
     public String addArticleSelect(String unArtSel){
         System.out.println("unArtSel : "+unArtSel);
