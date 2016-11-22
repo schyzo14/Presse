@@ -125,8 +125,8 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
-        MenuDistributeur menuDistributeur = new MenuDistributeur();
-        menuDistributeur.setVisible(true);
+        ListContratAValider listContratAValider = new ListContratAValider();
+        listContratAValider.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonOKActionPerformed
 

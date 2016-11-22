@@ -36,6 +36,7 @@ public class ValiderContrat extends javax.swing.JFrame {
         jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());
         jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
         jLabelChampTitre.setText(con.getTitreC().getNomT());
+        jLabelRecepisse.setText(con.getRecepisseC());
     }
 
     /**
@@ -200,7 +201,7 @@ public class ValiderContrat extends javax.swing.JFrame {
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
                 try {
             // on enregistre la validation
-            String s = ClientEditeur.port.listeContratAValiderEditeur(con.getNumC());
+            String s = ClientEditeur.port.validerContratEditeur(con.getNumC());
             // On récupère le contrat
             System.out.println(s);
             Gson gson = new Gson();
@@ -213,10 +214,13 @@ public class ValiderContrat extends javax.swing.JFrame {
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
             } else {
+                this.setVisible(false);
                 // corfirmation validation
                 JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, "Le contrat a été validé !", "Erreur de validation", JOptionPane.WARNING_MESSAGE);
-                this.setVisible(false);
+                jop.showMessageDialog(null, "Le contrat a été validé !", "Contrat validé", JOptionPane.WARNING_MESSAGE);
+                // retour à la liste des contrats en attente de validation
+                ListContratAValider listContratAValider = new ListContratAValider();
+                listContratAValider.setVisible(true);
             }
         } catch (RemoteException ex) {
             Logger.getLogger(ValiderContrat.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,8 +228,8 @@ public class ValiderContrat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        Menu menu = new Menu();
-        menu.setVisible(true);
+        ListContratAValider listContratAValider = new ListContratAValider();
+        listContratAValider.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

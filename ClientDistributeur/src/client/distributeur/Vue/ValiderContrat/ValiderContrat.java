@@ -258,8 +258,8 @@ public class ValiderContrat extends javax.swing.JFrame {
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // Menu
-        MenuDistributeur menuDistributeur = new MenuDistributeur();
-        menuDistributeur.setVisible(true);
+        ListContratAValider listContratAValider = new ListContratAValider();
+        listContratAValider.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

@@ -6,8 +6,6 @@
 package client.distributeur.Vue.EnvoyerRecepisse;
 
 import client.distributeur.ClientDistributeur;
-import client.distributeur.Vue.Menu.MenuDistributeur;
-import client.distributeur.Vue.ValiderContrat.ValiderContrat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.rmi.RemoteException;
@@ -236,13 +234,15 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, detailMessage, "Erreur d'envoi du récépissé", JOptionPane.WARNING_MESSAGE);
                 } else {
+                    // fermer la fenetre
+                    this.setVisible(false);
                     // Fenetre de confirmation
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, "Le récépissé a été envoyé !", "Récépissé envoyé", JOptionPane.WARNING_MESSAGE);
                     // retour au menu
-                    MenuDistributeur menuDistributeur = new MenuDistributeur();
-                    menuDistributeur.setVisible(true);
-                    this.setVisible(false);
+                    ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
+                    listContratAttenteRecepisse.setVisible(true);
+                    
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(EnvoyerRecepisse.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,9 +251,9 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // Menu
-        MenuDistributeur menuDistributeur = new MenuDistributeur();
-        menuDistributeur.setVisible(true);
+        // Liste contrats attente récépissé
+        ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
+        listContratAttenteRecepisse.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

@@ -148,6 +148,9 @@ public class CreerCompte extends javax.swing.JFrame {
                         Logger.getLogger(CreerCompte.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
+                    // fermer la fenetre
+                    this.setVisible(false);
+                    
                     // Garder le compte distributeur
                     ClientDistributeur.monDistributeur = distri;
             
@@ -155,7 +158,6 @@ public class CreerCompte extends javax.swing.JFrame {
                     String mdp = distri.getMdpD();
                     ConfirmationCreationCompte confirmationCreationCompte = new ConfirmationCreationCompte(mdp);
                     confirmationCreationCompte.setVisible(true);
-                    this.setVisible(false);
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(CreerCompte.class.getName()).log(Level.SEVERE, null, ex);

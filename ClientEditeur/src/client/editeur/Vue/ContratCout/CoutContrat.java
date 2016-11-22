@@ -226,8 +226,9 @@ public class CoutContrat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEnvoyerCoutActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        Menu menu = new Menu();
-        menu.setVisible(true);
+        // On passe a la fenetre de la liste de contrat en attente de cout
+        ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
+        listContratAttenteCout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

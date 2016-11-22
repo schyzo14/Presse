@@ -195,7 +195,6 @@ public class PasserContrat extends javax.swing.JFrame {
                 // On récupère les champs
                 // editeur
                 String edChoix = (String) jComboBoxEditeur.getSelectedItem();
-                System.out.println(edChoix);
                 Iterator ie = listeEditeur.keySet().iterator();
                 int editId = -1;
                 while (ie.hasNext()) {
@@ -212,16 +211,12 @@ public class PasserContrat extends javax.swing.JFrame {
                 while (it.hasNext()) {
                     int titrL = (int) it.next();
                     titre titrLL = listeTitre.get(titrL);
-                    System.out.println(titrL);
                     if (titrLL.getNomT().equals(titreChoix)) {
                         titrId = titrLL.getNumT();
                     }
                 }
                 // mois
                 int mois = Integer.parseInt(jComboBoxDuree.getSelectedItem().toString());
-                
-                // distributeur
-                System.out.println(ClientDistributeur.monDistributeur.getNumD());
                 
                 try {
                     // Avec le WS on passe le contrat
