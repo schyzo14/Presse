@@ -208,6 +208,7 @@ public class VirementBancaire extends javax.swing.JFrame {
                 
                 // On récupère le résultat
                 String s = c.virement(Integer.toString(numCompte), nomPayeur, numCompteReception, montant);
+                System.out.println(s);
 
                 // On récupère l'objet Payement qui nous est renvoyé par la Banque
                 java.lang.reflect.Type type = new TypeToken<Payement>(){}.getType();

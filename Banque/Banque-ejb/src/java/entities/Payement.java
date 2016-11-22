@@ -13,8 +13,8 @@ public class Payement {
     private double montant;
     private Date date;
 
-    public Payement(int numComptePayeur, int numCompteReception, double montant) {
-        this.setNumPayement(1 + (int)(Math.random() * ((1000000 - 1) + 1)));
+    public Payement(int numPayement, int numComptePayeur, int numCompteReception, double montant) {
+        this.setNumPayement(numPayement);
         this.setNumComptePayeur(numComptePayeur);
         this.setNumCompteReception(numCompteReception);
         this.setMontant(montant);

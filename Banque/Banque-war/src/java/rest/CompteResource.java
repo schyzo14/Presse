@@ -56,6 +56,7 @@ public class CompteResource {
         
         try {
             payement = this.banqueBean.payer(nomPayeur, numComptePayeur, numCompteReceptionInt, montantD);
+            
         } catch (Throwable e) {
             return this.gson.toJson(e);
         }

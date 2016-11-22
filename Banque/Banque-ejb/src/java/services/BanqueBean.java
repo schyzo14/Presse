@@ -5,11 +5,14 @@ import java.util.HashMap;
 import javax.ejb.Singleton;
 import entities.Compte;
 import entities.Payement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class BanqueBean implements BanqueBeanLocal {
 
     private HashMap<Integer, Compte> lescomptes;
+    private int lasIdPaiement;
 
     public BanqueBean() {
         this.lescomptes = new HashMap<>();
@@ -22,10 +25,13 @@ public class BanqueBean implements BanqueBeanLocal {
         // Compte Editeur
         lescomptes.put(11110000, new Compte(11110000, "Flammarion", 10000));
         lescomptes.put(22220000, new Compte(22220000, "Gallimard", 20000));
+        
+        lasIdPaiement = 0;
     }
 
     @Override
     public Payement payer(String nomPayeur, int numComptePayeur, int numCompteReception, double montant) {
+        
         // Si le compte du payeur existe
         if (lescomptes.containsKey(numComptePayeur)) {
             Compte comptePayeur = lescomptes.get(numComptePayeur);
@@ -39,7 +45,8 @@ public class BanqueBean implements BanqueBeanLocal {
                     
                     // Si le payeur a assez d'argent
                     if ((comptePayeur.getSomme() - montant) >= 0) {
-                        Payement payement = new Payement(numComptePayeur, numCompteReception, montant);
+                        Payement payement = new Payement(lasIdPaiement+1, numComptePayeur, numCompteReception, montant);
+                        lasIdPaiement++;
                         
                         lescomptes.get(numComptePayeur).setSomme(comptePayeur.getSomme() - montant);
                         lescomptes.get(numComptePayeur).addPayements(payement);
@@ -49,18 +56,21 @@ public class BanqueBean implements BanqueBeanLocal {
                         
                         return payement;
                     } else {
-                        new Throwable("Le compte à débiter n'a pas la somme nécéssaire pour réaliser le virement !");
+                        throw new Error("Le compte à débiter n'a pas la somme nécéssaire pour réaliser le virement !");
+                        
                     }
                 } else {
-                    new Throwable("Le compte à créditer est introuvable !");
+                    throw new Error("Le compte à créditer est introuvable !");
+                    
                 }
             } else {
-                new Throwable("Le nom du compte à débiter est introuvable !");
+                throw new Error("Le nom du compte à débiter est introuvable !");
+                
             }
         } else {
-            new Throwable("Le compte à débiter est introuvable !");
+            throw new Error("Le compte à débiter est introuvable !");
+            
         }
-        return null;
     }
 
 }
