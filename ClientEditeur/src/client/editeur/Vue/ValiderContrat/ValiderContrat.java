@@ -6,7 +6,6 @@
 package client.editeur.Vue.ValiderContrat;
 
 import client.editeur.ClientEditeur;
-import client.editeur.Vue.Menu.Menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.rmi.RemoteException;
@@ -28,7 +27,9 @@ public class ValiderContrat extends javax.swing.JFrame {
      */
     public ValiderContrat(contrat con) {
         this.con = con;
+        
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // remplir les champs
         jLabelChampCout.setText(con.getCoutC() + " €");

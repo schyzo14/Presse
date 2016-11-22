@@ -40,6 +40,7 @@ public class ListContratAValider extends javax.swing.JFrame {
      */
     public ListContratAValider() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // On récupère l'éditeur
         int editeurId = ClientEditeur.monEditeur.getNumE();

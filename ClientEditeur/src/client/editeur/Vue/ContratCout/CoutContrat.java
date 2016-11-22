@@ -6,16 +6,13 @@
 package client.editeur.Vue.ContratCout;
 
 import client.editeur.ClientEditeur;
-import client.editeur.Vue.Menu.Menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import presse.contrat;
-import presse.editeur;
 
 /**
  *
@@ -31,7 +28,9 @@ public class CoutContrat extends javax.swing.JFrame {
     public CoutContrat(contrat con) {
         
         this.con = con;
+        
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // remplir les champs
         jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());

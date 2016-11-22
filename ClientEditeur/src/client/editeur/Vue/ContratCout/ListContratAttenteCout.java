@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
@@ -23,11 +22,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import presse.contrat;
-import presse.editeur;
 
 /**
  *
@@ -42,6 +39,7 @@ public class ListContratAttenteCout extends javax.swing.JFrame {
      */
     public ListContratAttenteCout() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         // On récupère l'éditeur
         int editeurId = ClientEditeur.monEditeur.getNumE();
