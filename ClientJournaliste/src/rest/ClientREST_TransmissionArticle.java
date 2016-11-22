@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package REST;
+package rest;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
@@ -16,33 +16,47 @@ import javax.ws.rs.core.MediaType;
  * [articles]<br>
  * USAGE:
  * <pre>
- *        ClientREST_ArticleJournaliste client = new ClientREST_ArticleJournaliste();
- *        Object response = client.XXX(...);
- *        // do whatever with response
- *        client.close();
- * </pre>
+        ClientREST_TransmissionArticle client = new ClientREST_TransmissionArticle();
+        Object response = client.XXX(...);
+        // do whatever with response
+        client.close();
+ </pre>
  *
- * @author manou
+ * 
  */
-public class ClientREST_ArticleJournaliste {
+public class ClientREST_TransmissionArticle {
 
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/TransmissionArticles-war/webresources";
 
-    public ClientREST_ArticleJournaliste() {
+    
+    public ClientREST_TransmissionArticle() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("articles");
     }
     
-    //Pour récupérer le détail d'un article en particulier
+    /**
+     * GET
+     * @param idArticle
+     * @return récupérer le détail d'un article en particulier
+     * @throws ClientErrorException 
+     */
     public String getDetailArticle(String idArticle) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("articles/{0}", new Object[]{idArticle}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
 
-    //Pour envoyer les informations saisis par l'utilisateur au serveur TransmettreArticle
+    /**
+     * POST
+     * @param nomArticle
+     * @param nomAuteur
+     * @param contenu
+     * @param motscles
+     * @return Pour envoyer les informations saisis par l'utilisateur au serveur TransmettreArticle
+     * @throws ClientErrorException 
+     */
     public String postJsonArticleJournaliste(String nomArticle, String nomAuteur, String contenu, String motscles) throws ClientErrorException {
         System.out.println("postJsonArticle : "+contenu);
         WebTarget web = client.target(BASE_URI).path("articles");
@@ -55,11 +69,19 @@ public class ClientREST_ArticleJournaliste {
     
     }
 
+    /**
+     * GET
+     * @return
+     * @throws ClientErrorException 
+     */
     public String getJson() throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
     }
 
+    /**
+     * Fermer la connexion
+     */
     public void close() {
         client.close();
     }
