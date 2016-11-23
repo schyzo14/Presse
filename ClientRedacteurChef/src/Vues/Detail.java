@@ -83,6 +83,7 @@ public class Detail extends javax.swing.JFrame {
 
         jTextArea_ContenuDetailArticle.setEditable(false);
         jTextArea_ContenuDetailArticle.setColumns(20);
+        jTextArea_ContenuDetailArticle.setLineWrap(true);
         jTextArea_ContenuDetailArticle.setRows(5);
         jScrollPane_ContenuDetailArticle.setViewportView(jTextArea_ContenuDetailArticle);
 
