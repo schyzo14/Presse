@@ -2,11 +2,18 @@ package entities;
 
 import java.util.ArrayList;
 
+/**
+ * Compte bancaire dans la Banque
+ */
 public class Compte {
 
+    // Numéro de compte
     private int numCompte;
-    private String nomCompte;   
+    // Nom du compte
+    private String nomCompte;
+    // Somme disponible sur le compte
     private double somme;
+    // Liste des actions sur le compte
     private ArrayList<Payement> listPayements = new ArrayList<Payement> ();
 
     public Compte(int numCompte, String nomCompte, double somme) {
