@@ -24,6 +24,9 @@ public class NotificationNouveauVolume extends javax.swing.JFrame {
     public NotificationNouveauVolume() {
         gson = new Gson();
         initComponents();
+        
+        //Dimensionnement Fenetre
+        setLocationRelativeTo(null);
     }
     
     public void setReceived(String s) {

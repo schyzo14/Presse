@@ -23,6 +23,9 @@ public class Detail extends javax.swing.JFrame {
     public Detail() {
         initComponents();
         
+        //Dimensionnement Fenetre
+        setLocationRelativeTo(null);
+        
     }
     
     //Permet d'alimenter les champs à partir des informations reçues du serveur

@@ -46,6 +46,9 @@ public class SelectionArticle extends javax.swing.JFrame {
 
         initComponents();
         
+        //Dimensionnement Fenetre
+        setLocationRelativeTo(null);
+        
         //Afficher la liste des articles
         String articles = restTransmissionArticles.getListeArticles();
 
