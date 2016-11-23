@@ -55,7 +55,7 @@ public class NotificationNouveauVolume extends javax.swing.JFrame {
         jButtonOk = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nouveau volume");
+        setTitle("Rédacteur Chef - Nouveau volume");
 
         jLabelNouveauVolume.setText("Le volume suivant a été ajouté au serveur d'archives :");
 

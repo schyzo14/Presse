@@ -71,6 +71,8 @@ public class Detail extends javax.swing.JFrame {
         jLabel_MotsClesDetailArticle = new javax.swing.JLabel();
         jButton_FermerDetailArticle = new javax.swing.JButton();
 
+        setTitle("Rédacteur Chef - Détail d'un article");
+
         jLabel_NomDetailArticle.setText("Nom : ");
 
         jTextField_NomDetailArticle.setEditable(false);

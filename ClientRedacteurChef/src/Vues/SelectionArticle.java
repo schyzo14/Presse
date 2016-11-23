@@ -90,6 +90,7 @@ public class SelectionArticle extends javax.swing.JFrame {
         jButton_MettrePresse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Rédacteur Chef - Sélection des articles");
 
         jTable_SelectionArticle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
