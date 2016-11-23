@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.distributeur.Vue.PasserContrat;
 
 import client.distributeur.ClientDistributeur;
@@ -20,18 +16,21 @@ import presse.editeur;
 import presse.titre;
 
 /**
- *
- * @author Aurore
+ * Fenetre pour passer un contrat
  */
 public class PasserContrat extends javax.swing.JFrame {
 
+    // Liste des éditeurs
     public HashMap<Integer, editeur> listeEditeur = new HashMap<Integer, editeur>();
+    // Liste des titres
     public HashMap<Integer, titre> listeTitre = new HashMap<Integer, titre>();
+    
     /**
-     * Creates new form PasserContrat
+     * Constructeur
      */
     public PasserContrat() {
         initComponents();
+        // Centrer la fenetre
         this.setLocationRelativeTo(null);
         
         try {
@@ -42,6 +41,7 @@ public class PasserContrat extends javax.swing.JFrame {
             java.lang.reflect.Type type = new TypeToken<HashMap<Integer, editeur>>(){}.getType();
             listeEditeur = gson.fromJson(s, type);
             Iterator ie = listeEditeur.keySet().iterator();
+            // Mettre les éditeurs dans la comboBox
             while (ie.hasNext()) {
                 int editL = (int) ie.next();
                 jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
@@ -52,11 +52,11 @@ public class PasserContrat extends javax.swing.JFrame {
             java.lang.reflect.Type typet = new TypeToken<HashMap<Integer, titre>>(){}.getType();
             listeTitre = gson.fromJson(st, typet);
             Iterator it = listeTitre.keySet().iterator();
+            // Mettre les titres dans la comboBox
             while (it.hasNext()) {
                 int titr = (int) it.next();
                 jComboBoxTitre.addItem(listeTitre.get(titr).getNomT());
             }
-            
         } catch (RemoteException ex) {
             Logger.getLogger(PasserContrat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -177,42 +177,59 @@ public class PasserContrat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
+        // ouvrir la fenetre du menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
+    /**
+     * Bouton "Envoyer"
+     * @param evt 
+     */
     private void jButtonEnvoyerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerActionPerformed
         try {
-            // nbCopie
+            // champ nombre de copie
             int nbCopie = Integer.parseInt(jTextFieldNombreCopies.getText());
-            // nbCopie positif
+            
+            // nombre de copie positif
             if (nbCopie > 0) {
-                // On récupère les champs
-                // editeur
+                
+                // champ editeur
                 String edChoix = (String) jComboBoxEditeur.getSelectedItem();
+                // on parcours la liste des éditeurs pour retrouver l'éditeur sélectionné
                 Iterator ie = listeEditeur.keySet().iterator();
                 int editId = -1;
                 while (ie.hasNext()) {
                     int editL =  (int) ie.next();
                     editeur editLL = listeEditeur.get(editL);
+                    // Si c'est le même nom, c'est l'éditeur sélectionné
                     if (editLL.getNomE().equals(edChoix)) {
                         editId = editLL.getNumE();
                     }
                 }
-                // titre
+                
+                // champ titre
                 String titreChoix = (String) jComboBoxTitre.getSelectedItem();
+                // on parcours la liste des titres pour retrouver le titre sélectionné
                 Iterator it = listeTitre.keySet().iterator();
                 int titrId = -1;
                 while (it.hasNext()) {
                     int titrL = (int) it.next();
                     titre titrLL = listeTitre.get(titrL);
+                    // Si c'est le même nom, c'est le titre sélectionné
                     if (titrLL.getNomT().equals(titreChoix)) {
                         titrId = titrLL.getNumT();
                     }
                 }
-                // mois
+                
+                // champ mois
                 int mois = Integer.parseInt(jComboBoxDuree.getSelectedItem().toString());
                 
                 try {
@@ -224,34 +241,33 @@ public class PasserContrat extends javax.swing.JFrame {
                     java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
                     contrat con = gson.fromJson(s, type);
                     
+                    // si il n'y a pas de numero de contrat
                     if (con.getNumC() == 0) {
                         String detailMessage = "Oups... Une erreur est survenue...";
                         // On affiche l'erreur
                         JOptionPane jop = new JOptionPane();
                         jop.showMessageDialog(null, detailMessage, "Erreur de création", JOptionPane.WARNING_MESSAGE);
                     } else {
+                        // fermer la fenetre courante
                         this.dispose();
-                        // validation contrat envoyé
+                        // fenetre de validation pour dire que le contrat est envoyé
                         JOptionPane d = new JOptionPane();
                         String lesTextes[]={"OK"}; 
                         int retour = d.showOptionDialog(this, "Votre contrat a été envoyé avec succés !", "Contrat demandé", JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, lesTextes, lesTextes[0]);
                         if (lesTextes[retour].equals("OK")) {
+                            // On revint au menu
                             MenuDistributeur menuDistributeur = new MenuDistributeur();
                             menuDistributeur.setVisible(true);
-                            
                         }
                     }
-
                 } catch (RemoteException ex) {
                     Logger.getLogger(PasserContrat.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
             } else {
                 // nb de copie <= 0    
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, "<html>Le nombre de copie doit être positif !</html>", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
             }
-            
         } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
             // On affiche une pop-up pour le signaler
             JOptionPane jop = new JOptionPane();

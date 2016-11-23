@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.SeConnecter;
+
 import client.distributeur.ClientDistributeur;
 import client.distributeur.Vue.Menu.MenuDistributeur;
 import com.google.gson.Gson;
@@ -17,16 +13,16 @@ import org.json.JSONObject;
 import presse.distributeur;
 
 /**
- *
- * @author Aurore
+ * Fenetre pour se connecter
  */
 public class SeConnecter extends javax.swing.JFrame {
 
     /**
-     * Creates new form CreerCompte
+     * Constructeur
      */
     public SeConnecter() {
         initComponents();
+        // Centrer la fenetre
         this.setLocationRelativeTo(null);
     }
 
@@ -109,6 +105,10 @@ public class SeConnecter extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Valider"
+     * @param evt 
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         // On récupère le contenu des champs
         String mail = jTextFieldMail.getText();
@@ -116,6 +116,7 @@ public class SeConnecter extends javax.swing.JFrame {
         
         // On vérifie que les champs sont complétés
         if (mail.equals("") || mdp.equals("")) {
+            // pop-up pour compléter les champs
             JOptionPane jop = new JOptionPane();
             jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -151,13 +152,14 @@ public class SeConnecter extends javax.swing.JFrame {
                     // Fenetre menu
                     MenuDistributeur menuDistributeur = new MenuDistributeur();
                     menuDistributeur.setVisible(true);
+                    
+                    // fermer la fenetre courante
                     this.dispose();
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(SeConnecter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.distributeur.Vue.ValiderContrat;
 
 import client.distributeur.ClientDistributeur;
@@ -16,21 +12,26 @@ import javax.swing.JOptionPane;
 import presse.contrat;
 
 /**
- *
- * @author Aurore
+ * Fenetre pour valider un contrat
  */
 public class ValiderContrat extends javax.swing.JFrame {
 
+    // contrat courant
     private static contrat con;
     
     /**
-     * Creates new form ValiderContrat
+     * Constructeur
      */
     public ValiderContrat(contrat con) {
+        // contrat courant
         this.con = con;
+        
         initComponents();
+        
+        // Centrer la fenetre
         this.setLocationRelativeTo(null);
         
+        // remplir les champs
         jLabelChampCout.setText(con.getCoutC() + " €");
         jLabelChampDuree.setText(con.getDureeC() + " mois");
         jLabelChampEditeur.setText(con.getEditeurC().getNomE());
@@ -200,15 +201,21 @@ public class ValiderContrat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "valider"
+     * @param evt 
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         try {
-            // on enregistre le cout
+            // on enregistre la validation du contrat en WS
             String s = ClientDistributeur.port.validerContrat(con.getNumC());
+            
             // On récupère le contrat
             System.out.println(s);
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
             contrat con = gson.fromJson(s, type);
+            
             // SI le contrat est vide, il y a eu une erreur
             if (con.getNumC() <= 0) {
                 String detailMessage = "Oups... Une erreur est survenue...";
@@ -218,7 +225,7 @@ public class ValiderContrat extends javax.swing.JFrame {
             } else {
                 // fermer la fenetre
                 this.dispose();
-                // corfirmation validation
+                // fenetre pour la confirmation de la validation
                 ConfirmationValidationContrat confirmationValidationContrat = new ConfirmationValidationContrat(con);
                 confirmationValidationContrat.setVisible(true);
             }
@@ -227,15 +234,21 @@ public class ValiderContrat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
+    /**
+     * Bouton "refuser"
+     * @param evt 
+     */
     private void jButtonRefuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefuserActionPerformed
         try {
-            // on enregistre le cout
+            // on enregistre le refus en WS
             String s = ClientDistributeur.port.validerContrat(con.getNumC());
+            
             // On récupère le contrat
             System.out.println(s);
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
             contrat con = gson.fromJson(s, type);
+            
             // SI le contrat est vide, il y a eu une erreur
             if (con.getNumC() <= 0) {
                 String detailMessage = "Oups... Une erreur est survenue...";
@@ -245,10 +258,10 @@ public class ValiderContrat extends javax.swing.JFrame {
             } else {
                 // fermer la fenetre
                 this.dispose();
-                // Fenetre de confirmation
+                // Fenetre de confirmation de refus
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, "Votre refus de contrat a été envoyé !", "Refus de contrat", JOptionPane.WARNING_MESSAGE);
-                // Menu
+                // Fenetre Menu
                 MenuDistributeur menuDistributeur = new MenuDistributeur();
                 menuDistributeur.setVisible(true);
             }
@@ -257,10 +270,15 @@ public class ValiderContrat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonRefuserActionPerformed
 
+    /**
+     * Bouton "Annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // Menu
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

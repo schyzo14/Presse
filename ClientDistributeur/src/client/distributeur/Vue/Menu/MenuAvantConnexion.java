@@ -1,24 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.Menu;
 
 import client.distributeur.Vue.CreerCompte.CreerCompte;
 import client.distributeur.Vue.SeConnecter.SeConnecter;
 
 /**
- *
- * @author Aurore
+ * Fenêtre du menu avant la connexion
  */
 public class MenuAvantConnexion extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuAvantConnexion
+     * Constructeur
      */
     public MenuAvantConnexion() {
         initComponents();
+        
+        // Centrer la fenêtre
         this.setLocationRelativeTo(null);
     }
 
@@ -86,20 +82,38 @@ public class MenuAvantConnexion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Créer un compte"
+     * @param evt 
+     */
     private void jButtonCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreerCompteActionPerformed
+        // fenetre créer un compte
         CreerCompte creerCompte = new CreerCompte();
         creerCompte.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonCreerCompteActionPerformed
 
+    /**
+     * Bouton "S'inscrire"
+     * @param evt 
+     */
     private void jButtonSeConnecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeConnecterActionPerformed
+        // fenetre se connecter
         SeConnecter seConnecter = new SeConnecter();
         seConnecter.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonSeConnecterActionPerformed
 
+    /**
+     * Bouton "Quitter"
+     * @param evt 
+     */
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
+        // fermer la fenetre courante
         this.dispose();
+        // Fermer l'application
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 

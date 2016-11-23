@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
 import client.distributeur.ClientDistributeur;
@@ -28,38 +23,41 @@ import javax.swing.table.TableColumn;
 import presse.contrat;
 
 /**
- *
- * @author Aurore
+ * Fenêtre avec la liste des contrats en attente d'un récépissé
  */
 public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
+    // Liste des contrats en attente d'un récépissé
     HashMap<Integer, contrat> lesContratsAttenteRecepisse = new HashMap<Integer, contrat>();
     
     /**
-     * Creates new form ListContratAValider
+     * Constructeur
      */
     public ListContratAttenteRecepisse() {
         initComponents();
+        
+        // centrer la fenêtre
         this.setLocationRelativeTo(null);
         
-        // On récupère le distributeur
+        // On récupère le distributeur courant
         int distributeurId = ClientDistributeur.monDistributeur.getNumD();
         
         // Liste des contrats
         try {
-            // liste contrat
+            // Demande de la liste des contrats en WS
             String s = ClientDistributeur.port.listeContratRecepisse(distributeurId);
             System.out.println(s);
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<HashMap<Integer, contrat>>(){}.getType();
             lesContratsAttenteRecepisse = gson.fromJson(s, type);
             
-            // init tableau
+            // initialisation du tableau
             String[] columnNames = {"", "Titre", "Editeur", "Nombre de copies", "Durée", "Action"};
             DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
             Object[][] data = new Object[lesContratsAttenteRecepisse.size()][6];
             int i=0;
             
+            // On parcours la liste des contrats en attente pour remplir le tableau
             for (int key : lesContratsAttenteRecepisse.keySet()) {
                 contrat con = lesContratsAttenteRecepisse.get(key);
                 
@@ -73,9 +71,11 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
                 i++;
             }
             
+            // On rempli le jTable
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             jTableContrat.setModel(model);
 
+            // On met le bouton avec listener dans la dernière colonne
             TableColumn column = jTableContrat.getColumnModel().getColumn(5);
             column.setCellRenderer(new ListContratAttenteRecepisse.ButtonRenderer());
             column.setCellEditor(new ListContratAttenteRecepisse.ButtonEditor(new JCheckBox()));
@@ -160,6 +160,10 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // Menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
@@ -214,7 +218,9 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
 
 
 
-    /**
+/**
+* Mettre des boutons dans une colonne d'un JTable avec des listener
+* 
 * Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
 */    
     class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -299,5 +305,4 @@ public class ListContratAttenteRecepisse extends javax.swing.JFrame {
             super.fireEditingStopped();
         }
     }
-
 }

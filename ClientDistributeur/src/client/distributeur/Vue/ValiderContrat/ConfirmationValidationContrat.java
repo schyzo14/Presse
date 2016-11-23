@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.distributeur.Vue.ValiderContrat;
 
 import java.util.HashMap;
@@ -10,20 +6,22 @@ import presse.contrat;
 
 
 /**
- *
- * @author Aurore
+ * Fenetre de confirmation après validation d'un contrat
  */
 public class ConfirmationValidationContrat extends javax.swing.JFrame {
     
+    // Contrat courant
     private static contrat con;
 
     /**
-     * Creates new form ConfirmationValidationContrat
+     * Constructeur
      */
     public ConfirmationValidationContrat(contrat con) {
         initComponents();
+        // Centrer la fenetre
         this.setLocationRelativeTo(null);
         
+        // contrat
         this.con = con;
         
         // Montant
@@ -125,9 +123,15 @@ public class ConfirmationValidationContrat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "OK"
+     * @param evt 
+     */
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
+        // fenetre avec la liste des contrats à valider
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonOKActionPerformed
 

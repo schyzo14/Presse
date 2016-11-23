@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.Menu;
 
 import client.distributeur.Vue.EnvoyerRecepisse.ListContratAttenteRecepisse;
@@ -11,16 +6,16 @@ import client.distributeur.Vue.ValiderContrat.ListContratAValider;
 import client.distributeur.Vue.VirementBancaire.VirementBancaire;
 
 /**
- *
- * @author Aurore
+ * Menu après s'être identifié
  */
 public class MenuDistributeur extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuDistributeur
+     * Constructeur
      */
     public MenuDistributeur() {
         initComponents();
+        // Centrer la fenetre
         this.setLocationRelativeTo(null);
     }
 
@@ -115,32 +110,62 @@ public class MenuDistributeur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Passer un contrat"
+     * @param evt 
+     */
     private void jButtonPasserContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPasserContratActionPerformed
+        // afficher la fenetre pour passer un contrat
         PasserContrat passerContrat = new PasserContrat();
         passerContrat.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonPasserContratActionPerformed
 
+    /**
+     * Bouton "Valider les contrats"
+     * @param evt 
+     */
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
+        // afficher la fenetre avec la liste des contrats à valider
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonValiderContratActionPerformed
 
+    /**
+     * Bouton "Réaliser un virement bancaire"
+     * @param evt 
+     */
     private void jButtonRealiserVirementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealiserVirementActionPerformed
+        // afficher la fenetre pour faire un virement bancaire
         VirementBancaire virementBancaire = new VirementBancaire();
         virementBancaire.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonRealiserVirementActionPerformed
 
+    /**
+     * Bouton "Envoyer un récépissé"
+     * @param evt 
+     */
     private void jButtonEnvoyerRecepisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerRecepisseActionPerformed
+        // afficher la fenetre de la liste des contrats en attente d'un récépissé
         ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
         listContratAttenteRecepisse.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
+    /**
+     * Bouton "Quitter"
+     * @param evt 
+     */
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
+        // fermer la fenetre courante
         this.dispose();
+        // quitter le programme
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 

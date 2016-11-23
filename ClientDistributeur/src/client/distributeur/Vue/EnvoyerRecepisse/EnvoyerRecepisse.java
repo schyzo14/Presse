@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.EnvoyerRecepisse;
 
 import client.distributeur.ClientDistributeur;
@@ -15,22 +10,27 @@ import javax.swing.JOptionPane;
 import presse.contrat;
 
 /**
- *
- * @author Aurore
+ * Fenêtre pour envoyer un récépissé par rapport à un contrat
  */
 public class EnvoyerRecepisse extends javax.swing.JFrame {
 
+    // Contrat courant
     private static contrat con;    
     
     /**
-     * Creates new form ValiderContrat
+     * Constructeur
+     * @param con   contrat
      */
     public EnvoyerRecepisse(contrat con) {
         initComponents();
+        
+        // Mettre la fenetre au millieu
         this.setLocationRelativeTo(null);
         
+        // le contrat de la fenêtre
         this.con = con;
         
+        // les champs
         // éditeut
         jLabelChampEditeur.setText(con.getEditeurC().getNomE());
         // titre
@@ -213,22 +213,30 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Envoyer"
+     * @param evt 
+     */
     private void jButtonEnvoyerRecepisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerRecepisseActionPerformed
-        // test champ vide
+        // test si le champ du récépissé est vide
         if (jTextAreaRecepisse.getText().equals("")) {
+            // pop-up pour dire de saisir le récépissé
             JOptionPane jop = new JOptionPane();
             jop.showMessageDialog(null, "Veillez saisir le récépissé !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
+            // contenu du champ récépissé
             String recepisse = jTextAreaRecepisse.getText();
             
              try {
                 // on enregistre le recepisse
                 String s = ClientDistributeur.port.envoiRecepisse(con.getNumC(), recepisse);
-                // On récupère le contrat
+                
+                // On récupère le contrat renvoyé
                 System.out.println(s);
                 Gson gson = new Gson();
                 java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
                 contrat con = gson.fromJson(s, type);
+                
                 // SI le contrat est vide, il y a eu une erreur
                 if (con.getNumC() <= 0) {
                     String detailMessage = "Oups... Une erreur est survenue...";
@@ -238,13 +246,14 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
                 } else {
                     // fermer la fenetre
                     this.dispose();
+                    
                     // Fenetre de confirmation
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, "Le récépissé a été envoyé !", "Récépissé envoyé", JOptionPane.WARNING_MESSAGE);
+                    
                     // retour au menu
                     ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
                     listContratAttenteRecepisse.setVisible(true);
-                    
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(EnvoyerRecepisse.class.getName()).log(Level.SEVERE, null, ex);
@@ -252,10 +261,15 @@ public class EnvoyerRecepisse extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonEnvoyerRecepisseActionPerformed
 
+    /**
+     * Bouton "Annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // Liste contrats attente récépissé
         ListContratAttenteRecepisse listContratAttenteRecepisse = new ListContratAttenteRecepisse();
         listContratAttenteRecepisse.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

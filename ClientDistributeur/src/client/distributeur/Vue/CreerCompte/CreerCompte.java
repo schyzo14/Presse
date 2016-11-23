@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.CreerCompte;
 
 import client.distributeur.ClientDistributeur;
@@ -17,16 +12,16 @@ import org.json.JSONObject;
 import presse.distributeur;
 
 /**
- *
- * @author Aurore
+ * Créer un compte
  */
 public class CreerCompte extends javax.swing.JFrame {
 
     /**
-     * Creates new form CreerCompte
+     * Constructeur
      */
     public CreerCompte() {
         initComponents();
+        // Mettre la fenêtre au millieu
         this.setLocationRelativeTo(null);
         
         // initialisation des champs
@@ -113,6 +108,10 @@ public class CreerCompte extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Valider"
+     * @param evt 
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         // On récupère le contenu des champs
         String mail = jTextFieldMail.getText();
@@ -120,6 +119,7 @@ public class CreerCompte extends javax.swing.JFrame {
         
         // On vérifie que les champs sont complétés
         if (mail.equals("") || nom.equals("")) {
+            // POP-UP : tous les champs ne sont pas complétés
             JOptionPane jop = new JOptionPane();
             jop.showMessageDialog(null, "Tous les champs doivent être complétés !", "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -164,7 +164,6 @@ public class CreerCompte extends javax.swing.JFrame {
                 Logger.getLogger(CreerCompte.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     /**

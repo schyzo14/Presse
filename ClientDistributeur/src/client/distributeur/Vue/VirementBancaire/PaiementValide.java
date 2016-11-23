@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.distributeur.Vue.VirementBancaire;
 
 import client.distributeur.Payement;
@@ -10,24 +6,28 @@ import client.distributeur.Vue.Menu.MenuDistributeur;
 import java.text.DateFormat;
 
 /**
- *
- * @author Aurore
+ * Validation du paiement avec le récépissé
  */
 public class PaiementValide extends javax.swing.JFrame {
 
+    // paiement courant
     static private Payement payement;
     
     /**
-     * Creates new form PaiementValide
+     * Constructeur
      */
     public PaiementValide(Payement payement) {
         initComponents();
+        // centrer la fenetre
         this.setLocationRelativeTo(null);
         
+        // payement courant
         this.payement = payement;
         
+        // format de la date
         DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         
+        // affichage du récépissé
         String recepisse = "Numéro du virement : " + payement.getNumPayement() + "\n" +
                             "Numéro du compte débité : " + payement.getNumComptePayeur() + "\n" +
                             "Numéro du compte crédité : " + payement.getNumCompteReception() + "\n" +
@@ -117,9 +117,15 @@ public class PaiementValide extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "OK"
+     * @param evt 
+     */
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
+        // fenetre du menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonOKActionPerformed
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur;
 
 import client.distributeur.Vue.Menu.MenuAvantConnexion;
@@ -14,27 +9,30 @@ import javax.xml.rpc.ServiceException;
 import presse.distributeur;
 
 /**
- *
- * @author Aurore
+ * ClientDistributeur
  */
 public class ClientDistributeur {
 
+    // Distributeur identifié
     public static distributeur monDistributeur;
     
+    // WS
     public static DistributeurEditeurWS_Service  service = new DistributeurEditeurWS_ServiceLocator();
     public static DistributeurEditeurWS_PortType  port;
     
-     /**
+    /**
+     * Main qui lance la première fenêtre
+     * 
      * @param args the command line arguments
+     * @throws ServiceException
+     * @throws RemoteException 
      */
     public static void main(String[] args) throws ServiceException, RemoteException {
         // WS
         port = service.getDistributeurEditeurWSPort();
         
-        // Afficher la fenetre
+        // Afficher la fenetre : menu pour se connecter ou créer un compte
         MenuAvantConnexion menuAvantConnexion = new MenuAvantConnexion();
         menuAvantConnexion.setVisible(true);
-        
     }
-    
 }

@@ -1,25 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.CreerCompte;
 
 import client.distributeur.Vue.Menu.MenuDistributeur;
 
 /**
- *
- * @author Aurore
+ * Fenêtre de confirmation de la création de compte
  */
 public class ConfirmationCreationCompte extends javax.swing.JFrame {
 
+    // mdp après création
     private static String mdp;
     
     /**
-     * Creates new form ErreurMail
+     * Constructeur
+     * @param mdp 
      */
     public ConfirmationCreationCompte(String mdp) {
         initComponents();
+        
+        // Mettre la fenêtre au milieu
         this.setLocationRelativeTo(null);
         
         // Champ MDP
@@ -86,10 +84,15 @@ public class ConfirmationCreationCompte extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "OK"
+     * @param evt 
+     */
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         // on arrive au menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
+        // on ferme la fenêtre courante
         this.dispose();
     }//GEN-LAST:event_jButtonOKActionPerformed
 

@@ -5,12 +5,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Payement réalisé auprès de la banque
+ */
 public class Payement {
 
+    // Numéro du payement
     private int numPayement;
+    // Numéro de compte Débiteur
     private int numComptePayeur;
+    // Numéro de compte Créditeur
     private int numCompteReception;
+    // Montant du payement
     private double montant;
+    // Date du payement
     private Date date;
 
     public Payement(int numPayement, int numComptePayeur, int numCompteReception, double montant) {

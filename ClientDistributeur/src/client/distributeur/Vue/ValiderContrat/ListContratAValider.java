@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.ValiderContrat;
 
 import client.distributeur.ClientDistributeur;
@@ -27,18 +22,19 @@ import javax.swing.table.TableColumn;
 import presse.contrat;
 
 /**
- *
- * @author Aurore
+ * Fenetre avec la liste des contrats à valider
  */
 public class ListContratAValider extends javax.swing.JFrame {
 
+    // liste des contrats à valider
     HashMap<Integer, contrat> lesContratsAValiderDistrib = new HashMap<Integer, contrat>();
         
     /**
-     * Creates new form ListContratAValider
+     * Constructeur
      */
     public ListContratAValider() {
         initComponents();
+        // centrer la fenetre
         this.setLocationRelativeTo(null);
         
         // On récupère le distributeur
@@ -46,19 +42,20 @@ public class ListContratAValider extends javax.swing.JFrame {
         
         // Liste des contrats
         try {
-            // liste contrat
+            // liste des contrats récupérer en WS
             String s = ClientDistributeur.port.listContratAValider(distributeurId);
             System.out.println(s);
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<HashMap<Integer, contrat>>(){}.getType();
             lesContratsAValiderDistrib = gson.fromJson(s, type);
             
-            // init tableau
+            // initialisation du tableau
             String[] columnNames = {"", "Titre", "Editeur", "Nombre de copies", "Durée", "Action"};
             DefaultTableModel modele = (DefaultTableModel) jTableContrat.getModel();
             Object[][] data = new Object[lesContratsAValiderDistrib.size()][6];
             int i=0;
             
+            // on parcours la liste des contrats à valider pour remplir le tableau
             for (int key : lesContratsAValiderDistrib.keySet()) {
                 contrat con = lesContratsAValiderDistrib.get(key);
                 
@@ -72,9 +69,11 @@ public class ListContratAValider extends javax.swing.JFrame {
                 i++;
             }
             
+            // Remplir le jTable
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             jTableContrat.setModel(model);
 
+            // Mettre des boutons dans la dernière colonne avec des listeners
             TableColumn column = jTableContrat.getColumnModel().getColumn(5);
             column.setCellRenderer(new ButtonRenderer());
             column.setCellEditor(new ButtonEditor(new JCheckBox()));
@@ -82,7 +81,6 @@ public class ListContratAValider extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(ListContratAValider.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     /**
@@ -160,9 +158,15 @@ public class ListContratAValider extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
+        // fenetre du menu
         MenuDistributeur menuDistributeur = new MenuDistributeur();
         menuDistributeur.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
@@ -211,6 +215,8 @@ public class ListContratAValider extends javax.swing.JFrame {
     
     
 /**
+* Mettre des boutons dans une colonne d'un JTable avec des listener
+* 
 * Inspiration du site : http://www.java2s.com/Code/Java/Swing-Components/ButtonTableExample.htm
 */    
     class ButtonRenderer extends JButton implements TableCellRenderer {

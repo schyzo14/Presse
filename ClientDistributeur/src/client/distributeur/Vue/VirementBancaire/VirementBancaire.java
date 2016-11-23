@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.distributeur.Vue.VirementBancaire;
 
 import client.distributeur.ClientRESTDistributeur;
@@ -16,8 +11,7 @@ import javax.swing.JOptionPane;
 import org.json.*;
 
 /**
- *
- * @author Aurore
+ * Faire un virement bancaire auprès de la banque
  */
 public class VirementBancaire extends javax.swing.JFrame {
 
