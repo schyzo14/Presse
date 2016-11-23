@@ -107,19 +107,9 @@ public class DistributeurEditeurWS {
     public String getListeTitre() {
         //return this.gson.toJson(this.titreBean.getListeTitre());
         
-        // On récupère les titres dans Archive avec REST
-        ClientRESTTitre clientRESTTitre = new ClientRESTTitre();
-        String s = clientRESTTitre.getTitres();
-        java.lang.reflect.Type type = new TypeToken<ArrayList<titre>>(){}.getType();
-        Gson gson = new Gson();
-        ArrayList<titre> lesTitres = gson.fromJson(s, type);
-        // On parcours les titres REST pour les transformer et les envoyer en WS
-        HashMap<Integer, titre> lesTitresMap = new HashMap<Integer, titre>();
-        for (titre titr : lesTitres) {
-            lesTitresMap.put(titr.getNumT(), titr);
-        }
-        titreBean.setListeTitre(lesTitresMap);
-        return this.gson.toJson(lesTitresMap);
+        getLesTitres();
+        
+        return this.gson.toJson(titreBean.getListeTitre());
     }
 
     
@@ -136,18 +126,7 @@ public class DistributeurEditeurWS {
     public String demandeContrat(@WebParam(name="distributeurId") Integer distributeurId, @WebParam(name="editeurId") Integer editeurId, @WebParam(name="titreId") Integer titreId, 
             @WebParam(name="nbCopies") Integer nbCopies, @WebParam(name="duree") Integer duree) {
         
-        // On récupère les titres dans Archive avec REST
-        ClientRESTTitre clientRESTTitre = new ClientRESTTitre();
-        String s = clientRESTTitre.getTitres();
-        java.lang.reflect.Type type = new TypeToken<ArrayList<titre>>(){}.getType();
-        Gson gson = new Gson();
-        ArrayList<titre> lesTitres = gson.fromJson(s, type);
-        // On parcours les titres REST pour les transformer et les envoyer en WS
-        HashMap<Integer, titre> lesTitresMap = new HashMap<Integer, titre>();
-        for (titre titr : lesTitres) {
-            lesTitresMap.put(titr.getNumT(), titr);
-        }
-        titreBean.setListeTitre(lesTitresMap);
+        getLesTitres();
         
         return this.gson.toJson(this.contratBean.créerContrat(distributeurId, editeurId, titreId, nbCopies, duree));
     }
@@ -160,6 +139,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="listContratAValider")
     public String listContratAValider(@WebParam(name="distributeurId") Integer distributeurId) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.listContratAValider(distributeurId));
     }
         
@@ -171,6 +152,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="validerContrat")
     public String validerContrat(@WebParam(name="contratId") Integer contratId) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.validerContrat(contratId));
     }
 	
@@ -184,6 +167,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="refusContrat")
     public String refusContrat(@WebParam(name="contratId") Integer contratId) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.refuserContrat(contratId));
     }
     
@@ -197,6 +182,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="listeContratRecepisse")
     public String listeContratRecepisse(@WebParam(name="distributeurId") Integer distributeurId) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.listeContratRecepisse(distributeurId));
     }
     
@@ -210,12 +197,10 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="envoiRecepisse")
     public String envoiRecepisse(@WebParam(name="contratId") Integer contratId, @WebParam(name="recepisse") String recepisse) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.setRecepisse(contratId, recepisse));
     }
-    
-    
-    
-    
     
     
     
@@ -228,6 +213,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="listeContratAttenteCout")
     public String listeContratAttenteCout(@WebParam(name="editeurId") Integer editeurId) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.listeContratAttenteCout(editeurId));
     }
 
@@ -242,6 +229,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="coutContrat")
     public String coutContrat(@WebParam(name="contratId") Integer contratId, @WebParam(name="cout") float cout) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.setCout(contratId, cout));
     }
     
@@ -255,6 +244,8 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="listeContratAValiderEditeur")
     public String listeContratAValiderEditeur(@WebParam(name="editeurId") Integer editeurId) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.listeContratAValiderEditeur(editeurId));
     }
     
@@ -268,7 +259,27 @@ public class DistributeurEditeurWS {
      */
     @WebMethod(operationName="validerContratEditeur")
     public String validerContratEditeur(@WebParam(name="numContrat") Integer numContrat) {
+        getLesTitres();
+        
         return this.gson.toJson(this.contratBean.validerContratEditeur(numContrat));
+    }
+    
+    /**
+     * Récupère les titres depuis Archive en REST
+     */
+    public void getLesTitres() {
+        // On récupère les titres dans Archive avec REST
+        ClientRESTTitre clientRESTTitre = new ClientRESTTitre();
+        String s = clientRESTTitre.getTitres();
+        java.lang.reflect.Type type = new TypeToken<ArrayList<titre>>(){}.getType();
+        Gson gson = new Gson();
+        ArrayList<titre> lesTitres = gson.fromJson(s, type);
+        // On parcours les titres REST pour les transformer et les envoyer en WS
+        HashMap<Integer, titre> lesTitresMap = new HashMap<Integer, titre>();
+        for (titre titr : lesTitres) {
+            lesTitresMap.put(titr.getNumT(), titr);
+        }
+        titreBean.setListeTitre(lesTitresMap);
     }
 
 }

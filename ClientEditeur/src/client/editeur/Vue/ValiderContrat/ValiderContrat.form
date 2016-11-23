@@ -219,6 +219,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelRecepisse">
+      <Properties>
+        <Property name="verticalTextPosition" type="int" value="1"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

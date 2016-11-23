@@ -37,7 +37,10 @@ public class ValiderContrat extends javax.swing.JFrame {
         jLabelChampDistributeur.setText(con.getDistributeurC().getNomD());
         jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
         jLabelChampTitre.setText(con.getTitreC().getNomT());
-        jLabelRecepisse.setText(con.getRecepisseC());
+        
+        // récépissé : retour à la ligne
+        String recepisse = "<html>" + con.getRecepisseC() + "</html>";
+        jLabelRecepisse.setText(recepisse.replace("\n", "<br/>"));
     }
 
     /**
@@ -109,6 +112,8 @@ public class ValiderContrat extends javax.swing.JFrame {
 
         jLabelContratRecepisse.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelContratRecepisse.setText("Récépissé");
+
+        jLabelRecepisse.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

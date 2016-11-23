@@ -31,9 +31,13 @@ public class ContratBean implements ContratBeanLocal {
         lesContrats = new HashMap<Integer, contrat>();
         lesContrats.put(1, new contrat(1, 10, 12, 0, null, null, "ATTENTECOUT", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(1)));
         lesContrats.put(2, new contrat(2, 10, 12, 0, null, null, "ATTENTEVALDISTRIB", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(2)));
-        lesContrats.put(3, new contrat(3, 10, 12, 0, null, null, "ATTENTERECEPISSE", EditeurBean.lesEditeurs.get(2), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(1)));
+        lesContrats.get(2).setCoutC((float) 1000.0);
+        lesContrats.put(3, new contrat(3, 10, 12, 0, null, null, "ATTENTERECEPISSE", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(1)));
+        lesContrats.get(3).setCoutC((float) 500.0);
         lesContrats.put(4, new contrat(4, 10, 12, 0, null, null, "ATTENTEVALEDITEUR", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(1)));
-        lesContrats.put(5, new contrat(5, 10, 12, 0, null, null, "VALIDATIONEDITEUR", EditeurBean.lesEditeurs.get(2), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(2)));
+        lesContrats.get(4).setRecepisseC("Numéro du virement : 1\nNuméro du compte débité : 10002222\nNuméro du compte crédité : 11110000\nMontant du virement : 1000.0 €\nDate du virement : 22/11/16 14:53");
+        lesContrats.get(4).setCoutC((float) 1000.0);
+        lesContrats.put(5, new contrat(5, 10, 12, 0, null, null, "VALIDATIONEDITEUR", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(2)));
         lesContrats.put(6, new contrat(6, 10, 12, 0, null, null, "REFUSDISTRIBUTEUR", EditeurBean.lesEditeurs.get(1), DistributeurBean.lesdistributeurs.get("CONTACT@HACHETTEDIFF.FR"), TitreBean.lesTitres.get(2)));
         dernierId = 6;
         
