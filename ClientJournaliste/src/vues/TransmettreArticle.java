@@ -69,6 +69,7 @@ public class TransmettreArticle extends javax.swing.JFrame {
         jLabel_ContenuArticle.setText("Contenu :");
 
         jTextArea_ContenuArticle.setColumns(20);
+        jTextArea_ContenuArticle.setLineWrap(true);
         jTextArea_ContenuArticle.setRows(5);
         jScrollPane_ContenuArticle.setViewportView(jTextArea_ContenuArticle);
 
