@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.editeur.Vue.ContratCout;
 
 import client.editeur.ClientEditeur;
@@ -15,21 +11,24 @@ import javax.swing.JOptionPane;
 import presse.contrat;
 
 /**
- *
- * @author Aurore
+ * Fenetre pour saisir le cout d'un contrat
  */
 public class CoutContrat extends javax.swing.JFrame {
 
+    // contrat courant
     private static contrat con;
     
     /**
-     * Creates new form ValiderContrat
+     * Constructeur
      */
     public CoutContrat(contrat con) {
         
+        // contrat courant
         this.con = con;
         
         initComponents();
+        
+        // centrer la fenetre
         this.setLocationRelativeTo(null);
         
         // remplir les champs
@@ -37,7 +36,6 @@ public class CoutContrat extends javax.swing.JFrame {
         jLabelChampDuree.setText(con.getDureeC() + " mois");
         jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
         jLabelChampTitre.setText(con.getTitreC().getNomT());
-        
         jTextFieldCout.setText("");
     }
 
@@ -184,19 +182,25 @@ public class CoutContrat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Envoyer"
+     * @param evt 
+     */
     private void jButtonEnvoyerCoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnvoyerCoutActionPerformed
         try {
             // on récupère le cout
             float cout = Float.parseFloat(jTextFieldCout.getText());
         
             try {
-                // on enregistre le cout
+                // on enregistre le cout en WS
                 String s = ClientEditeur.port.coutContrat(con.getNumC(), cout);
+                
                 // On récupère le contrat
                 System.out.println(s);
                 Gson gson = new Gson();
                 java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
                 contrat con = gson.fromJson(s, type);
+                
                 // SI le contrat est vide, il y a eu une erreur
                 if (con.getNumC() <= 0) {
                     String detailMessage = "Oups... Une erreur est survenue...";
@@ -206,9 +210,11 @@ public class CoutContrat extends javax.swing.JFrame {
                 } else {
                     // on ferme la fenetre
                     this.dispose();
+                    
                     // On confirme que le cout est envoyé
                     JOptionPane jop = new JOptionPane();
                     jop.showMessageDialog(null, "Le cout est envoyé !", "Cout envoyé", JOptionPane.WARNING_MESSAGE);
+                    
                     // On passe a la fenetre de la liste de contrat en attente de cout
                     ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
                     listContratAttenteCout.setVisible(true);
@@ -216,7 +222,6 @@ public class CoutContrat extends javax.swing.JFrame {
             } catch (RemoteException ex) {
                 Logger.getLogger(CoutContrat.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
         } catch (NumberFormatException  e) { // Les informations des champs ne sont pas saisies au bon format
             // On affiche une pop-up pour le signaler
             JOptionPane jop = new JOptionPane();
@@ -224,10 +229,15 @@ public class CoutContrat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonEnvoyerCoutActionPerformed
 
+    /**
+     * Bouton "annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // On passe a la fenetre de la liste de contrat en attente de cout
         ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
         listContratAttenteCout.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 

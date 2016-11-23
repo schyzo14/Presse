@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.editeur.Vue.Menu;
 
 import client.editeur.ClientEditeur;
@@ -18,38 +14,44 @@ import java.util.logging.Logger;
 import presse.editeur;
 
 /**
- *
- * @author Aurore
+ * Fenetre avec le menu de l'éditeur
  */
 public class Menu extends javax.swing.JFrame {
 
+    // liste des éditeurs
     public HashMap<Integer, editeur> listeEditeur = new HashMap<Integer, editeur>();
     
     /**
-     * Creates new form MenuAvantConnexion
+     * Constructeur
      */
     public Menu() {
         initComponents();
+        // centrer la fenetre
         this.setLocationRelativeTo(null);
         
-        // éditeur identifié
+        // si l'éditeur identifié
         int idE = -1;
         if (ClientEditeur.monEditeur != null) {
             idE = ClientEditeur.monEditeur.getNumE();
         }
         
-        // Les éditeurs
+        // La liste des éditeurs
         try {
+            // on récupère la liste des éditeurs en WS
             String s = ClientEditeur.port.getListeEditeur();
             System.out.println(s);
+            
+            // on transforme le retour en liste d'éditeurs
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<HashMap<Integer, editeur>>(){}.getType();
             listeEditeur = gson.fromJson(s, type);
             Iterator ie = listeEditeur.keySet().iterator();
+            
+            // on parcours la liste pour remplir la jComboBox
             while (ie.hasNext()) {
                 int editL = (int) ie.next();
                 jComboBoxEditeur.addItem(listeEditeur.get(editL).getNomE());
-                // Si identifié
+                // Si l'éditeur est identifié, on le sélectione dans la liste déroulante
                 if (idE == editL) {
                     jComboBoxEditeur.setSelectedItem(listeEditeur.get(editL).getNomE());
                 }
@@ -57,7 +59,6 @@ public class Menu extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
     }
 
     /**
@@ -138,6 +139,10 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "répondre aux contrats en attente de cout"
+     * @param evt 
+     */
     private void jButtonRepondreDemandesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRepondreDemandesActionPerformed
         // Editeur choisi
         String edChoix = (String) jComboBoxEditeur.getSelectedItem();
@@ -154,9 +159,14 @@ public class Menu extends javax.swing.JFrame {
         // Ouvrir la liste des contrats en attente d'un cout
         ListContratAttenteCout listContratAttenteCout = new ListContratAttenteCout();
         listContratAttenteCout.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonRepondreDemandesActionPerformed
 
+    /**
+     * Bouton "valider les contrats en attente de validation"
+     * @param evt 
+     */
     private void jButtonValiderContratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderContratActionPerformed
         // Editeur choisi
         String edChoix = (String) jComboBoxEditeur.getSelectedItem();
@@ -170,13 +180,21 @@ public class Menu extends javax.swing.JFrame {
             }
         }
         
+        // Ouvrir la liste des contrats en attente de validation
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonValiderContratActionPerformed
 
+    /**
+     * outon "Quitter"
+     * @param evt 
+     */
     private void jButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterActionPerformed
+        // fermer la fenetre courante
         this.dispose();
+        // Quitter l'application
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitterActionPerformed
 

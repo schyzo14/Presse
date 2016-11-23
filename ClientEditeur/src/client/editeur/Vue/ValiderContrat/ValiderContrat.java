@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client.editeur.Vue.ValiderContrat;
 
 import client.editeur.ClientEditeur;
@@ -15,20 +11,24 @@ import javax.swing.JOptionPane;
 import presse.contrat;
 
 /**
- *
- * @author Aurore
+ * Fenetre pour valider un contrat
  */
 public class ValiderContrat extends javax.swing.JFrame {
 
+    // contrat courant
     private static contrat con;
     
-    /**
-     * Creates new form ValiderContrat
-     */
+   /**
+    * Constructeur
+    * @param con    contrat
+    */
     public ValiderContrat(contrat con) {
+        // contrat courant
         this.con = con;
         
         initComponents();
+        
+        // centrer la fenetre
         this.setLocationRelativeTo(null);
         
         // remplir les champs
@@ -38,7 +38,7 @@ public class ValiderContrat extends javax.swing.JFrame {
         jLabelChampNombreCopies.setText(con.getNbCopieC() + " copie(s)");
         jLabelChampTitre.setText(con.getTitreC().getNomT());
         
-        // récépissé : retour à la ligne
+        // récépissé avec retour à la ligne
         String recepisse = "<html>" + con.getRecepisseC() + "</html>";
         jLabelRecepisse.setText(recepisse.replace("\n", "<br/>"));
     }
@@ -204,15 +204,21 @@ public class ValiderContrat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton "Valider"
+     * @param evt 
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-                try {
-            // on enregistre la validation
+        try {
+            // on enregistre la validation en WS
             String s = ClientEditeur.port.validerContratEditeur(con.getNumC());
+            
             // On récupère le contrat
             System.out.println(s);
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<contrat>(){}.getType();
             contrat con = gson.fromJson(s, type);
+            
             // SI le contrat est vide, il y a eu une erreur
             if (con.getNumC() <= 0) {
                 String detailMessage = "Oups... Une erreur est survenue...";
@@ -220,6 +226,7 @@ public class ValiderContrat extends javax.swing.JFrame {
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, detailMessage, "Erreur de validation", JOptionPane.WARNING_MESSAGE);
             } else {
+                // fermer la fenetre courante
                 this.dispose();
                 // corfirmation validation
                 JOptionPane jop = new JOptionPane();
@@ -233,9 +240,15 @@ public class ValiderContrat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
+    /**
+     * Bouton "annuler"
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
+        // fenetre avec la liste des contrats à valider
         ListContratAValider listContratAValider = new ListContratAValider();
         listContratAValider.setVisible(true);
+        // fermer la fenetre courante
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
