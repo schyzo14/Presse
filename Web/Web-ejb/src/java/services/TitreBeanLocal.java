@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package services;
 
 import java.util.HashMap;
@@ -10,14 +6,23 @@ import javax.ejb.Local;
 import presse.titre;
 
 /**
- *
- * @author Aurore
+ * Interface TitreBeanLocal
  */
 @Local
 public interface TitreBeanLocal {
     
+    /**
+     * Liste des titres
+     * 
+     * @return  liste des titres
+     */
     public HashMap<Integer, titre> getListeTitre();
     
+    /**
+     * Initialiser la liste des titres
+     * 
+     * @param listTitres 
+     */
     public void setListeTitre(HashMap<Integer, titre> listTitres);
     
 }

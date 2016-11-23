@@ -15,8 +15,22 @@ import presse.distributeur;
 @Local
 public interface DistributeurBeanLocal {
     
+    /**
+     * Le distributeur s'inscrit
+     * 
+     * @param mail  mail
+     * @param nom   nom
+     * @return      le distributeur
+     */
     public distributeur inscrire(String mail, String nom);
     
+    /**
+     * Le distributeur se connecte
+     * 
+     * @param mail      mail
+     * @param mdp       mdp
+     * @return          le distributeur identifié
+     */
     public distributeur connecter(String mail, String mdp);
    
 }
