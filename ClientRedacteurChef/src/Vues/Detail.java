@@ -12,8 +12,7 @@ import javax.swing.DefaultListModel;
 import presse.motsCles;
 
 /**
- *
- * @author Manon
+ * Classe permettant d'afficher le détail d'un article
  */
 public class Detail extends javax.swing.JFrame {
 
@@ -28,7 +27,13 @@ public class Detail extends javax.swing.JFrame {
         
     }
     
-    //Permet d'alimenter les champs à partir des informations reçues du serveur
+    /**
+     * Permet d'alimenter les champs à partir des informations reçues du serveur
+     * @param nomArt
+     * @param contenu
+     * @param nomAut
+     * @param listeMC 
+     */
     public void setChamp(String nomArt, String contenu, String nomAut, HashMap<Integer,motsCles> listeMC){
         //Alimentation des champs Nom de l'article et Nom de l'auteur
         jTextField_NomDetailArticle.setText(nomArt);
@@ -171,6 +176,10 @@ public class Detail extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fermer la fenêtre
+     * @param evt 
+     */
     private void jButton_FermerDetailArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FermerDetailArticleActionPerformed
         // TODO add your handling code here:
         //Fermeture de la fenêtre

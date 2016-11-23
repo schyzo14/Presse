@@ -13,7 +13,7 @@ import presse.motsCles;
 
 /**
  *
- * @author manou
+ * ArticlesBeanLocal
  */
 @Local
 public interface ArticlesBeanLocal {

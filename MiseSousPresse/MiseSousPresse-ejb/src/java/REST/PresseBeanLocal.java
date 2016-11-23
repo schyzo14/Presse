@@ -15,7 +15,7 @@ import presse.volume;
 
 /**
  *
- * @author manou
+ * PresseBeanLocal
  */
 @Local
 public interface PresseBeanLocal {

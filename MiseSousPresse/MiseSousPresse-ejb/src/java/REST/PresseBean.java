@@ -17,7 +17,7 @@ import presse.volume;
 
 /**
  *
- * @author Manon
+ * PresseBean implements PresseBeanLocal
  */
 @Singleton
 public class PresseBean implements PresseBeanLocal{
@@ -69,79 +69,145 @@ public class PresseBean implements PresseBeanLocal{
         lastid++;
     }
     
-    //Récupérer les articles
+    //Gérer les articles
+    /**
+     * Récupérer un article
+     * @param numA
+     * @return article
+     */
     @Override
     public article getArticles(int numA) {
         return this.listeArticles.get(numA);
     }
 
+    /**
+     * Récupérer la liste des articles
+     * @return HashMap d'article
+     */
     @Override
     public HashMap<Integer, article> getListeArticles() {
         return listeArticles;
     }
 
+    /**
+     * Modifier la liste d'articles
+     * @param listeArticles 
+     */
     public void setListeArticles(HashMap<Integer, article> listeArticles) {
         this.listeArticles = listeArticles;
     }
     
-    //Récupérer les auteurs
+    //Gérer les auteurs
+    /**
+     * Récupérer un auteur
+     * @param numA
+     * @return auteur
+     */
     @Override
     public auteur getAuteurs(int numA) {
         return this.listeAuteurs.get(numA);
     }
 
+    /**
+     * Récupérer la liste des auteurs
+     * @return HashMap d'auteur
+     */
     @Override
     public HashMap<Integer, auteur> getListeAuteurs() {
         return listeAuteurs;
     }
 
+    /**
+     * Modifier la liste des auteurs
+     * @param listeAuteurs 
+     */
     public void setListeAuteurs(HashMap<Integer, auteur> listeAuteurs) {
         this.listeAuteurs = listeAuteurs;
     }
     
-    //Récupérer les mots cles
+    //Gérer les mots cles
+    /**
+     * Récupérer un mot clé
+     * @param numMC
+     * @return motsCles
+     */
     @Override
     public motsCles getMotsCles(int numMC) {
         return this.listeMotsCles.get(numMC);
     }
 
+    /**
+     * Liste des mots clés
+     * @return HashMap de motsclés
+     */
     @Override
     public HashMap<Integer, motsCles> getListeMotsCles() {
         return listeMotsCles;
     }
 
+    /**
+     * Modifier la liste des mots clés
+     * @param listeMC 
+     */
     public void setListeMotsCles(HashMap<Integer, motsCles> listeMC) {
         this.listeMotsCles = listeMC;
     }
 
-    //Récupérer les volumes
+    //Gérer les volumes
+    /**
+     * Récupérer un volume
+     * @param numVol
+     * @return volume
+     */
     @Override
     public volume getVolume(int numVol) {
         return this.listeVolume.get(numVol);
     }
 
+    /**
+     * Liste des volumes
+     * @return HashMap de volume
+     */
     @Override
     public HashMap<Integer, volume> getListeVolume() {
         return this.listeVolume;
     }
 
-    //Récupérer les publicités
+    //Gérer les publicités
+    /**
+     * Récupérer une publicité
+     * @param numPub
+     * @return publicité
+     */
     @Override
     public publicite getPublicite(int numPub) {
         return this.listePublicite.get(numPub);
     }
 
+    /**
+     * Liste de publicité
+     * @return HashMap de publicité
+     */
     @Override
     public HashMap<Integer, publicite> getListePublicite() {
         return this.listePublicite;
     }
     
     //Gestion des articles sélectionnés
+    /**
+     * Liste des articles sélectionnés
+     * @return HashMap d'article
+     */
     @Override
     public HashMap<Integer, article> listeArticleSelect() {
         return this.listeArticlesSelect;
     }
 
+    /**
+     * Ajouter la liste des articles sélectionnés par le rédacteur chef
+     * @param unArtSel
+     * @return String
+     */
     @Override
     public String addArticleSelect(String unArtSel){
         System.out.println("unArtSel : "+unArtSel);

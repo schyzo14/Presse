@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 /**
  * REST
  *
- * @author manou
+ * ArticleRessource
  */
 @Path("articles")
 public class articleRessource {
@@ -50,14 +50,18 @@ public class articleRessource {
     }
 
     /**
-     * Retrieves representation of an instance of REST_TransmissionArticles.articleRessource
-     * @return an instance of java.lang.String
+     * GET : Récupérer la liste des articles
+     * @return String
      */
     @GET
     public String getJson() {
         return this.gson.toJson(this.articlesBean.getListeArticles());
     }
     
+    /**
+     * GET : Récupérer le détail d'un article
+     * @return String
+     */
     @GET
     @Path("articles/{idArticle}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,6 +69,14 @@ public class articleRessource {
         return this.gson.toJson(this.articlesBean.getArticles(idArticle));
     }
     
+    /**
+     * POST : envoyer un article saisie par le journaliste
+     * @param nomA
+     * @param nomAut
+     * @param contenu
+     * @param motcles
+     * @return 
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String postJsonArticleJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {

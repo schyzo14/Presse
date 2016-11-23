@@ -28,7 +28,7 @@ import presse.volume;
 
 /**
  *
- * @author Schyzo
+ * articlesRessource
  */
 @Path("articles")
 public class articlesRessource {
@@ -41,20 +41,29 @@ public class articlesRessource {
     //Convertisseur json
     private final Gson gson;
     
-    // Constructeur de la ressource
+    /**
+     * Constructeur de la ressource
+     */
     public articlesRessource() {
         this.gson = new Gson();
         this.presseBean = lookupPresseBeanLocal();
     }
     
-    //Récupérer la liste des articles
+    /**
+     * GET : Récupérer la liste des articles
+     * @return String
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getListeArticles() {
         return this.gson.toJson(this.presseBean.getListeArticles());
     }
     
-    //Gérer les articles sélectionnés par le rédacteurChef
+    /**
+     * POST : envoyer les articles sélectionnés par le rédacteur chef
+     * @param art
+     * @return String
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String postJsonArticle(@QueryParam("unArticle") String art) {

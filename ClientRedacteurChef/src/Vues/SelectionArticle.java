@@ -22,8 +22,7 @@ import presse.article;
 import presse.motsCles;
 
 /**
- *
- * @author Manon
+ * Rédacteur Chef - Sélectionner les articles pour la mise sous presse
  */
 public class SelectionArticle extends javax.swing.JFrame {
     //Définition des objets Client REST permettant de faire le lien avec les serveurs TransmissionArticle et MiseSousPresse
@@ -221,6 +220,10 @@ public class SelectionArticle extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fermer l'application
+     * @param evt 
+     */
     private void jButton_QuitterSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_QuitterSelectionActionPerformed
         // TODO add your handling code here:
         //Fermeture des connexion réseau
@@ -231,6 +234,10 @@ public class SelectionArticle extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton_QuitterSelectionActionPerformed
 
+    /**
+     * Afficher la fenêtre Détail pour afficher le détail de l'article sélectionné
+     * @param evt 
+     */
     private void jButton_DetailSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DetailSelectionActionPerformed
         // TODO add your handling code here:
         Gson gson = new Gson();
@@ -276,6 +283,10 @@ public class SelectionArticle extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_DetailSelectionActionPerformed
 
+    /**
+     * Mettre sous presse les articles sélectionnés
+     * @param evt 
+     */
     private void jButton_MettrePresseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_MettrePresseActionPerformed
         // TODO add your handling code here:
         //Récupérer les articles sélectionnés
