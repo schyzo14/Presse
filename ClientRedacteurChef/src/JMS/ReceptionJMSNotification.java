@@ -75,4 +75,13 @@ public class ReceptionJMSNotification {
         }
     }
     
+    public void closeConnexion() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (JMSException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
 }
