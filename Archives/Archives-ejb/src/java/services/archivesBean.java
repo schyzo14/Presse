@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package services;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import javax.ejb.Singleton;
@@ -18,12 +12,10 @@ import presse.volume;
 import presse.titre;
 
 /**
- *
- * @author Khadija
+ * Serveur Archives, implémente archivesBeanLocal
  */
 @Singleton
 public class archivesBean implements archivesBeanLocal {
-    private int lastid;
     private HashMap<Integer, volume> listeVolumes;
     private HashMap<Integer, titre> listeTitres;
     
@@ -78,17 +70,22 @@ public class archivesBean implements archivesBeanLocal {
         t2.getListeMotsCles().put(mc2.getNumMC(), mc2);
         t2.getListeMotsCles().put(mc3.getNumMC(), mc3);
         
+        //Ajout des volumes à la "BD"
         listeVolumes.put(v1.getNumV(), v1);
         listeVolumes.put(v2.getNumV(), v2);
         listeVolumes.put(v3.getNumV(), v3);
         listeVolumes.put(v4.getNumV(), v4);
         
+        //Ajout des titres à la "BD"
         listeTitres.put(t1.getNumT(), t1);
         listeTitres.put(t2.getNumT(), t2);
-        
-        lastid = 0;
     }
-
+    
+    /**
+     * Ajout d'un nouveau volume
+     * @param vol numéro de volume
+     * @return volume v
+     */
     @Override
     public volume addVolume(String vol) {
         Gson gson = new Gson();
@@ -98,39 +95,10 @@ public class archivesBean implements archivesBeanLocal {
         return v;
     }
     
-    @Override
-    public ArrayList<titre> getTitreParParam(String nomT, String mc) {
-        ArrayList<titre> titresTrouves = new ArrayList<>();
-        
-        if(!nomT.equals("")) {
-            for(titre t : listeTitres.values()) {
-                if(t.getNomT().equals(nomT)) {
-                    titresTrouves.add(t);
-                }
-            }
-        } else if(!mc.equals("")) {
-            ArrayList<motsCles> listeMC = new ArrayList<motsCles>();
-            StringTokenizer st = new StringTokenizer(mc, " ");
-            int i = 0;
-            while(st.hasMoreTokens()) {
-                motsCles m = new motsCles(i, st.nextToken());
-                i++;
-            }
-
-            for(titre t : listeTitres.values()) {
-                for(motsCles m : listeMC) {
-                    if(t.getListeMotsCles().containsValue(m)) {
-                        if(!titresTrouves.contains(t)) {
-                            titresTrouves.add(t);
-                        }
-                    }
-                }
-            }
-        }
-        
-        return titresTrouves;
-    }
-    
+    /**
+     * Récupération de tous les titres
+     * @return ArrayList liste de titres
+     */
     @Override
     public ArrayList<titre> getTitres() {
         ArrayList<titre> titresTrouves = new ArrayList<>();
@@ -141,19 +109,12 @@ public class archivesBean implements archivesBeanLocal {
         
         return titresTrouves;
     }
-    
-    @Override
-    public volume getVolume(String numV, String nomT) {
-        volume v = null;
-        for(titre t : this.listeTitres.values()) {
-            if(t.getNomT().equalsIgnoreCase(nomT)) {
-                v = t.getListeVolumes().get(Integer.parseInt(numV));
-            }
-        }
-        
-        return v;
-    }
 
+    /**
+     * Recherche de titres par nom
+     * @param nomT
+     * @return ArrayList liste des titres trouvés
+     */
     @Override
     public ArrayList<titre> getTitreParNom(String nomT) {
         ArrayList<titre> titresTrouves = new ArrayList<>();
@@ -167,6 +128,11 @@ public class archivesBean implements archivesBeanLocal {
         return titresTrouves;
     }
 
+    /**
+     * Recherche de titres par mots-clés
+     * @param motsCles
+     * @return ArrayList liste des titres trouvés
+     */
     @Override
     public ArrayList<titre> getTitreParMC(String motsCles) {
         ArrayList<titre> titresTrouves = new ArrayList<>();
@@ -194,5 +160,23 @@ public class archivesBean implements archivesBeanLocal {
         }
         
         return titresTrouves;
+    }
+    
+    /**
+     * Recherche d'un volume dans un titre
+     * @param numV
+     * @param nomT
+     * @return volume v
+     */
+    @Override
+    public volume getVolume(String numV, String nomT) {
+        volume v = null;
+        for(titre t : this.listeTitres.values()) {
+            if(t.getNomT().equalsIgnoreCase(nomT)) {
+                v = t.getListeVolumes().get(Integer.parseInt(numV));
+            }
+        }
+        
+        return v;
     }
 }

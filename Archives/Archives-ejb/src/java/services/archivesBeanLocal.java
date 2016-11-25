@@ -1,27 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import javax.ejb.Local;
 import presse.titre;
 import presse.volume;
 
 
 /**
- *
- * @author Khadija
+ * Interface du serveur Archives
+ * Implémentée par archivesBean
  */
 @Local
 public interface archivesBeanLocal {
+    
+    /**
+     * Ajout d'un nouveau volume
+     * @param vol numéro de volume
+     * @return volume v
+     */
     public volume addVolume(String vol);
-    public ArrayList<titre> getTitreParParam(String nomT, String motsCles);
-    public ArrayList<titre> getTitreParNom(String nomT);
-    public ArrayList<titre> getTitreParMC(String motsCles);
+    
+    /**
+     * Récupération de tous les titres
+     * @return ArrayList liste de titres
+     */
     public ArrayList<titre> getTitres();
+    
+    /**
+     * Recherche de titres par nom
+     * @param nomT
+     * @return ArrayList liste des titres trouvés
+     */
+    public ArrayList<titre> getTitreParNom(String nomT);
+    
+    /**
+     * Recherche de titres par mots-clés
+     * @param motsCles
+     * @return ArrayList liste des titres trouvés
+     */
+    public ArrayList<titre> getTitreParMC(String motsCles);
+    
+    /**
+     * Recherche d'un volume dans un titre
+     * @param numV
+     * @param nomT
+     * @return volume v
+     */
     public volume getVolume(String numV, String nomT);
 }
