@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.jms;
 
 import java.util.logging.Level;
@@ -18,8 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- *
- * @author Khadija
+ * Client JMS
  */
 public class NotificationJMS {
     private InitialContext context;
@@ -30,7 +24,9 @@ public class NotificationJMS {
     private Destination dest;
     private Session session;
     private MessageProducer sender;
-    
+    /**
+     * Constructeur
+     */
     public NotificationJMS() {
         factory = null;
         connection = null;
@@ -48,29 +44,34 @@ public class NotificationJMS {
             System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
             System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             context = new InitialContext();
-            // look up the ConnectionFactory
+            
+            //Recherche de la ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
-            // look up the Destination
+            //Recherchde de la Destination
             dest = (Destination) context.lookup(destName);
 
-            // create the connection
+            //Création de la Connection
             connection = factory.createConnection();
 
-            // create the session
+            //Création de la Session
             session = connection.createSession(
                     false, Session.AUTO_ACKNOWLEDGE);
 
-            // create the sender
+            //Création du Sender
             sender = session.createProducer(dest);
 
-            // start the connection, to enable message sends
+            //Démarrage de la connexion
             connection.start();
         } catch (JMSException | NamingException exception) {
             exception.printStackTrace();
         }
     }
     
+    /**
+     * Envoi de la notification
+     * @param s 
+     */
     public void sendNotification(String s) {
         try {
             StreamMessage sm = session.createStreamMessage();
@@ -81,6 +82,9 @@ public class NotificationJMS {
         }
     }
     
+    /**
+     * Fermeture de la connexion
+     */
     public void closeConnexion() {
         if (connection != null) {
             try {

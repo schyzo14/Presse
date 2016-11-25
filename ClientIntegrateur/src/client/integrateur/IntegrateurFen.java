@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.integrateur;
 
 import client.jms.NotificationJMS;
@@ -25,22 +20,31 @@ import presse.titre;
 import presse.volume;
 
 /**
- *
- * @author Schyzo
+ * Fenêtre du Client Integrateur
  */
 public class IntegrateurFen extends javax.swing.JFrame {
-    private HashMap<Integer,publicite> listePub;
-    private HashMap<Integer,article> listeArticlesSelectionnes;
-    ArrayList<article> listeArticlesSel;
-    private ArrayList<titre> listeTitres;
+    //Liste de publicités
+    private final HashMap<Integer,publicite> listePub;
+    
+    //Liste des articles sélectionnés récupérés
+    private final HashMap<Integer,article> listeArticlesSelectionnes;
+    
+    //Liste d'articles sélectionnés utilisés
+    public ArrayList<article> listeArticlesSel;
+    
+    //Liste des titres
+    private final ArrayList<titre> listeTitres;
+    
+    //Convertisseur json
+    Gson gson;
+    
+    //Client JMS
+    NotificationJMS notif;
     
     private int i;
     
-    Gson gson;
-    NotificationJMS notif;
-    
     /**
-     * Creates new form IntegrateurFen
+     * Création d'une nouvelle fenêtre IntegrateurFen
      */
     public IntegrateurFen() {
         gson = new Gson();
@@ -69,18 +73,18 @@ public class IntegrateurFen extends javax.swing.JFrame {
         
         //Récupération sous forme de liste des pubs
         DefaultListModel<String> lesPubs = new DefaultListModel<>();
-        for(publicite p : listePub.values()) {
+        listePub.values().forEach((p) -> {
             lesPubs.addElement("#" + p.getNumP() + " : " + p.getCompagnie() + " - " + p.getContenuP());
-        }
+        });
         //Récupération sous forme de liste des titres
         DefaultComboBoxModel<String> lesTitres = new DefaultComboBoxModel<>();
-        for(titre t : listeTitres) {
+        listeTitres.forEach((t) -> {
             lesTitres.addElement("#" + t.getNumT() + " - " + t.getNomT());
-        }
+        });
         
         //Affichage
         initComponents();
-        listeArticlesSel = new ArrayList<article>(listeArticlesSelectionnes.values());
+        listeArticlesSel = new ArrayList<>(listeArticlesSelectionnes.values());
         i = 0;
         jLabelArticle.setText("#" + (i+1) + "/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSel.get(i).getNomA());
         jTextAreaArticle.setText(listeArticlesSel.get(i).getContenuA());
@@ -247,10 +251,18 @@ public class IntegrateurFen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Bouton Annuler
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
+    /**
+     * Bouton Valider
+     * @param evt 
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         //Enregistrement du dernier article et de ses pubs
         int numA = getNumArticleCourant()-1;
@@ -319,9 +331,9 @@ public class IntegrateurFen extends javax.swing.JFrame {
         } else if(options[reponse].equals("Créer un nouveau volume")) {
             //Remettre tous les champs à vide
             this.jTextFieldNumVolume.setText("");
-            for(article a : this.listeArticlesSelectionnes.values()) {
+            this.listeArticlesSelectionnes.values().forEach((a) -> {
                 a.getListePublicites().clear();
-            }
+            });
             this.jListPubZone1.clearSelection();
             this.jListPubZone2.clearSelection();
             jLabelArticle.setText("#1/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSelectionnes.get(1).getNomA());
@@ -329,6 +341,10 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
+    /**
+     * Bouton Suivant
+     * @param evt 
+     */
     private void jButtonSuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuivantActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant()-1;
@@ -362,6 +378,10 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSuivantActionPerformed
 
+    /**
+     * Bouton Précédent
+     * @param evt 
+     */
     private void jButtonPrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrecedentActionPerformed
         //Récupérer le numéro d'article courant
         int numA = getNumArticleCourant()-1;
@@ -395,10 +415,18 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonPrecedentActionPerformed
 
+    /**
+     * Récupération du numéro d'article courant
+     * @return Numéro d'Article
+     */
     public int getNumArticleCourant() {
         return this.listeArticlesSel.get(i).getNumA();
     }
     
+    /**
+     * Récupération de la pub courante dans la zone 1
+     * @return numPub1 numéro de la publicité
+     */
     public int getNumPub1Courante() {
         int numPub1 = 0;
         Pattern pattern = Pattern.compile("#(.*) :");
@@ -410,6 +438,10 @@ public class IntegrateurFen extends javax.swing.JFrame {
         return numPub1;
     }
     
+    /**
+     * Récupération de la pub courante dans la zone 2
+     * @return numPub2 numéro de la publicité
+     */
     public int getNumPub2Courante() {
         int numPub2 = 0;
         Pattern pattern = Pattern.compile("#(.*) :");
@@ -421,6 +453,10 @@ public class IntegrateurFen extends javax.swing.JFrame {
         return numPub2;
     }
     
+    /**
+     * Ajout des publicites à l'article
+     * @param numA 
+     */
     public void enregistrerArticlePubs(int numA) {
         int numPub1 = getNumPub1Courante();
         int numPub2 = getNumPub2Courante();
