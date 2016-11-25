@@ -16,9 +16,15 @@ import presse.titre;
  */
 @Singleton
 public class archivesBean implements archivesBeanLocal {
+    //Liste des volumes de la "BD"
     private HashMap<Integer, volume> listeVolumes;
+    
+    //Liste des titres de la "BD"
     private HashMap<Integer, titre> listeTitres;
     
+    /**
+     * Constructeur
+     */
     public archivesBean() {
         //init
         listeVolumes = new HashMap<>();
