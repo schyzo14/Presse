@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package JMS;
 
 import java.io.BufferedReader;
@@ -16,8 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- *
- * @author Khadija
+ * Client JMS
  */
 public class ReceptionJMSNotification {
     private InitialContext context;
@@ -30,6 +24,9 @@ public class ReceptionJMSNotification {
     private MessageConsumer receiver;
     BufferedReader waiter;
     
+    /**
+     * Constructeur
+     */
     public ReceptionJMSNotification() {
         factory = null;
         connection = null;
@@ -47,34 +44,38 @@ public class ReceptionJMSNotification {
             System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
             System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             context = new InitialContext();
-            // look up the ConnectionFactory
+            
+            //Recherche de la ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
-            // look up the Destination
+            //Recherche de la Destination
             dest = (Destination) context.lookup(destName);
 
-            // create the connection
+            //Création de la Connection
             connection = factory.createConnection();
 
-            // create the session
+            //Création de la Session
             session = connection.createSession(
                     false, Session.AUTO_ACKNOWLEDGE);
 
-            // create the receiver
+            //Création du Receiver
             receiver = session.createConsumer(dest);
             
-            // register a listener
+            //Enregistrement d'un Listener au Receiver
             receiver.setMessageListener(new ListenerJMS());
 
-            // start the connection, to enable message sends
+            //Démarrage de la Connection
             connection.start();
             
-            System.out.println("En attente...");
+            System.out.println("En écoute...");
         } catch (JMSException | NamingException exception) {
             exception.printStackTrace();
         }
     }
     
+    /**
+     * Fermeture de la connexion
+     */
     public void closeConnexion() {
         if (connection != null) {
             try {

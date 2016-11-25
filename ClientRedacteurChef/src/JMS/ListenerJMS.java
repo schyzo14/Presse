@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package JMS;
 
 import Vues.NotificationNouveauVolume;
@@ -14,17 +9,22 @@ import javax.jms.MessageListener;
 import javax.jms.StreamMessage;
 
 /**
- *
- * @author Khadija
+ * Listener JMS de ReceptionJMSNotification
  */
 public class ListenerJMS implements MessageListener {
 
+    /**
+     * À la réception d'un message JMS
+     * @param message 
+     */
     @Override
     public void onMessage(Message message) {
         if (message instanceof StreamMessage) {
             try {
+                //Récupération du message au format String
                 String text = ((StreamMessage) message).readString();
-                System.out.println(text);
+                
+                //Ouverture de la fenêtre de notification
                 NotificationNouveauVolume nnv = new NotificationNouveauVolume();
                 nnv.setReceived(text);
                 nnv.setVisible(true);
