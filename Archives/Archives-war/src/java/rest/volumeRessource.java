@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rest;
 
 import com.google.gson.Gson;
@@ -21,8 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import services.archivesBeanLocal;
 
 /**
- *
- * @author Schyzo
+ * Ressource volume
  */
 @Path("volume")
 public class volumeRessource {
@@ -35,18 +29,31 @@ public class volumeRessource {
     //Convertisseur json
     private Gson gson;
     
-    // Constructeur de la ressource
+    /**
+     * Constructeur
+     */
     public volumeRessource() {
         this.gson = new Gson();
         this.archivesBean = lookupArchivesBeanLocal();
     }
     
+    /**
+     * Recherche des volumes à partir d'un titre et d'un numéro de volume
+     * @param nomT
+     * @param numV
+     * @return Le volume trouvé au format json
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getVolume(@QueryParam("nomT") String nomT, @QueryParam("numV") String numV) {
         return this.gson.toJson(this.archivesBean.getVolume(numV, nomT));
     }
     
+    /**
+     * Ajout d'un nouveau volume
+     * @param content
+     * @return Le volume ajouté
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String addVolume(String content) {

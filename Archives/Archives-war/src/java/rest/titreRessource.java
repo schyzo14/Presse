@@ -1,33 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rest;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import presse.titre;
-import presse.volume;
 import services.archivesBeanLocal;
 
 /**
- *
- * @author Schyzo
+ * Ressource titre
  */
 @Path("titre")
 public class titreRessource {
@@ -40,18 +28,30 @@ public class titreRessource {
     //Convertisseur json
     private Gson gson;
     
-    // Constructeur de la ressource
+    /**
+     * Constructeur
+     */
     public titreRessource() {
         this.gson = new Gson();
         this.archivesBean = lookupArchivesBeanLocal();
     }
     
+    /**
+     * Recherche de titres par nom
+     * @param nomTitre
+     * @return Liste des titres trouvés au format json
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTitreParNom(@QueryParam("nomT") String nomTitre) {
         return this.gson.toJson(this.archivesBean.getTitreParNom(nomTitre));
     }
     
+    /**
+     * Recherche de titres par mots-clés
+     * @param mc
+     * @return Liste des titres trouvés au format json
+     */
     @Path("/motsCles")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,6 +59,10 @@ public class titreRessource {
         return this.gson.toJson(this.archivesBean.getTitreParMC(mc));
     }
     
+    /**
+     * Récupération de tous les titres
+     * @return Tous les titres au format json
+     */
     @Path("/getTitres")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
