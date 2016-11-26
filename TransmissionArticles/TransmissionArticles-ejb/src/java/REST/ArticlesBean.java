@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package REST;
 
 import java.util.HashMap;
@@ -12,14 +7,17 @@ import presse.auteur;
 import presse.motsCles;
 
 /**
- *
- * ArticlesBean implements ArticlesBeanLocal
+ * Bean Articles
  */
 @Singleton
 public class ArticlesBean implements ArticlesBeanLocal{
+    //Liste des articles
     private HashMap<Integer, article> listeArticles;
+    //Liste des auteurs
     private HashMap<Integer, auteur> listeAuteurs;
+    //Liste des mots-clés
     private HashMap<Integer, motsCles> listeMotsCles;
+    //Dernier identifiant
     private int lastid;
     
     /**
@@ -58,7 +56,6 @@ public class ArticlesBean implements ArticlesBeanLocal{
         a3.getListeMotsCles().put(3, mc3);
     }
     
-    //Gérer les articles
     /**
      * Récupérer un article
      * @param numA
@@ -82,11 +79,11 @@ public class ArticlesBean implements ArticlesBeanLocal{
      * Modifier la liste d'articles
      * @param listeArticles 
      */
+    @Override
     public void setListeArticles(HashMap<Integer, article> listeArticles) {
         this.listeArticles = listeArticles;
     }
     
-    //Gérer les auteurs
     /**
      * Récupérer un auteur
      * @param numA
@@ -110,11 +107,11 @@ public class ArticlesBean implements ArticlesBeanLocal{
      * Modifier la liste des auteurs
      * @param listeAuteurs 
      */
+    @Override
     public void setListeAuteurs(HashMap<Integer, auteur> listeAuteurs) {
         this.listeAuteurs = listeAuteurs;
     }
     
-    //Gérer les mots cles
     /**
      * Récupérer un mot clé
      * @param numMC
@@ -138,14 +135,18 @@ public class ArticlesBean implements ArticlesBeanLocal{
      * Modifier la liste des mots clés
      * @param listeMC 
      */
+    @Override
     public void setListeMotsCles(HashMap<Integer, motsCles> listeMC) {
         this.listeMotsCles = listeMC;
     }
     
     /**
      * Ajouter l'article saisie par le Journaliste
-     * @param unArtSel
-     * @return String
+     * @param nomA
+     * @param nomAut
+     * @param contenu
+     * @param motcles
+     * @return article
      */
     @Override
     public article addArticles(String nomA, String nomAut, String contenu, String motcles){
@@ -154,16 +155,25 @@ public class ArticlesBean implements ArticlesBeanLocal{
         this.listeArticles.put(a.getNumA(), a);
         
         String[] auteurCast = nomAut.split(" ");
-        if(auteurCast.length==1){
-            auteur aut = new auteur(lastid, auteurCast[0], auteurCast[0]);
-            a.getListeAuteurs().put(lastid, aut);
-        }
-        else if(auteurCast.length==2){
-            auteur aut = new auteur(lastid, auteurCast[1], auteurCast[0]);
-            a.getListeAuteurs().put(lastid, aut);
-        }else{
-            auteur aut = new auteur(lastid, auteurCast[2], auteurCast[0]+" "+auteurCast[1]);
-            a.getListeAuteurs().put(lastid, aut);
+        switch (auteurCast.length) {
+            case 1:
+                {
+                    auteur aut = new auteur(lastid, auteurCast[0], auteurCast[0]);
+                    a.getListeAuteurs().put(lastid, aut);
+                    break;
+                }
+            case 2:
+                {
+                    auteur aut = new auteur(lastid, auteurCast[1], auteurCast[0]);
+                    a.getListeAuteurs().put(lastid, aut);
+                    break;
+                }
+            default:
+                {
+                    auteur aut = new auteur(lastid, auteurCast[2], auteurCast[0]+" "+auteurCast[1]);
+                    a.getListeAuteurs().put(lastid, aut);
+                    break;
+                }
         }
 
         String[] motsClesCast = motcles.split(",");
@@ -177,6 +187,14 @@ public class ArticlesBean implements ArticlesBeanLocal{
         return a;
     }
     
+    /**
+     * Ajouter un auteur
+     * @param nomA
+     * @param nomAut
+     * @param contenu
+     * @param motcles
+     * @return auteur
+     */
     @Override
     public auteur addAuteurs(String nomA, String nomAut, String contenu, String motcles){
         System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);
@@ -188,6 +206,14 @@ public class ArticlesBean implements ArticlesBeanLocal{
         return aut;
     }
     
+    /**
+     * Ajouter un mot-clé
+     * @param nomA
+     * @param nomAut
+     * @param contenu
+     * @param motcles
+     * @return mot-clé
+     */
     @Override
     public motsCles addMotsCles(String nomA, String nomAut, String contenu, String motcles){
         System.out.println("nom : "+nomA+" nom Auteur : "+nomAut+" contenu : "+contenu+" motscles : "+motcles);

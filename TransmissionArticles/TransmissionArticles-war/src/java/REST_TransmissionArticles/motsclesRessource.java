@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package REST_TransmissionArticles;
 
 import REST.ArticlesBeanLocal;
@@ -18,12 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
- * @author manou
+ * Ressource Mots-Clés
  */
 @Path("motscles")
 public class motsclesRessource {
@@ -37,7 +30,7 @@ public class motsclesRessource {
     private Gson gson;
     
     /**
-     * Creates a new instance of articleRessource
+     * Constructeur de la ressource
      */
     public motsclesRessource() {
         this.gson = new Gson();
