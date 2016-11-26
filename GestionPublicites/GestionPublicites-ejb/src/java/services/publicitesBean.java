@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package services;
 
 import java.util.HashMap;
@@ -10,14 +5,18 @@ import javax.ejb.Singleton;
 import presse.publicite;
 
 /**
- *
- * @author Schyzo
+ * Bean publicites
  */
 @Singleton
 public class publicitesBean implements publicitesBeanLocal {
+    //Liste des publicités de la "BD"
     private HashMap<Integer, publicite> listePubs;
 
+    /**
+     * Constructeur
+     */
     public publicitesBean() {
+        //Initialisation de la "BD"
         this.listePubs = new HashMap<>();
         publicite p1 = new publicite(1, "Pub Colgate", "Colgate", "Fraicheur et machage");
         this.listePubs.put(p1.getNumP(), p1);
@@ -31,17 +30,30 @@ public class publicitesBean implements publicitesBeanLocal {
         this.listePubs.put(p5.getNumP(), p5);
     }
     
-    //Récupérer les pubs
+    /**
+     * Récupérer la publicité
+     * @param num numéro de la publicité
+     * @return publicite la publicité trouvée
+     */
     @Override
     public publicite getPublicites(int num) {
         return this.listePubs.get(num);
     }
 
+    /**
+     * Récupérer toutes les publicités
+     * @return listePubs la liste des publicités
+     */
     @Override
     public HashMap<Integer, publicite> getListePubs() {
         return listePubs;
     }
 
+    /**
+     * Saisir la nouvelle liste de publicités
+     * @param listePubs la liste des publicités
+     */
+    @Override
     public void setListePubs(HashMap<Integer, publicite> listePubs) {
         this.listePubs = listePubs;
     }

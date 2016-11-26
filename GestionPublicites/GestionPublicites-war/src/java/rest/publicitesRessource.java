@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rest;
 
 import com.google.gson.Gson;
@@ -12,7 +7,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -20,8 +14,7 @@ import javax.ws.rs.core.UriInfo;
 import services.publicitesBeanLocal;
 
 /**
- *
- * @author Schyzo
+ * Ressource publicites
  */
 @Path("publicites")
 public class publicitesRessource {
@@ -34,12 +27,18 @@ public class publicitesRessource {
     //Convertisseur json
     private Gson gson;
     
-    // Constructeur de la ressource
+    /**
+     * Constructeur
+     */
     public publicitesRessource() {
         this.gson = new Gson();
         this.publicitesBean = lookupPublicitesBeanLocal();
     }
     
+    /**
+     * Récupérer la liste des publicités
+     * @return Liste des publicités au format json
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getListePubs() {
