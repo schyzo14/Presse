@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package REST_MiseSousPresse;
 
 import REST.PresseBeanLocal;
@@ -19,8 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
- * @author Schyzo
+ * Ressource Article Sélectionnés
  */
 @Path("articlesSel")
 public class articlesSelectionnesRessource {
@@ -33,13 +27,18 @@ public class articlesSelectionnesRessource {
     //Convertisseur json
     private final Gson gson;
     
-    // Constructeur de la ressource
+    /**
+     * Constructeur
+     */
     public articlesSelectionnesRessource() {
         this.gson = new Gson();
         this.presseBean = lookupPresseBeanLocal();
     }
     
-    //Récupérer la liste des articles
+    /**
+     * Récupérer la liste des articles sélectionnés
+     * @return la liste des articles sélectionnés au format json
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getListeArticlesSelectionnes() {

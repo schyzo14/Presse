@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package REST;
 
 import com.google.gson.Gson;
@@ -16,19 +11,28 @@ import presse.publicite;
 import presse.volume;
 
 /**
- *
- * PresseBean implements PresseBeanLocal
+ * Bean Presse
  */
 @Singleton
 public class PresseBean implements PresseBeanLocal{
+    //Liste des articles
     private HashMap<Integer, article> listeArticles;
+    //Liste des auteurs
     private HashMap<Integer, auteur> listeAuteurs;
+    //Liste des mots-clés
     private HashMap<Integer, motsCles> listeMotsCles;
+    //Liste des publicités
     private HashMap<Integer, publicite> listePublicite;
+    //Liste des volumes
     private HashMap<Integer, volume> listeVolume;
+    //Dernier identifiant
     private int lastid;
+    //Liste des articles sélectionnés
     private HashMap<Integer, article> listeArticlesSelect;
     
+    /**
+     * Constructeur
+     */
     public PresseBean() {
         //Initialisation des tables
         this.listeArticles = new HashMap<>();
@@ -69,7 +73,6 @@ public class PresseBean implements PresseBeanLocal{
         lastid++;
     }
     
-    //Gérer les articles
     /**
      * Récupérer un article
      * @param numA
@@ -93,11 +96,11 @@ public class PresseBean implements PresseBeanLocal{
      * Modifier la liste d'articles
      * @param listeArticles 
      */
+    @Override
     public void setListeArticles(HashMap<Integer, article> listeArticles) {
         this.listeArticles = listeArticles;
     }
     
-    //Gérer les auteurs
     /**
      * Récupérer un auteur
      * @param numA
@@ -121,11 +124,11 @@ public class PresseBean implements PresseBeanLocal{
      * Modifier la liste des auteurs
      * @param listeAuteurs 
      */
+    @Override
     public void setListeAuteurs(HashMap<Integer, auteur> listeAuteurs) {
         this.listeAuteurs = listeAuteurs;
     }
     
-    //Gérer les mots cles
     /**
      * Récupérer un mot clé
      * @param numMC
@@ -149,11 +152,11 @@ public class PresseBean implements PresseBeanLocal{
      * Modifier la liste des mots clés
      * @param listeMC 
      */
+    @Override
     public void setListeMotsCles(HashMap<Integer, motsCles> listeMC) {
         this.listeMotsCles = listeMC;
     }
 
-    //Gérer les volumes
     /**
      * Récupérer un volume
      * @param numVol
@@ -173,7 +176,6 @@ public class PresseBean implements PresseBeanLocal{
         return this.listeVolume;
     }
 
-    //Gérer les publicités
     /**
      * Récupérer une publicité
      * @param numPub
@@ -193,7 +195,6 @@ public class PresseBean implements PresseBeanLocal{
         return this.listePublicite;
     }
     
-    //Gestion des articles sélectionnés
     /**
      * Liste des articles sélectionnés
      * @return HashMap d'article
@@ -217,6 +218,4 @@ public class PresseBean implements PresseBeanLocal{
         
         return "ok";
     }
-    
-   
 }

@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package REST_MiseSousPresse;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
 /**
- *
- * ApplicationConfig
+ * Configuration du serveur MiseSousPresse
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class applicationConfig extends Application{
