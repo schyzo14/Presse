@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gestiondistributeurs.jms;
 
 import java.util.logging.Level;
@@ -18,8 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- *
- * @author Khadija
+ * Classe Sender JMS
  */
 public class Sender {
     private InitialContext context;
@@ -48,29 +42,34 @@ public class Sender {
             System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
             System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             context = new InitialContext();
-            // look up the ConnectionFactory
+            
+            //Recherche de la ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
-            // look up the Destination
+            //Recherche de la Destination
             dest = (Destination) context.lookup(destName);
 
-            // create the connection
+            //Création de la Connection
             connection = factory.createConnection();
 
-            // create the session
+            //Création de la Session
             session = connection.createSession(
                     false, Session.AUTO_ACKNOWLEDGE);
 
-            // create the sender
+            //Création du Sender
             sender = session.createProducer(dest);
 
-            // start the connection, to enable message sends
+            //Démarrage de la Connection
             connection.start();
         } catch (JMSException | NamingException exception) {
             exception.printStackTrace();
         }
     }
     
+    /**
+     * Envoi du message par JMS
+     * @param s le message à envoyer
+     */
     public void sendResponse(String s) {
         try {
             StreamMessage sm = session.createStreamMessage();
@@ -82,6 +81,9 @@ public class Sender {
         }
     }
     
+    /**
+     * Fermeture de la connexion
+     */
     public void closeConnexion() {
         if (connection != null) {
             try {

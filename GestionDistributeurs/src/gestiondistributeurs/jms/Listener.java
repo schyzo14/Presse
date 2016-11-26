@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gestiondistributeurs.jms;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import gestiondistributeurs.GestionDistributeurs;
 import java.util.ArrayList;
@@ -18,16 +11,20 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.StreamMessage;
 import presse.distributeur;
-import presse.titre;
 
 /**
- *
- * @author Khadija
+ * Classe Listener du Receiver
  */
 public class Listener implements MessageListener {
+    //Convertisseur json
     Gson gson;
+    //Sender JMS
     Sender send;
     
+    /**
+     * Se lance à la récéption d'un message JMS
+     * @param message le message reçu par JMS
+     */
     @Override
     public void onMessage(Message message) {
         if (message instanceof StreamMessage) {
@@ -64,5 +61,4 @@ public class Listener implements MessageListener {
             }
         }
     }
-    
 }

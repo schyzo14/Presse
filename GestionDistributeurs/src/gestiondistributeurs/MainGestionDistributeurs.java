@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gestiondistributeurs;
 
+/**
+ * Classe principale de l'application Gestion Distributeurs
+ */
 public class MainGestionDistributeurs {
 
     /**
-     * @param args the command line arguments
+     * Classe Main initialisant la GestionDistributeurs
+     * @param args
      */
     public static void main(String[] args) {
         new GestionDistributeurs();
