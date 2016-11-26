@@ -84,6 +84,8 @@ public class IntegrateurFen extends javax.swing.JFrame {
         
         //Affichage
         initComponents();
+        //Mettre la fenêtre au millieu
+        this.setLocationRelativeTo(null);
         listeArticlesSel = new ArrayList<>(listeArticlesSelectionnes.values());
         i = 0;
         jLabelArticle.setText("#" + (i+1) + "/" + listeArticlesSelectionnes.size() + " : " + listeArticlesSel.get(i).getNomA());
