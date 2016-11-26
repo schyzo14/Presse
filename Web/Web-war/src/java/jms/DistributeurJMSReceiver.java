@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jms;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jms.Connection;
@@ -21,11 +15,9 @@ import javax.jms.StreamMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import presse.distributeur;
-import presse.publicite;
 
 /**
- *
- * @author Khadija
+ * Classe JMS Distributeur - Receiver
  */
 public class DistributeurJMSReceiver {
     private InitialContext context;
@@ -38,6 +30,9 @@ public class DistributeurJMSReceiver {
     private MessageConsumer receiver;
     BufferedReader waiter;
     
+    /**
+     * Constructeur du Receiver
+     */
     public DistributeurJMSReceiver() {
         factory = null;
         connection = null;
@@ -55,29 +50,34 @@ public class DistributeurJMSReceiver {
             System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
             System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             context = new InitialContext();
-            // look up the ConnectionFactory
+            
+            //Recherche de la ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
-            // look up the Destination
+            //Recherche de la Destination
             dest = (Destination) context.lookup(destName);
 
-            // create the connection
+            //Création de la Connection
             connection = factory.createConnection();
 
-            // create the session
+            //Création de la Session
             session = connection.createSession(
                     false, Session.AUTO_ACKNOWLEDGE);
 
-            // create the receiver
+            //Création du Receiver
             receiver = session.createConsumer(dest);
 
-            // start the connection, to enable message sends
+            //Démarrage de la Connection
             connection.start();
         } catch (JMSException | NamingException exception) {
             exception.printStackTrace();
         }
     }
     
+    /**
+     * Récupération du distributeur
+     * @return distributeur
+     */
     public distributeur reception() {
         distributeur reponse = null;
         try {
@@ -95,6 +95,9 @@ public class DistributeurJMSReceiver {
         return reponse;
     }
     
+    /**
+     * Fermeture de la Connection
+     */
     public void closeConnexion() {
         if (connection != null) {
             try {

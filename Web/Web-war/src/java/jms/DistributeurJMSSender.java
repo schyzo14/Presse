@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jms;
 
 import java.util.logging.Level;
@@ -18,8 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- *
- * @author Khadija
+ * Classe JMS Distributeur - Sender
  */
 public class DistributeurJMSSender {
     private InitialContext context;
@@ -31,6 +25,9 @@ public class DistributeurJMSSender {
     private Session session;
     private MessageProducer sender;
     
+    /**
+     * Constructeur du Sender
+     */
     public DistributeurJMSSender() {
         factory = null;
         connection = null;
@@ -48,29 +45,34 @@ public class DistributeurJMSSender {
             System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
             System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             context = new InitialContext();
-            // look up the ConnectionFactory
+            
+            //Recherche de la ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
-            // look up the Destination
+            //Recherche de la Destination
             dest = (Destination) context.lookup(destName);
 
-            // create the connection
+            //Création de la Connection
             connection = factory.createConnection();
 
-            // create the session
+            //Création de la Session
             session = connection.createSession(
                     false, Session.AUTO_ACKNOWLEDGE);
 
-            // create the sender
+            //Créatin du Sender
             sender = session.createProducer(dest);
 
-            // start the connection, to enable message sends
+            //Démarrage de la Connection
             connection.start();
         } catch (JMSException | NamingException exception) {
             exception.printStackTrace();
         }
     }
     
+    /**
+     * Vérification des informations du distributeur
+     * @param s les paramètres du distributeur au format json
+     */
     public void checkParams(String s) {
         try {
             StreamMessage sm = session.createStreamMessage();
@@ -83,6 +85,9 @@ public class DistributeurJMSSender {
         }
     }
     
+    /**
+     * Fermeture de la Connection
+     */
     public void closeConnexion() {
         if (connection != null) {
             try {
