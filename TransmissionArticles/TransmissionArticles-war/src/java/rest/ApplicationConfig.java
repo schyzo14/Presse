@@ -1,4 +1,4 @@
-package REST_TransmissionArticles;
+package rest;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -7,7 +7,7 @@ import javax.ws.rs.core.Application;
  * Configuration du serveur TransmissionArticles
  */
 @javax.ws.rs.ApplicationPath("webresources")
-public class applicationConfig extends Application{
+public class ApplicationConfig extends Application{
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
@@ -20,8 +20,8 @@ public class applicationConfig extends Application{
      * comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(REST_TransmissionArticles.articleRessource.class);
-        resources.add(REST_TransmissionArticles.auteurRessource.class);
-        resources.add(REST_TransmissionArticles.motsclesRessource.class);
+        resources.add(rest.ArticleRessource.class);
+        resources.add(rest.AuteurRessource.class);
+        resources.add(rest.MotsclesRessource.class);
     }
 }

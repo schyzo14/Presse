@@ -3,7 +3,7 @@ package services;
 
 import java.util.HashMap;
 import javax.ejb.Singleton;
-import presse.editeur;
+import presse.Editeur;
 
 /**
  * EditeurBean implemente EditeurBeanLocal
@@ -12,15 +12,15 @@ import presse.editeur;
 public class EditeurBean implements EditeurBeanLocal{
     
     // Liste des éditeurs
-    public static HashMap<Integer, editeur> lesEditeurs = new HashMap<Integer, editeur>();
+    public static HashMap<Integer, Editeur> lesEditeurs = new HashMap<Integer, Editeur>();
 
     /**
      * Constructeur
      */
     public EditeurBean() {
         // Initialisation de la liste des éditeurs
-        lesEditeurs.put(1, new editeur(1, "Flammarion", "contact@flam.fr"));
-        lesEditeurs.put(2, new editeur(2, "Gallimard", "contact@gall.fr"));
+        lesEditeurs.put(1, new Editeur(1, "Flammarion", "contact@flam.fr"));
+        lesEditeurs.put(2, new Editeur(2, "Gallimard", "contact@gall.fr"));
     }
 
     /**
@@ -29,7 +29,7 @@ public class EditeurBean implements EditeurBeanLocal{
      * @return      Liste des éditeurs
      */
     @Override
-    public HashMap<Integer, editeur> getListeEditeur() {
+    public HashMap<Integer, Editeur> getListeEditeur() {
         return lesEditeurs;
     }
 }

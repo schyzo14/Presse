@@ -14,26 +14,26 @@ import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import presse.article;
-import presse.publicite;
-import presse.titre;
-import presse.volume;
+import presse.Article;
+import presse.Publicite;
+import presse.Titre;
+import presse.Volume;
 
 /**
  * Fenêtre du Client Integrateur
  */
 public class IntegrateurFen extends javax.swing.JFrame {
     //Liste de publicités
-    private final HashMap<Integer,publicite> listePub;
+    private final HashMap<Integer,Publicite> listePub;
     
     //Liste des articles sélectionnés récupérés
-    private final HashMap<Integer,article> listeArticlesSelectionnes;
+    private final HashMap<Integer,Article> listeArticlesSelectionnes;
     
     //Liste d'articles sélectionnés utilisés
-    public ArrayList<article> listeArticlesSel;
+    public ArrayList<Article> listeArticlesSel;
     
     //Liste des titres
-    private final ArrayList<titre> listeTitres;
+    private final ArrayList<Titre> listeTitres;
     
     //Convertisseur json
     Gson gson;
@@ -62,13 +62,13 @@ public class IntegrateurFen extends javax.swing.JFrame {
         String titres = clientTitres.getTitres();
         
         //Transformation du json à HashMap Pub
-        java.lang.reflect.Type typePublicites = new TypeToken<HashMap<Integer,publicite>>(){}.getType();
+        java.lang.reflect.Type typePublicites = new TypeToken<HashMap<Integer,Publicite>>(){}.getType();
         listePub = gson.fromJson(publicites, typePublicites);
         //Transformation du json à HashMap Articles
-        java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer,article>>(){}.getType();
+        java.lang.reflect.Type typeArticles = new TypeToken<HashMap<Integer,Article>>(){}.getType();
         listeArticlesSelectionnes = gson.fromJson(articlesSelectionnes, typeArticles);
         //Transformation du json à HashMap Titres
-        java.lang.reflect.Type typeTitres = new TypeToken<ArrayList<titre>>(){}.getType();
+        java.lang.reflect.Type typeTitres = new TypeToken<ArrayList<Titre>>(){}.getType();
         listeTitres = gson.fromJson(titres, typeTitres);
         
         //Récupération sous forme de liste des pubs
@@ -290,7 +290,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
         
         //Vérification que tous les articlesSelectionnes ont été traités
-        for(article a : this.listeArticlesSelectionnes.values()) {
+        for(Article a : this.listeArticlesSelectionnes.values()) {
             if(a.getListePublicites().size() != 2) {
                 JOptionPane.showMessageDialog(this,
                 "Vous n'avez pas traité tous les articles",
@@ -301,7 +301,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
         }
 
         //Envoyer le volume sur le serveur 
-        volume v = new volume(Integer.parseInt(this.jTextFieldNumVolume.getText()));
+        Volume v = new Volume(Integer.parseInt(this.jTextFieldNumVolume.getText()));
             v.setListeArticles(this.listeArticlesSelectionnes);
             //Récupération de l'id Titre
             Pattern pattern = Pattern.compile("#(.*) -");
@@ -371,7 +371,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
                 //Sélection des pubs liées
                 numA = getNumArticleCourant()-1;
-                ArrayList<publicite> pubs = this.listeArticlesSelectionnes.get(numA).getListePublicites();
+                ArrayList<Publicite> pubs = this.listeArticlesSelectionnes.get(numA).getListePublicites();
                 if(!pubs.isEmpty()) {
                     this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
                     this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
@@ -408,7 +408,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
 
                 //Sélection des pubs liées
                 numA = getNumArticleCourant()-1;
-                ArrayList<publicite> pubs = this.listeArticlesSelectionnes.get(numA).getListePublicites();
+                ArrayList<Publicite> pubs = this.listeArticlesSelectionnes.get(numA).getListePublicites();
                 if(!pubs.isEmpty()) {
                     this.jListPubZone1.setSelectedIndex(pubs.get(0).getNumP()-1);
                     this.jListPubZone2.setSelectedIndex(pubs.get(1).getNumP()-1);
@@ -462,7 +462,7 @@ public class IntegrateurFen extends javax.swing.JFrame {
     public void enregistrerArticlePubs(int numA) {
         int numPub1 = getNumPub1Courante();
         int numPub2 = getNumPub2Courante();
-        ArrayList<publicite> pubs = new ArrayList<>();
+        ArrayList<Publicite> pubs = new ArrayList<>();
         
         pubs.add(this.listePub.get(numPub1));
         pubs.add(this.listePub.get(numPub2));

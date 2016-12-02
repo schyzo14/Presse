@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rest;
 
 import javax.ws.rs.ClientErrorException;
@@ -24,14 +19,14 @@ import javax.ws.rs.core.MediaType;
  *
  * 
  */
-public class ClientREST_TransmissionArticle {
+public class ClientRESTTransmissionArticle {
 
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/TransmissionArticles-war/webresources";
 
     
-    public ClientREST_TransmissionArticle() {
+    public ClientRESTTransmissionArticle() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("articles");
     }

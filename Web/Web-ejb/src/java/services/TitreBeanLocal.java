@@ -3,7 +3,7 @@ package services;
 
 import java.util.HashMap;
 import javax.ejb.Local;
-import presse.titre;
+import presse.Titre;
 
 /**
  * Interface TitreBeanLocal
@@ -16,13 +16,13 @@ public interface TitreBeanLocal {
      * 
      * @return  liste des titres
      */
-    public HashMap<Integer, titre> getListeTitre();
+    public HashMap<Integer, Titre> getListeTitre();
     
     /**
      * Initialiser la liste des titres
      * 
      * @param listTitres 
      */
-    public void setListeTitre(HashMap<Integer, titre> listTitres);
+    public void setListeTitre(HashMap<Integer, Titre> listTitres);
     
 }

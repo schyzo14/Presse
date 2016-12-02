@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
-import presse.titre;
+import presse.Titre;
 
 /**
  * Jersey REST client generated for REST resource:titreRessource [titre]<br>
@@ -38,7 +38,7 @@ public class ClientRESTTitre {
      * @return ArrayList des titres trouvés
      * @throws ClientErrorException 
      */
-    public ArrayList<titre> getTitreParNom(String nomT) throws ClientErrorException {
+    public ArrayList<Titre> getTitreParNom(String nomT) throws ClientErrorException {
         WebTarget resource;
         resource = webTarget
                 .queryParam("nomT", nomT);
@@ -46,8 +46,8 @@ public class ClientRESTTitre {
         
         Gson gson = new Gson();
         
-        java.lang.reflect.Type typeTitre = new TypeToken<ArrayList<titre>>(){}.getType();
-        ArrayList<titre> listeTitres = gson.fromJson(titres, typeTitre);
+        java.lang.reflect.Type typeTitre = new TypeToken<ArrayList<Titre>>(){}.getType();
+        ArrayList<Titre> listeTitres = gson.fromJson(titres, typeTitre);
         
         return listeTitres;
     }
@@ -58,7 +58,7 @@ public class ClientRESTTitre {
      * @return ArrayList des titres trouvés
      * @throws ClientErrorException 
      */
-    public ArrayList<titre> getTitreParMC(String mc) throws ClientErrorException {
+    public ArrayList<Titre> getTitreParMC(String mc) throws ClientErrorException {
         WebTarget resource;
         resource = webTarget
                 .queryParam("motsCles", mc);
@@ -67,8 +67,8 @@ public class ClientRESTTitre {
 
         Gson gson = new Gson();
 
-        java.lang.reflect.Type typeTitre = new TypeToken<ArrayList<titre>>(){}.getType();
-        ArrayList<titre> listeTitres = gson.fromJson(titres, typeTitre);
+        java.lang.reflect.Type typeTitre = new TypeToken<ArrayList<Titre>>(){}.getType();
+        ArrayList<Titre> listeTitres = gson.fromJson(titres, typeTitre);
 
         return listeTitres;
     }

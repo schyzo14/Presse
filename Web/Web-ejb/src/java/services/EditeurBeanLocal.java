@@ -3,7 +3,7 @@ package services;
 
 import java.util.HashMap;
 import javax.ejb.Local;
-import presse.editeur;
+import presse.Editeur;
 
 /**
  * Interface EditeurBeanLocal
@@ -16,6 +16,6 @@ public interface EditeurBeanLocal {
      * 
      * @return      Liste des éditeurs
      */
-    public HashMap<Integer, editeur> getListeEditeur();
+    public HashMap<Integer, Editeur> getListeEditeur();
     
 }

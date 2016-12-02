@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
-import presse.volume;
+import presse.Volume;
 
 /**
  * Jersey REST client generated for REST resource:volumeRessource [volume]<br>
@@ -38,7 +38,7 @@ public class ClientRESTVolume {
      * @return volume trouvé
      * @throws ClientErrorException 
      */
-    public volume getVolume(String nomT, String numV) throws ClientErrorException {
+    public Volume getVolume(String nomT, String numV) throws ClientErrorException {
         WebTarget resource = webTarget
                 .queryParam("nomT", nomT)
                 .queryParam("numV", numV);
@@ -46,8 +46,8 @@ public class ClientRESTVolume {
         
         Gson gson = new Gson();
         
-        java.lang.reflect.Type typeVolume = new TypeToken<volume>(){}.getType();
-        volume v = gson.fromJson(s, typeVolume);
+        java.lang.reflect.Type typeVolume = new TypeToken<Volume>(){}.getType();
+        Volume v = gson.fromJson(s, typeVolume);
         
         return v;
     }

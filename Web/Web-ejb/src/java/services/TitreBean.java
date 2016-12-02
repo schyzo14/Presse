@@ -3,7 +3,7 @@ package services;
 
 import java.util.HashMap;
 import javax.ejb.Singleton;
-import presse.titre;
+import presse.Titre;
 
 /**
  * TitreBean implemente TitreBeanLocal
@@ -12,7 +12,7 @@ import presse.titre;
 public class TitreBean implements TitreBeanLocal{
     
     // Liste des titres
-    public static HashMap<Integer, titre> lesTitres = new HashMap<Integer, titre>();
+    public static HashMap<Integer, Titre> lesTitres = new HashMap<Integer, Titre>();
 
     public TitreBean() {
     }
@@ -23,7 +23,7 @@ public class TitreBean implements TitreBeanLocal{
      * @return  liste des titres
      */
     @Override
-    public HashMap<Integer, titre> getListeTitre() {
+    public HashMap<Integer, Titre> getListeTitre() {
         return lesTitres;
     }
 
@@ -33,7 +33,7 @@ public class TitreBean implements TitreBeanLocal{
      * @param listTitres 
      */
     @Override
-    public void setListeTitre(HashMap<Integer, titre> listTitres) {
+    public void setListeTitre(HashMap<Integer, Titre> listTitres) {
         lesTitres = listTitres;
     }
     

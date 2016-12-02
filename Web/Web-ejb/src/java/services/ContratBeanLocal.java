@@ -3,7 +3,7 @@ package services;
 
 import java.util.HashMap;
 import javax.ejb.Local;
-import presse.contrat;
+import presse.Contrat;
 
 /**
  * Interface ContratBeanLocal
@@ -21,7 +21,7 @@ public interface ContratBeanLocal {
      * @param duree             durée
      * @return                  contrat créé
      */
-    public contrat créerContrat(int distributeurId, int editeurId, int titreId, int nbCopies, int duree);
+    public Contrat créerContrat(int distributeurId, int editeurId, int titreId, int nbCopies, int duree);
     
     /**
      * Liste des contrats à valider par le distributeur
@@ -29,7 +29,7 @@ public interface ContratBeanLocal {
      * @param distributeurId    Id du distributeur
      * @return                  liste des contrats à valider
      */
-    public HashMap<Integer, contrat> listContratAValider(int distributeurId);
+    public HashMap<Integer, Contrat> listContratAValider(int distributeurId);
     
     /**
      * Le distributeur valide un contrat
@@ -37,7 +37,7 @@ public interface ContratBeanLocal {
      * @param contratId Id du contrat
      * @return          Contrat
      */
-    public contrat validerContrat(int contratId);
+    public Contrat validerContrat(int contratId);
     
     /**
      * Le distributeur refuse un contrat
@@ -45,7 +45,7 @@ public interface ContratBeanLocal {
      * @param contratId
      * @return 
      */
-    public contrat refuserContrat(int contratId);
+    public Contrat refuserContrat(int contratId);
     
     /**
      * Liste des contrats en attente de récépissés
@@ -53,7 +53,7 @@ public interface ContratBeanLocal {
      * @param distributeurId    Id du distributeur
      * @return                  Liste des contrats en attente de récépissé
      */
-    public HashMap<Integer, contrat> listeContratRecepisse(int distributeurId);
+    public HashMap<Integer, Contrat> listeContratRecepisse(int distributeurId);
     
     /**
      * Le distributeur envoie un récépissé
@@ -62,7 +62,7 @@ public interface ContratBeanLocal {
      * @param recepisse     récépissé
      * @return              le contrat
      */
-    public contrat setRecepisse(int contratId, String recepisse);
+    public Contrat setRecepisse(int contratId, String recepisse);
     
     /**
      * Liste des contrats en attente de cout
@@ -70,7 +70,7 @@ public interface ContratBeanLocal {
      * @param editeurId     Id de l'éditeur
      * @return              liste des contrats
      */
-    public HashMap<Integer, contrat> listeContratAttenteCout(int editeurId);
+    public HashMap<Integer, Contrat> listeContratAttenteCout(int editeurId);
     
     /**
      * L'éditeur met un cout à un contrat
@@ -79,7 +79,7 @@ public interface ContratBeanLocal {
      * @param cout          le cout
      * @return              le contrat
      */
-    public contrat setCout(int contratId, float cout);
+    public Contrat setCout(int contratId, float cout);
     
     /**
      * Liste des contrats en attente de validation de l'éditeur
@@ -87,7 +87,7 @@ public interface ContratBeanLocal {
      * @param editeurId     Id de l'éditeur
      * @return              Liste de contrats
      */
-    public HashMap<Integer, contrat> listeContratAValiderEditeur(int editeurId);
+    public HashMap<Integer, Contrat> listeContratAValiderEditeur(int editeurId);
     
     /**
      * L'éditeur valide un contrat
@@ -95,6 +95,6 @@ public interface ContratBeanLocal {
      * @param contratId     Id du contrat
      * @return              le contrat
      */
-    public contrat validerContratEditeur(int contratId);
+    public Contrat validerContratEditeur(int contratId);
     
 }

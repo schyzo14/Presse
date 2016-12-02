@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vues;
 
-import com.google.gson.Gson;
-import rest.ClientREST_TransmissionArticle;
-import java.awt.Dimension;
+import rest.ClientRESTTransmissionArticle;
 import java.awt.Event;
-import java.awt.Insets;
-import java.awt.Toolkit;
-import java.util.HashMap;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -21,7 +11,7 @@ import javax.swing.JOptionPane;
  */
 public class TransmettreArticle extends javax.swing.JFrame {
     //Création d'un objet Client REST
-    ClientREST_TransmissionArticle restArticle = new ClientREST_TransmissionArticle();
+    ClientRESTTransmissionArticle restArticle = new ClientRESTTransmissionArticle();
 
     /**
      * Creates new form TransmettreArticle

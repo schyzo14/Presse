@@ -1,4 +1,4 @@
-package REST_TransmissionArticles;
+package rest;
 
 import REST.ArticlesBeanLocal;
 import com.google.gson.Gson;
@@ -16,10 +16,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * Ressource Auteurs
+ * Ressource Mots-Clés
  */
-@Path("auteurs")
-public class auteurRessource {
+@Path("motscles")
+public class MotsclesRessource {
     //Accès backoffice
     ArticlesBeanLocal articlesBean;
 
@@ -32,7 +32,7 @@ public class auteurRessource {
     /**
      * Constructeur de la ressource
      */
-    public auteurRessource() {
+    public MotsclesRessource() {
         this.gson = new Gson();
         this.articlesBean = lookupArticlesBeanLocal();
     }
@@ -48,7 +48,7 @@ public class auteurRessource {
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postJsonAuteurJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
+    public String postJsonMotsClesJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
         System.out.println("POST : nomA : "+nomA +" nomAut :"+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         return this.gson.toJson(this.articlesBean.addArticles(nomA, nomAut, contenu, motcles));
     }
@@ -67,4 +67,5 @@ public class auteurRessource {
             throw new RuntimeException(ne);
         }
     }
+    
 }

@@ -14,7 +14,7 @@ import javax.jms.Session;
 import javax.jms.StreamMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import presse.distributeur;
+import presse.Distributeur;
 
 /**
  * Classe JMS Distributeur - Receiver
@@ -78,15 +78,15 @@ public class DistributeurJMSReceiver {
      * Récupération du distributeur
      * @return distributeur
      */
-    public distributeur reception() {
-        distributeur reponse = null;
+    public Distributeur reception() {
+        Distributeur reponse = null;
         try {
             Gson gson = new Gson();
             
             //Récupération de la réponse
             String rep = ((StreamMessage) receiver.receive()).readString();
             System.out.println("Message reçu : GestDist -> Web");
-            java.lang.reflect.Type typeDistributeur = new TypeToken<distributeur>(){}.getType();
+            java.lang.reflect.Type typeDistributeur = new TypeToken<Distributeur>(){}.getType();
             reponse = gson.fromJson(rep, typeDistributeur);
         } catch (JMSException ex) {
             Logger.getLogger(DistributeurJMSReceiver.class.getName()).log(Level.SEVERE, null, ex);

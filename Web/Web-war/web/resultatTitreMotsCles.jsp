@@ -4,7 +4,7 @@
     Author     : Schyzo
 --%>
 
-<%@page import="presse.titre"%>
+<%@page import="presse.Titre"%>
 <%@page import="rest.ClientRESTTitre"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -40,7 +40,7 @@
           out.write("</h2>");
           
           ClientRESTTitre c = new ClientRESTTitre();
-          ArrayList<titre> liste = c.getTitreParMC(request.getParameter("titreMotsCles"));
+          ArrayList<Titre> liste = c.getTitreParMC(request.getParameter("titreMotsCles"));
         %>
         <form name='formulaire' action='resultatVolume.jsp' method='get' target='_blank' onsubmit='return validateForm()'>
             <table border="1">
@@ -50,7 +50,7 @@
                     <th>Sélection</th>
                 </tr>
                 <%
-                    for(titre t : liste) {
+                    for(Titre t : liste) {
                         out.write("<tr>");
                             out.write("<td>");
                                 out.write(Integer.toString(t.getNumT()));

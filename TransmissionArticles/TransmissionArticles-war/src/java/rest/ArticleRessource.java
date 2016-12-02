@@ -1,4 +1,4 @@
-package REST_TransmissionArticles;
+package rest;
 
 import REST.ArticlesBeanLocal;
 import com.google.gson.Gson;
@@ -6,20 +6,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
 
 /**
- * Ressource Mots-Clés
+ * REST
+ *
+ * Ressource Articles
  */
-@Path("motscles")
-public class motsclesRessource {
+@Path("articles")
+public class ArticleRessource {
     //Accès backoffice
     ArticlesBeanLocal articlesBean;
 
@@ -28,27 +31,46 @@ public class motsclesRessource {
     
     //Convertisseur json
     private Gson gson;
-    
+
     /**
      * Constructeur de la ressource
      */
-    public motsclesRessource() {
+    public ArticleRessource() {
         this.gson = new Gson();
         this.articlesBean = lookupArticlesBeanLocal();
     }
-    
+
     /**
-     * Retrieves representation of an instance of REST_TransmissionArticles.articleRessource
-     * @return an instance of java.lang.String
+     * GET : Récupérer la liste des articles
+     * @return String
      */
     @GET
     public String getJson() {
         return this.gson.toJson(this.articlesBean.getListeArticles());
     }
     
+    /**
+     * GET : Récupérer le détail d'un article
+     * @return String
+     */
+    @GET
+    @Path("articles/{idArticle}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDetailArticle(@PathParam("idArticle") int idArticle) {
+        return this.gson.toJson(this.articlesBean.getArticles(idArticle));
+    }
+    
+    /**
+     * POST : envoyer un article saisie par le journaliste
+     * @param nomA
+     * @param nomAut
+     * @param contenu
+     * @param motcles
+     * @return 
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String postJsonMotsClesJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
+    public String postJsonArticleJournaliste(@QueryParam("nomArticle") String nomA, @QueryParam("nomAuteur") String nomAut, @QueryParam("contenu") String contenu, @QueryParam("motscles") String motcles) {
         System.out.println("POST : nomA : "+nomA +" nomAut :"+nomAut+" contenu : "+contenu+" motscles : "+motcles);
         return this.gson.toJson(this.articlesBean.addArticles(nomA, nomAut, contenu, motcles));
     }
@@ -67,5 +89,4 @@ public class motsclesRessource {
             throw new RuntimeException(ne);
         }
     }
-    
 }

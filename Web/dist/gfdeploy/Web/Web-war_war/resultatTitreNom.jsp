@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@page import="presse.titre"%>
+<%@page import="presse.Titre"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="rest.ClientRESTTitre"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -33,7 +33,7 @@
         <h1>Résultat de la recherche du titre : <%= request.getParameter("titreNom") %></h1>
         <%
           ClientRESTTitre c = new ClientRESTTitre();
-          ArrayList<titre> liste = c.getTitreParNom(request.getParameter("titreNom"));
+          ArrayList<Titre> liste = c.getTitreParNom(request.getParameter("titreNom"));
         %>
         
         <form name='formulaire' action='resultatVolume.jsp' method='get' target='_blank' onsubmit='return validateForm()'>
@@ -44,7 +44,7 @@
                     <th>Sélection</th>
                 </tr>
                 <%
-                    for(titre t : liste) {
+                    for(Titre t : liste) {
                         out.write("<tr>");
                             out.write("<td>");
                                 out.write(Integer.toString(t.getNumT()));

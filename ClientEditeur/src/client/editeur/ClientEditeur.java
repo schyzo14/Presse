@@ -6,7 +6,7 @@ import client.editeur.ws.DistributeurEditeurWS_PortType;
 import client.editeur.ws.DistributeurEditeurWS_Service;
 import client.editeur.ws.DistributeurEditeurWS_ServiceLocator;
 import javax.xml.rpc.ServiceException;
-import presse.editeur;
+import presse.Editeur;
 
 /**
  * ClientEditeur : main
@@ -14,7 +14,7 @@ import presse.editeur;
 public class ClientEditeur {
     
     // éditeur connecté
-    public static editeur monEditeur;
+    public static Editeur monEditeur;
     
     // WS
     public static DistributeurEditeurWS_Service  service = new DistributeurEditeurWS_ServiceLocator();

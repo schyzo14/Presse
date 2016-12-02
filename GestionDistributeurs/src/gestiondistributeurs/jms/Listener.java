@@ -10,7 +10,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.StreamMessage;
-import presse.distributeur;
+import presse.Distributeur;
 
 /**
  * Classe Listener du Receiver
@@ -40,7 +40,7 @@ public class Listener implements MessageListener {
                 ArrayList<String> params = gson.fromJson(parametres, typeParams);
                 String mail = params.get(1);
                 String nom, mdp;
-                distributeur d = null;
+                Distributeur d = null;
                 
                 if(params.get(0).equals("inscription")) {
                     nom = params.get(2);

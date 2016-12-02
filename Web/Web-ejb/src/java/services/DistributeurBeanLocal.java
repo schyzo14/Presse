@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package services;
 
 import javax.ejb.Local;
-import presse.distributeur;
+import presse.Distributeur;
 
 /**
  *
@@ -22,7 +17,7 @@ public interface DistributeurBeanLocal {
      * @param nom   nom
      * @return      le distributeur
      */
-    public distributeur inscrire(String mail, String nom);
+    public Distributeur inscrire(String mail, String nom);
     
     /**
      * Le distributeur se connecte
@@ -31,6 +26,6 @@ public interface DistributeurBeanLocal {
      * @param mdp       mdp
      * @return          le distributeur identifié
      */
-    public distributeur connecter(String mail, String mdp);
+    public Distributeur connecter(String mail, String mdp);
    
 }

@@ -4,9 +4,9 @@
     Author     : Schyzo
 --%>
 
-<%@page import="presse.article"%>
+<%@page import="presse.Article"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="presse.volume"%>
+<%@page import="presse.Volume"%>
 <%@page import="rest.ClientRESTVolume"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,8 +20,8 @@
         <h2>Titre : <%= request.getParameter("selectionTitre") %></h2>
         <%
           ClientRESTVolume c = new ClientRESTVolume();
-          volume v = c.getVolume(request.getParameter("selectionTitre"), request.getParameter("numVolume"));
-          ArrayList<article> listeArticles = new ArrayList<article>(v.getListeArticles().values());
+          Volume v = c.getVolume(request.getParameter("selectionTitre"), request.getParameter("numVolume"));
+          ArrayList<Article> listeArticles = new ArrayList<Article>(v.getListeArticles().values());
         %>
         <table border='1'>
             <caption><% Integer.toString(v.getNumV()); %></caption>
@@ -30,7 +30,7 @@
                 <th>Nom de l'article</th>
             </tr>
             <%
-                for(article a : listeArticles) {
+                for(Article a : listeArticles) {
                     out.write("<tr>");
                         out.write("<td>");
                             out.write(Integer.toString(a.getNumA()));

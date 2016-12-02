@@ -16,12 +16,22 @@ public class Compte {
     // Liste des actions sur le compte
     private ArrayList<Payement> listPayements = new ArrayList<Payement> ();
 
+    /**
+     * Constructeur
+     * @param numCompte
+     * @param nomCompte
+     * @param somme 
+     */
     public Compte(int numCompte, String nomCompte, double somme) {
         this.setNumCompte(numCompte);
         this.setNomCompte(nomCompte);
         this.setSomme(somme);
     }
 
+    /**
+     *
+     * @return 
+     */
     public int getNumCompte() {
         return numCompte;
     }

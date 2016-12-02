@@ -1,12 +1,12 @@
 package client.distributeur;
 
-import client.distributeur.Vue.Menu.MenuAvantConnexion;
+import client.distributeur.vue.Menu.MenuAvantConnexion;
 import client.distributeur.ws.DistributeurEditeurWS_PortType;
 import client.distributeur.ws.DistributeurEditeurWS_Service;
 import client.distributeur.ws.DistributeurEditeurWS_ServiceLocator;
 import java.rmi.RemoteException;
 import javax.xml.rpc.ServiceException;
-import presse.distributeur;
+import presse.Distributeur;
 
 /**
  * ClientDistributeur
@@ -14,7 +14,7 @@ import presse.distributeur;
 public class ClientDistributeur {
 
     // Distributeur identifié
-    public static distributeur monDistributeur;
+    public static Distributeur monDistributeur;
     
     // WS
     public static DistributeurEditeurWS_Service  service = new DistributeurEditeurWS_ServiceLocator();
